@@ -5,7 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
-import sun.applet.Main;
+
 
 import java.awt.*;
 
@@ -14,8 +14,6 @@ public class mainMenuScreen implements Screen {
     OrthographicCamera camera;
     public Texture background;
     public Texture play;
-    public Texture leaderboard;
-    public Texture exit;
     public Rectangle playRec;
 
     mainMenuScreen(final zombie game) {
@@ -26,8 +24,6 @@ public class mainMenuScreen implements Screen {
         playRec.y = 480 - (480 / 3);
         playRec.width = 200;
         playRec.height = 100;
-        leaderboard = new Texture(Gdx.files.internal("kayu.png"));
-        exit = new Texture(Gdx.files.internal("kayu.png"));
 
 
         camera = new OrthographicCamera();
@@ -42,7 +38,6 @@ public class mainMenuScreen implements Screen {
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-
         game.batch.begin();
         game.batch.draw(background, 0, 0);
         game.batch.draw(play, playRec.x, playRec.y);

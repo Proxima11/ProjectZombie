@@ -73,6 +73,10 @@ public class MainZombie extends Game {
 			{
 				iter.remove();
 				polisi.getDamage();
+				if(polisi.AliveorNot() == false)
+				{
+
+				}
 			}
 		}
 

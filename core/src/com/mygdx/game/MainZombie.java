@@ -31,27 +31,7 @@ public class MainZombie implements Screen {
     private Rectangle bulletRec;
 
     public MainZombie(final menuScreen game) {
-
         this.game = game;
-        backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
-        police = new Texture(Gdx.files.internal("police.png"));
-        zombie = new Texture(Gdx.files.internal("zombie.png"));
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
-        batch = new SpriteBatch();
-        backgroundGameRec = new Rectangle();
-        backgroundGameRec.x = 0;
-        backgroundGameRec.y = 0;
-        backgroundGameRec.width = 800;
-        backgroundGameRec.height = 480;
-        policeRec = new Rectangle();
-        policeRec.x = 20;
-        policeRec.y = 40;
-        policeRec.width = 64;
-        policeRec.height = 64;
-        zombieSpawn = new Array<Rectangle>();
-        polisi = new Police(5);
-
     }
 
     @Override
@@ -65,7 +45,8 @@ public class MainZombie implements Screen {
             policeRec.x += 200 * Gdx.graphics.getDeltaTime();
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
             policeRec.x -= 200 * Gdx.graphics.getDeltaTime();
-
+        if (Gdx.input.justTouched())
+            bulletRec.x += 700 * Gdx.graphics.getDeltaTime();
 
         if (policeRec.y > 250) policeRec.y = 250;
         if (policeRec.y < 0) policeRec.y = 0;
@@ -163,19 +144,6 @@ public class MainZombie implements Screen {
 
 
     }
-
-
-
-
-//	private void bulletSpawning(){
-//		Rectangle bullets = new Rectangle();
-//		bullets.x = policeRec.x;
-//		bullets.y = policeRec.y;
-//		bullets.width = 20;
-//		bullets.height = 20;
-//		bulletSpawn.add(bullets);
-//
-//	}
 
     @Override
     public void resize(int width, int height) {

@@ -27,6 +27,10 @@ public class MainZombie extends ApplicationAdapter {
 	private Array<Rectangle> zombieSpawn;
 	private long zombieLastSpawn;
 
+	private Texture bullet;
+	private Array<Rectangle> bulletSpawn;
+	private long bulletLastSpawn;
+
 	public void create(){
 		backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
 		police = new Texture(Gdx.files.internal("police.png"));
@@ -46,7 +50,8 @@ public class MainZombie extends ApplicationAdapter {
 		policeRec.height = 64;
 		zombieSpawn = new Array<Rectangle>();
 
-
+		bullet = new Texture(Gdx.files.internal("peluru.png"));
+		bulletSpawn = new Array<>();
 
 	}
 
@@ -55,6 +60,8 @@ public class MainZombie extends ApplicationAdapter {
 		if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) policeRec.y -= 200 * Gdx.graphics.getDeltaTime();
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) policeRec.x += 200 * Gdx.graphics.getDeltaTime();
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) policeRec.x -= 200 * Gdx.graphics.getDeltaTime();
+
+		if (Gdx.input.justTouched()) bulletSpawning();
 
 		if (policeRec.y > 250) policeRec.y = 250;
 		if (policeRec.y < 0) policeRec.y = 0;
@@ -68,10 +75,23 @@ public class MainZombie extends ApplicationAdapter {
 			Rectangle zombiess = iter.next();
 			zombiess.x -=200 * Gdx.graphics.getDeltaTime();
 			if (zombiess.x + 64 < 0) iter.remove();
-			if(zombiess.intersects(policeRec))
+			if (zombiess.intersects(policeRec))
 			{
 				iter.remove();
 			}
+//			if (zombiess.intersects(bulletSpawn.random())) iter.remove();
+		}
+
+		for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext();){
+
+			Rectangle bulletss = iterr.next();
+			bulletss.x += 700 * Gdx.graphics.getDeltaTime();
+			if (bulletss.x + 20 > 800) iterr.remove();
+			if (bulletss.intersects(zombieSpawn.random()))
+			{
+				iterr.remove();
+			}
+
 		}
 
 		ScreenUtils.clear(0.2f,0,0,1);
@@ -83,6 +103,9 @@ public class MainZombie extends ApplicationAdapter {
 		for (Rectangle zombies : zombieSpawn){
 			batch.draw(zombie, zombies.x, zombies.y);
 		}
+		for (Rectangle bulletss : bulletSpawn){
+			batch.draw(bullet, bulletss.x, bulletss.y);
+		}
 		batch.end();
 	}
 	private void zombieSpawning(){
@@ -93,6 +116,17 @@ public class MainZombie extends ApplicationAdapter {
 		zombies.height = 64;
 		zombieSpawn.add(zombies);
 		zombieLastSpawn = TimeUtils.nanoTime();
+
+	}
+
+	private void bulletSpawning(){
+		Rectangle bullets = new Rectangle();
+		bullets.x = policeRec.x;
+		bullets.y = policeRec.y;
+		bullets.width = 20;
+		bullets.height = 20;
+		bulletSpawn.add(bullets);
+		bulletLastSpawn = TimeUtils.nanoTime();
 
 	}
 }

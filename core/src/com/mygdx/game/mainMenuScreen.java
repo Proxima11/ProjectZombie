@@ -37,10 +37,11 @@ public class mainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         game.batch.draw(background, 0, 0);
+        game.batch.draw(play, 300, 260);
         game.batch.end();
 
         if(Gdx.input.isTouched()){
-            game.setScreen(new MainZombie(game));
+//            game.setScreen(new MainZombie(game));
             dispose();
         }
     }

@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import java.awt.*;
 import java.util.Iterator;
 
-public class MainZombie extends ApplicationAdapter {
+public class MainZombie extends Game {
 
 
 	private Texture backgroundGame;
@@ -26,6 +27,7 @@ public class MainZombie extends ApplicationAdapter {
 	private Rectangle policeRec;
 	private Array<Rectangle> zombieSpawn;
 	private long zombieLastSpawn;
+	Character polisi;
 
 	private Texture bullet;
 	private Array<Rectangle> bulletSpawn;
@@ -53,6 +55,9 @@ public class MainZombie extends ApplicationAdapter {
 		bullet = new Texture(Gdx.files.internal("peluru.png"));
 		bulletSpawn = new Array<>();
 
+		polisi = new Police(5);
+
+
 	}
 
 	public void render(){
@@ -78,6 +83,11 @@ public class MainZombie extends ApplicationAdapter {
 			if (zombiess.intersects(policeRec))
 			{
 				iter.remove();
+				polisi.getDamage();
+				if(polisi.AliveorNot() == false)
+				{
+
+				}
 			}
 //			if (zombiess.intersects(bulletSpawn.random())) iter.remove();
 		}

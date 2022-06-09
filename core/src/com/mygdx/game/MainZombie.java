@@ -30,8 +30,8 @@ public class MainZombie extends Game {
 	Character polisi;
 
 	private Texture bullet;
-	private Array<Rectangle> bulletSpawn;
-	private long bulletLastSpawn;
+	private Rectangle bulletRec;
+
 
 	public void create(){
 		backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
@@ -53,7 +53,11 @@ public class MainZombie extends Game {
 		zombieSpawn = new Array<Rectangle>();
 
 		bullet = new Texture(Gdx.files.internal("peluru.png"));
-		bulletSpawn = new Array<>();
+		bulletRec = new Rectangle();
+		bulletRec.width = 20;
+		bulletRec.height = 20;
+		bulletRec.x = policeRec.x;
+		bulletRec.y = policeRec.y;
 
 		polisi = new Police(5);
 
@@ -66,7 +70,7 @@ public class MainZombie extends Game {
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) policeRec.x += 200 * Gdx.graphics.getDeltaTime();
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) policeRec.x -= 200 * Gdx.graphics.getDeltaTime();
 
-		if (Gdx.input.justTouched()) bulletSpawning();
+		if (Gdx.input.justTouched()) bulletRec.x += 700 * Gdx.graphics.getDeltaTime();
 
 		if (policeRec.y > 250) policeRec.y = 250;
 		if (policeRec.y < 0) policeRec.y = 0;
@@ -89,20 +93,20 @@ public class MainZombie extends Game {
 
 				}
 			}
-//			if (zombiess.intersects(bulletSpawn.random())) iter.remove();
+			if (zombiess.intersects(bulletRec)) iter.remove();
 		}
 
-		for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext();){
-
-			Rectangle bulletss = iterr.next();
-			bulletss.x += 700 * Gdx.graphics.getDeltaTime();
-			if (bulletss.x + 20 > 800) iterr.remove();
-			if (bulletss.intersects(zombieSpawn.random()))
-			{
-				iterr.remove();
-			}
-
-		}
+//		for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext();){
+//
+//			Rectangle bulletss = iterr.next();
+//			bulletss.x += 700 * Gdx.graphics.getDeltaTime();
+//			if (bulletss.x + 20 > 800) iterr.remove();
+//			if (bulletss.intersects(zombieSpawn.random()))
+//			{
+//				iterr.remove();
+//			}
+//
+//		}
 
 		ScreenUtils.clear(0.2f,0,0,1);
 		camera.update();
@@ -113,9 +117,9 @@ public class MainZombie extends Game {
 		for (Rectangle zombies : zombieSpawn){
 			batch.draw(zombie, zombies.x, zombies.y);
 		}
-		for (Rectangle bulletss : bulletSpawn){
-			batch.draw(bullet, bulletss.x, bulletss.y);
-		}
+
+		batch.draw(bullet, bulletRec.x, bulletRec.y);
+
 		batch.end();
 	}
 	private void zombieSpawning(){
@@ -129,14 +133,13 @@ public class MainZombie extends Game {
 
 	}
 
-	private void bulletSpawning(){
-		Rectangle bullets = new Rectangle();
-		bullets.x = policeRec.x;
-		bullets.y = policeRec.y;
-		bullets.width = 20;
-		bullets.height = 20;
-		bulletSpawn.add(bullets);
-		bulletLastSpawn = TimeUtils.nanoTime();
-
-	}
+//	private void bulletSpawning(){
+//		Rectangle bullets = new Rectangle();
+//		bullets.x = policeRec.x;
+//		bullets.y = policeRec.y;
+//		bullets.width = 20;
+//		bullets.height = 20;
+//		bulletSpawn.add(bullets);
+//
+//	}
 }

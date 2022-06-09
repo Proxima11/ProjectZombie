@@ -27,6 +27,7 @@ public class MainZombie extends Game {
 	private Rectangle policeRec;
 	private Array<Rectangle> zombieSpawn;
 	private long zombieLastSpawn;
+	Character polisi;
 
 	public void create(){
 		backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
@@ -46,8 +47,7 @@ public class MainZombie extends Game {
 		policeRec.width = 64;
 		policeRec.height = 64;
 		zombieSpawn = new Array<Rectangle>();
-
-
+		polisi = new Police(5);
 
 	}
 
@@ -72,6 +72,11 @@ public class MainZombie extends Game {
 			if(zombiess.intersects(policeRec))
 			{
 				iter.remove();
+				polisi.getDamage();
+				if(polisi.AliveorNot() == false)
+				{
+
+				}
 			}
 		}
 

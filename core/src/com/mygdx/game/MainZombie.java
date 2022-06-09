@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import java.awt.*;
 import java.util.Iterator;
 
-public class MainZombie extends ApplicationAdapter {
+public class MainZombie extends Game {
 
 
 	private Texture backgroundGame;

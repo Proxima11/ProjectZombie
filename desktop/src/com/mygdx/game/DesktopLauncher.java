@@ -10,6 +10,6 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Zombie Defender");
 		config.setWindowedMode(800,480);
-		new Lwjgl3Application(new zombie(), config);
+		new Lwjgl3Application(new menuScreen(), config);
 	}
 }

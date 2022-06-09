@@ -38,6 +38,11 @@ public class mainMenuScreen implements Screen {
         game.batch.begin();
         game.batch.draw(background, 0, 0);
         game.batch.end();
+
+        if(Gdx.input.isTouched()){
+            game.setScreen(new MainZombie(game));
+            dispose();
+        }
     }
 
     @Override

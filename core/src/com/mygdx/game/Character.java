@@ -19,4 +19,8 @@ abstract class Character {
     }
 
     public abstract void getDamage(int damage);
+
+    public boolean AliveorNot(){
+        return false;
+    }
 }

@@ -18,7 +18,6 @@ public class MainZombie extends ApplicationAdapter {
 //  final menuScreen game;
 
 
-
     private Texture bullet;
     private Rectangle bulletRec;
     private Array<Rectangle> bulletSpawn;
@@ -36,29 +35,31 @@ public class MainZombie extends ApplicationAdapter {
     @Override
     public void create() {
 
-      backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
-      police = new Texture(Gdx.files.internal("police.png"));
-      zombie = new Texture(Gdx.files.internal("zombie.png"));
-      camera = new OrthographicCamera();
-      camera.setToOrtho(false, 800, 480);
-      batch = new SpriteBatch();
-      backgroundGameRec = new Rectangle();
-      backgroundGameRec.x = 0;
-      backgroundGameRec.y = 0;
-      backgroundGameRec.width = 800;
-      backgroundGameRec.height = 480;
-      policeRec = new Rectangle();
-      policeRec.x = 20;
-      policeRec.y = 40;
-      policeRec.width = 64;
-      policeRec.height = 64;
-      zombieSpawn = new Array<Rectangle>();
+        backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
+        police = new Texture(Gdx.files.internal("police.png"));
+        zombie = new Texture(Gdx.files.internal("zombie.png"));
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+        batch = new SpriteBatch();
+        backgroundGameRec = new Rectangle();
+        backgroundGameRec.x = 0;
+        backgroundGameRec.y = 0;
+        backgroundGameRec.width = 800;
+        backgroundGameRec.height = 480;
+        policeRec = new Rectangle();
+        policeRec.x = 20;
+        policeRec.y = 40;
+        policeRec.width = 64;
+        policeRec.height = 64;
+        zombieSpawn = new Array<Rectangle>();
+        bullet = new Texture(Gdx.files.internal("peluru.png"));
+        bulletSpawn = new Array<>();
 
 //      polisi = new Police(5);
 
-      // Character polisi;
+        // Character polisi;
 
-  }
+    }
 
     @Override
     public void render() {
@@ -89,7 +90,7 @@ public class MainZombie extends ApplicationAdapter {
             if (zombiess.x + 64 < 0) iter.remove();
             zombiess.x -= 100 * Gdx.graphics.getDeltaTime();
 
-            for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext();) {
+            for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
                 Rectangle bullets = iterr.next();
                 bullets.x += 700 * Gdx.graphics.getDeltaTime();
                 if (bullets.x + 20 > 800) iterr.remove();
@@ -127,7 +128,7 @@ public class MainZombie extends ApplicationAdapter {
         for (Rectangle zombies : zombieSpawn) {
             batch.draw(zombie, zombies.x, zombies.y);
         }
-        for (Rectangle bullets : bulletSpawn){
+        for (Rectangle bullets : bulletSpawn) {
             batch.draw(bullet, bullets.x, bullets.y);
         }
 //        batch.draw(bullet, bulletRec.x, bulletRec.y);
@@ -147,36 +148,19 @@ public class MainZombie extends ApplicationAdapter {
         zombieLastSpawn = TimeUtils.nanoTime();
     }
 
-    private void bulletSpawning(){
+    private void bulletSpawning() {
         Rectangle bullets = new Rectangle();
-        bullets.x = policeRec.x+40;
-        bullets.y = policeRec.y+27;
+        bullets.x = policeRec.x + 40;
+        bullets.y = policeRec.y + 27;
         bullets.width = 20;
         bullets.height = 20;
         bulletSpawn.add(bullets);
     }
 
-    public void create(){
-        backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
-        police = new Texture(Gdx.files.internal("police.png"));
-        zombie = new Texture(Gdx.files.internal("zombie.png"));
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800,480);
-        batch = new SpriteBatch();
-        backgroundGameRec = new Rectangle();
-        backgroundGameRec.x = 0;
-        backgroundGameRec.y = 0;
-        backgroundGameRec.width = 800;
-        backgroundGameRec.height = 480;
-        policeRec = new Rectangle();
-        policeRec.x = 20;
-        policeRec.y = 40;
-        policeRec.width = 64;
-        policeRec.height = 64;
-        zombieSpawn = new Array<Rectangle>();
 
-		bullet = new Texture(Gdx.files.internal("peluru.png"));
-		bulletSpawn = new Array<>();
+
+
+
 //		bulletRec = new Rectangle();
 //		bulletRec.width = 20;
 //		bulletRec.height = 20;
@@ -186,7 +170,7 @@ public class MainZombie extends ApplicationAdapter {
 //		polisi = new Police(5);
 
 
-	}
+
 
 
 

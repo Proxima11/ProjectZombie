@@ -51,7 +51,7 @@ public class MainZombie extends ApplicationAdapter {
             policeRec.x += 200 * Gdx.graphics.getDeltaTime();
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
             policeRec.x -= 200 * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.justTouched())
+        if (Gdx.input.justTouched()) bulletSpawning();
 
 //            bulletRec.x += 700 * Gdx.graphics.getDeltaTime();
 
@@ -122,6 +122,37 @@ public class MainZombie extends ApplicationAdapter {
         zombies.y = MathUtils.random(0, 250);
         zombies.width = 64;
         zombies.height = 64;
+        zombieSpawn.add(zombies);
+        zombieLastSpawn = TimeUtils.nanoTime();
+    }
+
+    private void bulletSpawning(){
+        Rectangle bullets = new Rectangle();
+        bullets.x = policeRec.x+40;
+        bullets.y = policeRec.y+27;
+        bullets.width = 20;
+        bullets.height = 20;
+        bulletSpawn.add(bullets);
+    }
+
+    public void create(){
+        backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
+        police = new Texture(Gdx.files.internal("police.png"));
+        zombie = new Texture(Gdx.files.internal("zombie.png"));
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800,480);
+        batch = new SpriteBatch();
+        backgroundGameRec = new Rectangle();
+        backgroundGameRec.x = 0;
+        backgroundGameRec.y = 0;
+        backgroundGameRec.width = 800;
+        backgroundGameRec.height = 480;
+        policeRec = new Rectangle();
+        policeRec.x = 20;
+        policeRec.y = 40;
+        policeRec.width = 64;
+        policeRec.height = 64;
+        zombieSpawn = new Array<Rectangle>();
 
 		bullet = new Texture(Gdx.files.internal("peluru.png"));
 		bulletSpawn = new Array<>();

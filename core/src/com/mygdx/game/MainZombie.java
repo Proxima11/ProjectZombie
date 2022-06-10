@@ -23,12 +23,18 @@ public class MainZombie implements Screen {
     private Texture backgroundGame;
     private Texture police;
     private Texture zombie;
-    private Texture healt100;
+    private Texture health100;
+    private Texture health80;
+    private Texture health50;
+    private Texture health20;
+    private Texture health10;
+    private Texture barrier;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Rectangle backgroundGameRec;
     private Rectangle policeRec;
-    private Texture health100;
+    private Rectangle barrierRec;
+
     private Array<Rectangle> zombieSpawn;
     private long zombieLastSpawn;
 
@@ -44,7 +50,12 @@ public class MainZombie implements Screen {
         backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
         police = new Texture(Gdx.files.internal("police.png"));
         zombie = new Texture(Gdx.files.internal("zombie.png"));
-        healt100 = new Texture(Gdx.files.internal("health bar 100.png"));
+        health100 = new Texture(Gdx.files.internal("health bar 100.png"));
+        health80 = new Texture(Gdx.files.internal("health bar 80.png"));
+        health50 = new Texture(Gdx.files.internal("health bar 50.png"));
+        health20 = new Texture(Gdx.files.internal("health bar 20.png"));
+        health10 = new Texture(Gdx.files.internal("health bar 10.png"));
+        barrier = new Texture(Gdx.files.internal("barrier12.png"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         batch = new SpriteBatch();
@@ -58,6 +69,11 @@ public class MainZombie implements Screen {
         policeRec.y = 40;
         policeRec.width = 64;
         policeRec.height = 64;
+        barrierRec = new Rectangle();
+        barrierRec.x = 0;
+        barrierRec.y = 0;
+        barrierRec.width = 50;
+        barrierRec.height = 320;
         bullet = new Texture(Gdx.files.internal("peluru.png"));
         bulletSpawn = new Array<>();
 
@@ -94,7 +110,7 @@ public class MainZombie implements Screen {
         if (policeRec.y > 250) policeRec.y = 250;
         if (policeRec.y < 0) policeRec.y = 0;
         if (policeRec.x > 150) policeRec.x = 150;
-        if (policeRec.x < 0) policeRec.x = 0;
+        if (policeRec.x < barrierRec.width) policeRec.x = barrierRec.width ;
 
         if (TimeUtils.nanoTime() - zombieLastSpawn > 1000999999) zombieSpawning();
 
@@ -143,7 +159,8 @@ public class MainZombie implements Screen {
         batch.begin();
         batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
         batch.draw(police, policeRec.x, policeRec.y);
-        batch.draw(healt100, 20, 420);
+        batch.draw(health100, 20, 420);
+        batch.draw(barrier,barrierRec.x,barrierRec.y,50 ,320);
         for (Rectangle zombies : zombieSpawn) {
             batch.draw(zombie, zombies.x, zombies.y);
         }

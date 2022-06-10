@@ -66,6 +66,7 @@ public class mainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         game.batch.draw(background, 0, 0);
+
         if (Gdx.input.getX() < playRec.x + playRec.width && Gdx.input.getX() > playRec.x && 480 - Gdx.input.getY() < playRec.y + playRec.height && 480 - Gdx.input.getY() > playRec.y ) {
             game.batch.draw(playNotTouch, playRec.x, playRec.y);
         }else{
@@ -86,7 +87,7 @@ public class mainMenuScreen implements Screen {
         game.batch.end();
 
         if(Gdx.input.isTouched()){
-            game.setScreen(new MainZombie(game));
+//            game.setScreen(new MainZombie(game));
             dispose();
         }
     }

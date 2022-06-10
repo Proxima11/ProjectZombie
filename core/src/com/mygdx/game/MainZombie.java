@@ -99,8 +99,8 @@ public class MainZombie extends ApplicationAdapter {
                     iterr.remove();
                 }
             }
-//            if (zombiess.intersects(policeRec)) {
-//                iter.remove();
+            if (zombiess.intersects(policeRec)) {
+                iter.remove();
 //                polisi.getDamage();
 //                if (polisi.AliveorNot() == false) {
 //
@@ -108,6 +108,7 @@ public class MainZombie extends ApplicationAdapter {
 //            }
 //            if (zombiess.intersects(bulletSpawn.random())) iter.remove();
 
+            }
         }
 
 //        for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext();){

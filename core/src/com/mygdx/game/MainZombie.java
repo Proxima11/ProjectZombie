@@ -55,7 +55,7 @@ public class MainZombie extends ApplicationAdapter {
         bullet = new Texture(Gdx.files.internal("peluru.png"));
         bulletSpawn = new Array<>();
 
-//      polisi = new Police(5);
+//        polisi = new Police(5);
 
         // Character polisi;
 

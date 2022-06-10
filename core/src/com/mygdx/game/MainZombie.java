@@ -23,6 +23,7 @@ public class MainZombie implements Screen {
     private Texture backgroundGame;
     private Texture police;
     private Texture zombie;
+    private Texture healt100;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Rectangle backgroundGameRec;
@@ -43,6 +44,7 @@ public class MainZombie implements Screen {
         backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
         police = new Texture(Gdx.files.internal("police.png"));
         zombie = new Texture(Gdx.files.internal("zombie.png"));
+        healt100 = new Texture(Gdx.files.internal("health bar 100.png"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         batch = new SpriteBatch();
@@ -141,6 +143,7 @@ public class MainZombie implements Screen {
         batch.begin();
         batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
         batch.draw(police, policeRec.x, policeRec.y);
+        batch.draw(healt100, 20, 420);
         for (Rectangle zombies : zombieSpawn) {
             batch.draw(zombie, zombies.x, zombies.y);
         }

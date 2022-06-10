@@ -99,13 +99,13 @@ public class MainZombie extends ApplicationAdapter {
                     iterr.remove();
                 }
             }
-//            if (zombiess.intersects(policeRec)) {
-//                iter.remove();
-//                polisi.getDamage();
+            if (zombiess.intersects(policeRec)) {
+                iter.remove();
+//                police.getDamage();
 //                if (polisi.AliveorNot() == false) {
 //
 //                }
-//            }
+            }
 //            if (zombiess.intersects(bulletSpawn.random())) iter.remove();
 
         }

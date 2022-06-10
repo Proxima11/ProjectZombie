@@ -9,15 +9,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import org.w3c.dom.css.Rect;
+import sun.applet.Main;
 
 import java.awt.*;
 import java.util.Iterator;
 
-public class MainZombie extends ApplicationAdapter {
+public class MainZombie implements Screen {
 
-//  final menuScreen game;
-
-
+    final menuScreen game;
     private Texture bullet;
     private Rectangle bulletRec;
     private Array<Rectangle> bulletSpawn;
@@ -28,13 +27,19 @@ public class MainZombie extends ApplicationAdapter {
     private SpriteBatch batch;
     private Rectangle backgroundGameRec;
     private Rectangle policeRec;
+    private Texture health100;
     private Array<Rectangle> zombieSpawn;
     private long zombieLastSpawn;
-    private Texture health100;
 
-    @Override
+    Character zombieCon = new Zombie(1);
+
+    MainZombie(menuScreen game){
+        this.game = game;
+        create();
+    }
+
     public void create() {
-
+        zombieSpawn = new Array<Rectangle>();
         backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
         police = new Texture(Gdx.files.internal("police.png"));
         zombie = new Texture(Gdx.files.internal("zombie.png"));
@@ -51,7 +56,6 @@ public class MainZombie extends ApplicationAdapter {
         policeRec.y = 40;
         policeRec.width = 64;
         policeRec.height = 64;
-        zombieSpawn = new Array<Rectangle>();
         bullet = new Texture(Gdx.files.internal("peluru.png"));
         bulletSpawn = new Array<>();
 
@@ -62,8 +66,16 @@ public class MainZombie extends ApplicationAdapter {
     }
 
     @Override
-    public void render() {
+    public void show() {
 
+    }
+
+    @Override
+    public void render(float delta) {
+
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            pause();
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
             policeRec.y += 200 * Gdx.graphics.getDeltaTime();
@@ -140,31 +152,6 @@ public class MainZombie extends ApplicationAdapter {
 //        game.batch.end();
 
 
-    }
-
-    private void zombieSpawning() {
-        Rectangle zombies = new Rectangle();
-        zombies.x = 840;
-        zombies.y = MathUtils.random(0, 250);
-        zombies.width = 64;
-        zombies.height = 64;
-        zombieSpawn.add(zombies);
-        zombieLastSpawn = TimeUtils.nanoTime();
-    }
-
-    private void bulletSpawning() {
-        Rectangle bullets = new Rectangle();
-        bullets.x = policeRec.x + 40;
-        bullets.y = policeRec.y + 27;
-        bullets.width = 20;
-        bullets.height = 20;
-        bulletSpawn.add(bullets);
-    }
-
-
-
-
-
 //		bulletRec = new Rectangle();
 //		bulletRec.width = 20;
 //		bulletRec.height = 20;
@@ -184,11 +171,26 @@ public class MainZombie extends ApplicationAdapter {
 //
 //    }
 
-
-    @Override
-    public void resume() {
+    }
 
 
+    private void bulletSpawning() {
+        Rectangle bullets = new Rectangle();
+        bullets.x = policeRec.x + 40;
+        bullets.y = policeRec.y + 27;
+        bullets.width = 20;
+        bullets.height = 20;
+        bulletSpawn.add(bullets);
+    }
+
+    public void zombieSpawning() {
+        Rectangle zombies = new Rectangle();
+        zombies.x = 840;
+        zombies.y = MathUtils.random(0, 250);
+        zombies.width = 64;
+        zombies.height = 64;
+        zombieSpawn.add(zombies);
+        zombieLastSpawn = TimeUtils.nanoTime();
     }
 
     @Override
@@ -201,14 +203,18 @@ public class MainZombie extends ApplicationAdapter {
 
     }
 
-//    @Override
-//    public void hide() {
-//
-//    }
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
 
     @Override
     public void dispose() {
 
     }
-
 }

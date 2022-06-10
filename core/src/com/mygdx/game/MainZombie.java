@@ -101,15 +101,18 @@ public class MainZombie extends ApplicationAdapter {
             }
             if (zombiess.intersects(policeRec)) {
                 iter.remove();
+
 //                polisi.getDamage();
+//                police.getDamage();
 //                if (polisi.AliveorNot() == false) {
 //
 //                }
-//            }
+
 //            if (zombiess.intersects(bulletSpawn.random())) iter.remove();
 
             }
         }
+
 
 //        for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext();){
 //            Rectangle bullets = iterr.next();

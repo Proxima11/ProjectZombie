@@ -15,8 +15,13 @@ import java.util.Iterator;
 
 public class MainZombie extends ApplicationAdapter {
 
-//    final menuScreen game;
+//  final menuScreen game;
 
+
+
+    private Texture bullet;
+    private Rectangle bulletRec;
+    private Array<Rectangle> bulletSpawn;
     private Texture backgroundGame;
     private Texture police;
     private Texture zombie;
@@ -27,17 +32,33 @@ public class MainZombie extends ApplicationAdapter {
     private Array<Rectangle> zombieSpawn;
     private long zombieLastSpawn;
     private Texture health100;
-    Character polisi;
 
-    private Texture bullet;
-//    private Rectangle bulletRec;
-    private Array<Rectangle> bulletSpawn;
+    @Override
+    public void create() {
 
-//    public MainZombie(final menuScreen game) {
-//
-//        this.game = game;
-//
-//    }
+      backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
+      police = new Texture(Gdx.files.internal("police.png"));
+      zombie = new Texture(Gdx.files.internal("zombie.png"));
+      camera = new OrthographicCamera();
+      camera.setToOrtho(false, 800, 480);
+      batch = new SpriteBatch();
+      backgroundGameRec = new Rectangle();
+      backgroundGameRec.x = 0;
+      backgroundGameRec.y = 0;
+      backgroundGameRec.width = 800;
+      backgroundGameRec.height = 480;
+      policeRec = new Rectangle();
+      policeRec.x = 20;
+      policeRec.y = 40;
+      policeRec.width = 64;
+      policeRec.height = 64;
+      zombieSpawn = new Array<Rectangle>();
+
+//      polisi = new Police(5);
+
+      // Character polisi;
+
+  }
 
     @Override
     public void render() {
@@ -77,13 +98,13 @@ public class MainZombie extends ApplicationAdapter {
                     iterr.remove();
                 }
             }
-            if (zombiess.intersects(policeRec)) {
-                iter.remove();
-                polisi.getDamage();
-                if (polisi.AliveorNot() == false) {
-
-                }
-            }
+//            if (zombiess.intersects(policeRec)) {
+//                iter.remove();
+//                polisi.getDamage();
+//                if (polisi.AliveorNot() == false) {
+//
+//                }
+//            }
 //            if (zombiess.intersects(bulletSpawn.random())) iter.remove();
 
         }
@@ -131,7 +152,7 @@ public class MainZombie extends ApplicationAdapter {
 //		bulletRec.x = policeRec.x;
 //		bulletRec.y = policeRec.y;
 
-		polisi = new Police(5);
+//		polisi = new Police(5);
 
 
 	}

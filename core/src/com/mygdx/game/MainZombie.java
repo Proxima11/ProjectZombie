@@ -63,8 +63,18 @@ public class MainZombie extends ApplicationAdapter {
         for (Iterator<Rectangle> iter = zombieSpawn.iterator(); iter.hasNext(); ) {
 
             Rectangle zombiess = iter.next();
-            zombiess.x -= 100 * Gdx.graphics.getDeltaTime();
             if (zombiess.x + 64 < 0) iter.remove();
+            zombiess.x -= 100 * Gdx.graphics.getDeltaTime();
+
+            for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext();) {
+                Rectangle bullets = iterr.next();
+                bullets.x += 700 * Gdx.graphics.getDeltaTime();
+                if (bullets.x + 20 > 800) iterr.remove();
+                if (bullets.intersects(zombiess)) {
+                    iter.remove();
+                    iterr.remove();
+                }
+            }
             if (zombiess.intersects(policeRec)) {
                 iter.remove();
                 polisi.getDamage();
@@ -76,12 +86,12 @@ public class MainZombie extends ApplicationAdapter {
 
         }
 
-        for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext();){
-            Rectangle bullets = iterr.next();
-            bullets.x += 700 * Gdx.graphics.getDeltaTime();
-            if (bullets.x + 20 > 800) iterr.remove();
-            if (bullets.intersects(zombieSpawn.first())) iterr.remove();
-        }
+//        for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext();){
+//            Rectangle bullets = iterr.next();
+//            bullets.x += 700 * Gdx.graphics.getDeltaTime();
+//            if (bullets.x + 20 > 800) iterr.remove();
+//            if (bullets.intersects(zombieSpawn.first())) iterr.remove();
+//        }
 
 
         ScreenUtils.clear(0.2f, 0, 0, 1);

@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Leaderboard implements Screen {
 
@@ -17,7 +20,18 @@ public class Leaderboard implements Screen {
     OrthographicCamera camera;
 
     public void readFile(){
-
+        BufferedReader reader;
+        try{
+            reader = new BufferedReader(new FileReader("LeaderboardFile.txt"));
+            String line = reader.readLine();
+            while(line != null){
+                System.out.println(line);
+                line = reader.readLine();
+            }
+            reader.close();
+        }
+        catch (IOException e){
+        }
     }
 
     public Leaderboard(menuScreen game){

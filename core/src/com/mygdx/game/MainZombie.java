@@ -25,7 +25,6 @@ public class MainZombie implements Screen {
 
     final menuScreen game;
     private Texture bullet;
-//    private Rectangle bulletRec;
     private Array<Rectangle> bulletSpawn;
     private Array<Peluru> bulletList;
     private Texture backgroundGame;
@@ -56,6 +55,7 @@ public class MainZombie implements Screen {
 
     private int score = 0;
     private Array<Integer> scoreList;
+    private String dataScore = "";
 
 
     MainZombie(menuScreen game){
@@ -64,6 +64,7 @@ public class MainZombie implements Screen {
     }
 
     public void writeToLeaderboard(int score){
+        int a = 0;
         scoreList.add(score);
         if(scoreList.size > 0)
         {
@@ -93,6 +94,20 @@ public class MainZombie implements Screen {
         } catch (IOException ex) {
             System.out.println("File " + " Tidak Dapat DIbaca");
         }
+
+//        try {
+////            for (int i = 0; i < scoreList.size; i++){
+////                dataScore += (i+1) + ". " + scoreList.get(i) +"\n";
+////            }
+////            dataScore += (a+1) + ". " + scoreList.get(a) +"\n";
+//            dataScore += scoreList;
+//            FileWriter file = new FileWriter("FileLeaderBoard.txt", true);
+//            file.append(dataScore);
+//            file.close();
+//
+//        }catch (IOException e){
+//            System.out.println("File " + "Tidak dapat dibaca");
+//        }
     }
 
     public void create() {

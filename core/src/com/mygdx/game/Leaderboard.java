@@ -16,6 +16,10 @@ public class Leaderboard implements Screen {
     public Rectangle backRec;
     OrthographicCamera camera;
 
+    public void readFile(){
+
+    }
+
     public Leaderboard(menuScreen game){
         this.game = game;
         backgroundGame = new Texture(Gdx.files.internal("backgroundMainMenu.png"));

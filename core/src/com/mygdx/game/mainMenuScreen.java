@@ -29,9 +29,11 @@ public class mainMenuScreen implements Screen {
     public Rectangle playRec3;
     private Music soundtrack;
 
+
     private FreeTypeFontGenerator fontGenerator;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
     private BitmapFont font;
+
 
     mainMenuScreen(final menuScreen game) {
         this.game = game;

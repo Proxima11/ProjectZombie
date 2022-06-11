@@ -15,7 +15,7 @@ public class menuScreen extends Game {
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
-        this.setScreen(new mainMenuScreen(this));
+        this.setScreen(new gameOver(this));
     }
 
     @Override

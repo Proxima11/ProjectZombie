@@ -67,8 +67,6 @@ public class mainMenuScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0.2f, 0, 0, 1);
-        soundtrack.setLooping(true);
-        soundtrack.play();
 
 
         camera.update();

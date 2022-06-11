@@ -33,12 +33,14 @@ public class MainZombie implements Screen {
     private Texture health20;
     private Texture health10;
     private Texture barrier;
+    private Texture barrierHeatlh;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Rectangle backgroundGameRec;
     private Rectangle policeRec;
     private Rectangle barrierRec;
     private Character polisi;
+    private Character base;
 
     private Array<Rectangle> zombieSpawn;
     private Array<Character> zombieList;
@@ -66,6 +68,7 @@ public class MainZombie implements Screen {
         health20 = new Texture(Gdx.files.internal("health bar 20.png"));
         health10 = new Texture(Gdx.files.internal("health bar 10.png"));
         barrier = new Texture(Gdx.files.internal("barrier12.png"));
+        barrierHeatlh = new Texture(Gdx.files.internal("baseHealthBar.png"));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         batch = new SpriteBatch();
@@ -91,7 +94,6 @@ public class MainZombie implements Screen {
 
         polisi = new Police(5);
 
-
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Jelly Crazies.ttf"));
         fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontParameter.size = 15;
@@ -99,6 +101,9 @@ public class MainZombie implements Screen {
         fontParameter.borderColor = Color.FIREBRICK;
         fontParameter.color = Color.GREEN;
         font = fontGenerator.generateFont(fontParameter);
+
+
+        base = new Base(10);
 
     }
 
@@ -139,7 +144,13 @@ public class MainZombie implements Screen {
 
                 Rectangle zombiess = iter.next();
                 index++;
-                if (zombiess.x + 64 < 0) iter.remove();
+                if (zombiess.x + 64 < 0) {
+                    iter.remove();
+                    base.getDamage(1);
+                    if (!base.AliveorNot()) {
+                        game.setScreen(new gameOver(game));
+                    }
+                }
                 zombiess.x -= 100 * Gdx.graphics.getDeltaTime();
                 int bulletIndex = -1;
                 for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
@@ -189,6 +200,7 @@ public class MainZombie implements Screen {
 //        game.batch.begin();
         batch.begin();
         batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
+        batch.draw(barrierHeatlh, 300, 420);
         batch.draw(police, policeRec.x, policeRec.y);
         if(polisi.getHp() == 5)
         {

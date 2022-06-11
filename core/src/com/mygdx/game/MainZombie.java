@@ -52,11 +52,14 @@ public class MainZombie implements Screen {
 
     private int score = 0;
 
-    Character zombieCon = new Zombie(1);
 
     MainZombie(menuScreen game){
         this.game = game;
         create();
+    }
+
+    public void writeToLeaderboard(){
+
     }
 
     public void create() {
@@ -162,7 +165,7 @@ public class MainZombie implements Screen {
                     if (bullets.x + 20 > 800) iterr.remove();
                     if (bullets.intersects(zombiess)) {
                         zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
-                        if (zombieList.get(index).AliveorNot() == false) {
+                        if (!zombieList.get(index).AliveorNot()) {
                             iter.remove();
                             score += 25;
                             zombieList.removeIndex(index);

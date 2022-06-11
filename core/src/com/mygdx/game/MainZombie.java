@@ -83,16 +83,16 @@ public class MainZombie implements Screen {
         }
 
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("LeaderboardFile"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("LeaderboardFile.txt"))) {
             for (int i = 0; i < scoreList.size; i++) {
-                bw.write((i+1) + ".  " + scoreList.get(i));
+                bw.append((i+1) + ".  " + scoreList.get(i));
                 bw.newLine();
             }
         } catch (FileNotFoundException ex) {
 
-            System.out.println("File " + "Tidak Ditemukan");
+            System.out.println("File Tidak Ditemukan");
         } catch (IOException ex) {
-            System.out.println("File " + " Tidak Dapat DIbaca");
+            System.out.println("File Tidak Dapat DIbaca");
         }
 
 //        try {

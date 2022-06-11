@@ -3,8 +3,11 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 
@@ -25,6 +28,10 @@ public class mainMenuScreen implements Screen {
     public Rectangle playRec2;
     public Rectangle playRec3;
     private Music soundtrack;
+
+    private FreeTypeFontGenerator fontGenerator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+    private BitmapFont font;
 
     mainMenuScreen(final menuScreen game) {
         this.game = game;
@@ -60,6 +67,14 @@ public class mainMenuScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
+
+        fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("ZOMBIE.TTF"));
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 35;
+        fontParameter.borderWidth = 5;
+        fontParameter.borderColor = Color.CHARTREUSE;
+        fontParameter.color = Color.FOREST;
+        font = fontGenerator.generateFont(fontParameter);
 
     }
 
@@ -101,6 +116,9 @@ public class mainMenuScreen implements Screen {
         else {
             game.batch.draw(exit, playRec3.x, playRec3.y);
         }
+
+        font.draw(game.batch, "ZOMBIE DEFENDER", 10, 460);
+
         game.batch.end();
     }
 

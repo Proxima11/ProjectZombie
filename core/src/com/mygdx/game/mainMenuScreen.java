@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -23,10 +24,12 @@ public class mainMenuScreen implements Screen {
     public Rectangle playRec;
     public Rectangle playRec2;
     public Rectangle playRec3;
+    private Music soundtrack;
 
     mainMenuScreen(final menuScreen game) {
         this.game = game;
         background = new Texture("BackgroundMainMenu.png");
+        soundtrack = Gdx.audio.newMusic(Gdx.files.internal("Horror Piano Theme.mp3"));
         play = new Texture("playIs!touch.png");
         playNotTouch = new Texture("playIsTouch.png");
         leaderboard = new Texture("leadearboardis!Touch.png");
@@ -50,6 +53,9 @@ public class mainMenuScreen implements Screen {
         playRec3.height = 100;
 
 
+        soundtrack.setLooping(true);
+        soundtrack.play();
+
 
 
         camera = new OrthographicCamera();
@@ -61,6 +67,9 @@ public class mainMenuScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0.2f, 0, 0, 1);
+        soundtrack.setLooping(true);
+        soundtrack.play();
+
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);

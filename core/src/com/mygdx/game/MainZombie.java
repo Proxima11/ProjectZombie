@@ -117,39 +117,45 @@ public class MainZombie implements Screen {
 
         if (TimeUtils.nanoTime() - zombieLastSpawn > 1000999999) zombieSpawning();
 
-        int index = -1;
-        for (Iterator<Rectangle> iter = zombieSpawn.iterator(); iter.hasNext(); ) {
+        try {
+            int index = -1;
+            for (Iterator<Rectangle> iter = zombieSpawn.iterator(); iter.hasNext(); ) {
 
-            Rectangle zombiess = iter.next();
-            index++;
-            if (zombiess.x + 64 < 0) iter.remove();
-            zombiess.x -= 100 * Gdx.graphics.getDeltaTime();
-            int bulletIndex = -1;
-            for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
-                Rectangle bullets = iterr.next();
-                bulletIndex++;
-                bullets.x += 700 * Gdx.graphics.getDeltaTime();
-                if (bullets.x + 20 > 800) iterr.remove();
-                if (bullets.intersects(zombiess)) {
-                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
-                    if(zombieList.get(index).AliveorNot() == false) {
-                        iter.remove();
-                        zombieList.removeIndex(index);
+                Rectangle zombiess = iter.next();
+                index++;
+                if (zombiess.x + 64 < 0) iter.remove();
+                zombiess.x -= 100 * Gdx.graphics.getDeltaTime();
+                int bulletIndex = -1;
+                for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
+                    Rectangle bullets = iterr.next();
+                    bulletIndex++;
+                    bullets.x += 700 * Gdx.graphics.getDeltaTime();
+                    if (bullets.x + 20 > 800) iterr.remove();
+                    if (bullets.intersects(zombiess)) {
+                        zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
+                        if (zombieList.get(index).AliveorNot() == false) {
+                            iter.remove();
+                            zombieList.removeIndex(index);
+                        }
+                        iterr.remove();
+                        bulletList.removeIndex(bulletIndex);
                     }
-                    iterr.remove();
-                    bulletList.removeIndex(bulletIndex);
                 }
-            }
-            if (zombiess.intersects(policeRec)) {
-                iter.remove();
-                polisi.getDamage();
-                if (polisi.AliveorNot() == false) {
-                    game.setScreen(new gameOver(game));
-                }
+                if (zombiess.intersects(policeRec)) {
+                    iter.remove();
+                    polisi.getDamage();
+                    if (!polisi.AliveorNot()) {
+                        game.setScreen(new gameOver(game));
+                    }
 
 //            if (zombiess.intersects(bulletSpawn.random())) iter.remove();
 
+                }
             }
+        }
+        catch (ArrayIndexOutOfBoundsException e)
+        {
+
         }
 
 

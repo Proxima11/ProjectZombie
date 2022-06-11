@@ -15,11 +15,9 @@ import org.w3c.dom.css.Rect;
 //import sun.applet.Main;
 
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class MainZombie implements Screen {
 
@@ -66,6 +64,20 @@ public class MainZombie implements Screen {
     public void writeToLeaderboard(int score){
         int a = 0;
         scoreList.add(score);
+
+        try {
+            File file = new File("FileLeaderBoard.txt");
+            Scanner scan = new Scanner(file);
+
+            while (scan.hasNextInt()){
+                int scores = scan.nextInt();
+                scoreList.add(scores);
+            }
+
+        }catch (FileNotFoundException e){
+            System.out.println("File tidak dapat ditemukan");
+        }
+
         if(scoreList.size > 0)
         {
             for(int i = 0; i < scoreList.size - 1; i++)
@@ -83,31 +95,33 @@ public class MainZombie implements Screen {
         }
 
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("LeaderboardFile.txt"))) {
-            for (int i = 0; i < scoreList.size; i++) {
-                bw.append((i+1) + ".  " + scoreList.get(i));
-                bw.newLine();
-            }
-        } catch (FileNotFoundException ex) {
-
-            System.out.println("File Tidak Ditemukan");
-        } catch (IOException ex) {
-            System.out.println("File Tidak Dapat DIbaca");
-        }
-
-//        try {
-////            for (int i = 0; i < scoreList.size; i++){
-////                dataScore += (i+1) + ". " + scoreList.get(i) +"\n";
-////            }
-////            dataScore += (a+1) + ". " + scoreList.get(a) +"\n";
-//            dataScore += scoreList;
-//            FileWriter file = new FileWriter("FileLeaderBoard.txt", true);
-//            file.append(dataScore);
-//            file.close();
+//        try (BufferedWriter bw = new BufferedWriter(new FileWriter("LeaderboardFile.txt"))) {
+//            for (int i = 0; i < scoreList.size; i++) {
+//                bw.append((i+1) + ".  " + scoreList.get(i));
+//                bw.newLine();
+//            }
+//        } catch (FileNotFoundException ex) {
 //
-//        }catch (IOException e){
-//            System.out.println("File " + "Tidak dapat dibaca");
+//            System.out.println("File Tidak Ditemukan");
+//        } catch (IOException ex) {
+//            System.out.println("File Tidak Dapat DIbaca");
 //        }
+
+
+        try {
+            for (int i = 0; i < scoreList.size; i++){
+//                dataScore += (i+1) + ". " + scoreList.get(i) +"\n";
+                dataScore += scoreList.get(i) + " ";
+            }
+
+            FileWriter file = new FileWriter("FileLeaderBoard.txt", true);
+            file.append(dataScore);
+            file.append("\n");
+            file.close();
+
+        }catch (IOException e){
+            System.out.println("File tidak dapat dibaca");
+        }
     }
 
     public void create() {

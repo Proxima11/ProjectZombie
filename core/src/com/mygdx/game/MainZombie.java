@@ -36,6 +36,7 @@ public class MainZombie implements Screen {
     private Rectangle policeRec;
     private Rectangle barrierRec;
     private Character polisi;
+    private Character base;
 
     private Array<Rectangle> zombieSpawn;
     private Array<Character> zombieList;
@@ -84,6 +85,7 @@ public class MainZombie implements Screen {
 
         polisi = new Police(5);
 
+        base = new Base(10);
     }
 
     @Override
@@ -123,7 +125,13 @@ public class MainZombie implements Screen {
 
                 Rectangle zombiess = iter.next();
                 index++;
-                if (zombiess.x + 64 < 0) iter.remove();
+                if (zombiess.x + 64 < 0) {
+                    iter.remove();
+                    base.getDamage(1);
+                    if (!base.AliveorNot()) {
+                        game.setScreen(new gameOver(game));
+                    }
+                }
                 zombiess.x -= 100 * Gdx.graphics.getDeltaTime();
                 int bulletIndex = -1;
                 for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {

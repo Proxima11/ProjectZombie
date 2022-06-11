@@ -21,6 +21,11 @@ public class Achievement implements Screen {
         backgroundGame = new Texture(Gdx.files.internal("backgroundMainMenu.png"));
         backBtn = new Texture(Gdx.files.internal("arrowistouch.png"));
         backBtnTouched = new Texture(Gdx.files.internal("arrowis!touch.png"));
+        backRec =new Rectangle();
+        backRec.x = 20;
+        backRec.y = 400;
+        backRec.width = 80;
+        backRec.height = 60;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 //        backRec = new Rectangle();
@@ -41,10 +46,18 @@ public class Achievement implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         game.batch.draw(backgroundGame, 0, 0);
+
+
         
-//        if (Gdx.input.getX() < backRec.x + backRec.width && Gdx.input.getX() > backRec.x && 480 - Gdx.input.getY() < backRec.y + backRec.height && 480 - Gdx.input.getY() > backRec.y ) {
-//            game.batch.draw(backBtn, backRec.x, backRec.y);
-//        }
+        if (Gdx.input.getX() < backRec.x + backRec.width && Gdx.input.getX() > backRec.x && 480 - Gdx.input.getY() < backRec.y + backRec.height && 480 - Gdx.input.getY() > backRec.y ) {
+            game.batch.draw(backBtn, backRec.x, backRec.y);
+            if (Gdx.input.isTouched()){
+                game.setScreen(new mainMenuScreen(game));
+            }
+        }
+        else {
+            game.batch.draw(backBtnTouched,backRec.x,backRec.y);
+        }
         game.batch.end();
     }
 

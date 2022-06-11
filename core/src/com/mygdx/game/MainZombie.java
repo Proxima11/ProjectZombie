@@ -66,16 +66,21 @@ public class MainZombie implements Screen {
         scoreList.add(score);
 
         try {
-            File file = new File("FileLeaderBoard.txt");
-            Scanner scan = new Scanner(file);
+            BufferedReader reader = new BufferedReader(new FileReader("FileLeaderBoard.txt"));
+            String last = null, line;
 
-            while (scan.hasNextInt()){
-                int scores = scan.nextInt();
-                scoreList.add(scores);
+            while ((line = reader.readLine()) != null){
+                last = line;
+            }
+            if (last != null) {
+                Scanner scan = new Scanner(last);
+                while (scan.hasNextInt()) {
+                    scoreList.add(scan.nextInt());
+                }
             }
 
-        }catch (FileNotFoundException e){
-            System.out.println("File tidak dapat ditemukan");
+        }catch (IOException e){
+            System.out.println("File tidak dapat dibaca");
         }
 
         if(scoreList.size > 0)
@@ -94,7 +99,6 @@ public class MainZombie implements Screen {
             }
         }
 
-
 //        try (BufferedWriter bw = new BufferedWriter(new FileWriter("LeaderboardFile.txt"))) {
 //            for (int i = 0; i < scoreList.size; i++) {
 //                bw.append((i+1) + ".  " + scoreList.get(i));
@@ -107,7 +111,6 @@ public class MainZombie implements Screen {
 //            System.out.println("File Tidak Dapat DIbaca");
 //        }
 
-
         try {
             for (int i = 0; i < scoreList.size; i++){
 //                dataScore += (i+1) + ". " + scoreList.get(i) +"\n";
@@ -117,6 +120,7 @@ public class MainZombie implements Screen {
             FileWriter file = new FileWriter("FileLeaderBoard.txt", true);
             file.append(dataScore);
             file.append("\n");
+
             file.close();
 
         }catch (IOException e){
@@ -256,15 +260,6 @@ public class MainZombie implements Screen {
         {
 
         }
-
-
-//        for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext();){
-//            Rectangle bullets = iterr.next();
-//            bullets.x += 700 * Gdx.graphics.getDeltaTime();
-//            if (bullets.x + 20 > 800) iterr.remove();
-//            if (bullets.intersects(zombieSpawn.first())) iterr.remove();
-//        }
-
 
         ScreenUtils.clear(0.2f, 0, 0, 1);
         camera.update();

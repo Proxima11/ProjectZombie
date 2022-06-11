@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import org.w3c.dom.css.Rect;
-import sun.applet.Main;
+//import sun.applet.Main;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -20,6 +20,7 @@ public class MainZombie implements Screen {
     private Texture bullet;
     private Rectangle bulletRec;
     private Array<Rectangle> bulletSpawn;
+    private Array<Peluru> bulletList;
     private Texture backgroundGame;
     private Texture police;
     private Texture zombie;
@@ -36,6 +37,7 @@ public class MainZombie implements Screen {
     private Rectangle barrierRec;
 
     private Array<Rectangle> zombieSpawn;
+    private Array<Character> zombieList;
     private long zombieLastSpawn;
 
     Character zombieCon = new Zombie(1);
@@ -76,6 +78,8 @@ public class MainZombie implements Screen {
         barrierRec.height = 320;
         bullet = new Texture(Gdx.files.internal("peluru.png"));
         bulletSpawn = new Array<>();
+        bulletList = new Array<>();
+        zombieList = new Array<>();
 
 //        polisi = new Police(5);
 
@@ -114,19 +118,27 @@ public class MainZombie implements Screen {
 
         if (TimeUtils.nanoTime() - zombieLastSpawn > 1000999999) zombieSpawning();
 
+        int index = -1;
         for (Iterator<Rectangle> iter = zombieSpawn.iterator(); iter.hasNext(); ) {
 
             Rectangle zombiess = iter.next();
+            index++;
             if (zombiess.x + 64 < 0) iter.remove();
             zombiess.x -= 100 * Gdx.graphics.getDeltaTime();
-
+            int bulletIndex = -1;
             for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
                 Rectangle bullets = iterr.next();
+                bulletIndex++;
                 bullets.x += 700 * Gdx.graphics.getDeltaTime();
                 if (bullets.x + 20 > 800) iterr.remove();
                 if (bullets.intersects(zombiess)) {
-                    iter.remove();
+                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
+                    if(zombieList.get(index).AliveorNot() == false) {
+                        iter.remove();
+                        zombieList.removeIndex(index);
+                    }
                     iterr.remove();
+                    bulletList.removeIndex(bulletIndex);
                 }
             }
             if (zombiess.intersects(policeRec)) {
@@ -196,20 +208,24 @@ public class MainZombie implements Screen {
 
     private void bulletSpawning() {
         Rectangle bullets = new Rectangle();
+        Peluru peluru = new Peluru();
         bullets.x = policeRec.x + 40;
         bullets.y = policeRec.y + 27;
         bullets.width = 20;
         bullets.height = 20;
         bulletSpawn.add(bullets);
+        bulletList.add(peluru);
     }
 
     public void zombieSpawning() {
         Rectangle zombies = new Rectangle();
+        Character zombie1 = new Zombie(100);
         zombies.x = 840;
         zombies.y = MathUtils.random(0, 250);
         zombies.width = 64;
         zombies.height = 64;
         zombieSpawn.add(zombies);
+        zombieList.add(zombie1);
         zombieLastSpawn = TimeUtils.nanoTime();
     }
 

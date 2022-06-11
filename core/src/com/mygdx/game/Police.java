@@ -14,6 +14,13 @@ public class Police extends Character{
         }
     }
 
+    public void tambahHP(){
+        if(getHp() < 5)
+        {
+            UpdateHp(getHp()+1);
+        }
+    }
+
     @Override
     public void getDamage(int damage) {
     }

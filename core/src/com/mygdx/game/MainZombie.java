@@ -15,6 +15,10 @@ import org.w3c.dom.css.Rect;
 //import sun.applet.Main;
 
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Iterator;
 
 public class MainZombie implements Screen {
@@ -51,6 +55,7 @@ public class MainZombie implements Screen {
     private BitmapFont font;
 
     private int score = 0;
+    private Array<Integer> scoreList;
 
 
     MainZombie(menuScreen game){
@@ -58,8 +63,33 @@ public class MainZombie implements Screen {
         create();
     }
 
-    public void writeToLeaderboard(){
+    public void writeToLeaderboard(int score){
+        scoreList.add(score);
+        for(int i = 0; i < scoreList.size - 1; i++)
+        {
+            for(int j = i+1; j < scoreList.size; j++)
+            {
+                if(scoreList.get(i) < scoreList.get(j))
+                {
+                    int temp = scoreList.get(i);
+                    scoreList.set(i, scoreList.get(j));
+                    scoreList.set(j, temp);
+                }
+            }
+        }
 
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("LeaderboardFile"))) {
+            for (int i = 0; i < scoreList.size; i++) {
+                bw.write((i+1) + ".  " + scoreList.get(i));
+                bw.newLine();
+            }
+        } catch (FileNotFoundException ex) {
+
+            System.out.println("File " + "Tidak Ditemukan");
+        } catch (IOException ex) {
+            System.out.println("File " + " Tidak Dapat DIbaca");
+        }
     }
 
     public void create() {
@@ -110,6 +140,7 @@ public class MainZombie implements Screen {
 
         base = new Base(10);
 
+        scoreList = new Array<>();
     }
 
     @Override
@@ -153,6 +184,7 @@ public class MainZombie implements Screen {
                     iter.remove();
                     base.getDamage(1);
                     if (!base.AliveorNot()) {
+                        writeToLeaderboard(score);
                         game.setScreen(new gameOver(game));
                     }
                 }
@@ -179,6 +211,7 @@ public class MainZombie implements Screen {
                     score += 25;
                     polisi.getDamage();
                     if (!polisi.AliveorNot()) {
+                        writeToLeaderboard(score);
                         game.setScreen(new gameOver(game));
                     }
 

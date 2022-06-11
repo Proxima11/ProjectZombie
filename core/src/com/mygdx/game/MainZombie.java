@@ -35,6 +35,7 @@ public class MainZombie implements Screen {
     private Rectangle backgroundGameRec;
     private Rectangle policeRec;
     private Rectangle barrierRec;
+    private Character polisi;
 
     private Array<Rectangle> zombieSpawn;
     private Array<Character> zombieList;
@@ -81,9 +82,7 @@ public class MainZombie implements Screen {
         bulletList = new Array<>();
         zombieList = new Array<>();
 
-//        polisi = new Police(5);
-
-        // Character polisi;
+        polisi = new Police(5);
 
     }
 
@@ -143,12 +142,10 @@ public class MainZombie implements Screen {
             }
             if (zombiess.intersects(policeRec)) {
                 iter.remove();
+                polisi.getDamage();
+                if (polisi.AliveorNot() == false) {
 
-//                polisi.getDamage();
-//                police.getDamage();
-//                if (polisi.AliveorNot() == false) {
-//
-//                }
+                }
 
 //            if (zombiess.intersects(bulletSpawn.random())) iter.remove();
 
@@ -171,7 +168,26 @@ public class MainZombie implements Screen {
         batch.begin();
         batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
         batch.draw(police, policeRec.x, policeRec.y);
-        batch.draw(health100, 20, 420);
+        if(polisi.getHp() == 5)
+        {
+            batch.draw(health100, 20, 420);
+        }
+        if(polisi.getHp() == 4)
+        {
+            batch.draw(health80, 20, 420);
+        }
+        if(polisi.getHp() == 3)
+        {
+            batch.draw(health50, 20, 420);
+        }
+        if(polisi.getHp() == 2)
+        {
+            batch.draw(health20, 20, 420);
+        }
+        if(polisi.getHp() == 1)
+        {
+            batch.draw(health10, 20, 420);
+        }
         batch.draw(barrier,barrierRec.x,barrierRec.y,50 ,320);
         for (Rectangle zombies : zombieSpawn) {
             batch.draw(zombie, zombies.x, zombies.y);

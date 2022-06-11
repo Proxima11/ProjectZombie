@@ -50,6 +50,8 @@ public class MainZombie implements Screen {
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
     private BitmapFont font;
 
+    private int score = 0;
+
     Character zombieCon = new Zombie(1);
 
     MainZombie(menuScreen game){
@@ -162,6 +164,7 @@ public class MainZombie implements Screen {
                         zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
                         if (zombieList.get(index).AliveorNot() == false) {
                             iter.remove();
+                            score += 25;
                             zombieList.removeIndex(index);
                         }
                         iterr.remove();
@@ -170,6 +173,7 @@ public class MainZombie implements Screen {
                 }
                 if (zombiess.intersects(policeRec)) {
                     iter.remove();
+                    score += 25;
                     polisi.getDamage();
                     if (!polisi.AliveorNot()) {
                         game.setScreen(new gameOver(game));
@@ -230,7 +234,7 @@ public class MainZombie implements Screen {
             batch.draw(bullet, bullets.x, bullets.y);
         }
 
-        font.draw(batch, "POIN : 500", 520, 455 );
+        font.draw(batch, "POIN : " + score, 520, 455 );
 
         batch.end();
 //        game.batch.end();

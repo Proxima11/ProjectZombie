@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import java.awt.*;
 
-public class Achievement implements Screen {
+public class Leaderboard implements Screen {
 
     final menuScreen game;
     private Texture backgroundGame;
@@ -16,7 +16,7 @@ public class Achievement implements Screen {
     public Rectangle backRec;
     OrthographicCamera camera;
 
-    public Achievement(menuScreen game){
+    public Leaderboard(menuScreen game){
         this.game = game;
         backgroundGame = new Texture(Gdx.files.internal("backgroundMainMenu.png"));
         backBtn = new Texture(Gdx.files.internal("arrowistouch.png"));

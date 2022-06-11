@@ -86,7 +86,7 @@ public class mainMenuScreen implements Screen {
         if (Gdx.input.getX() < playRec2.x + playRec2.width && Gdx.input.getX() > playRec2.x && 480 - Gdx.input.getY() < playRec2.y + playRec2.height && 480 - Gdx.input.getY() > playRec2.y){
             game.batch.draw(leaderboardNotTouch,playRec2.x, playRec2.y);
             if (Gdx.input.isTouched()) {
-                game.setScreen(new Achievement(game));
+                game.setScreen(new Leaderboard(game));
             }
         }
         else {

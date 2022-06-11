@@ -65,15 +65,18 @@ public class MainZombie implements Screen {
 
     public void writeToLeaderboard(int score){
         scoreList.add(score);
-        for(int i = 0; i < scoreList.size - 1; i++)
+        if(scoreList.size > 0)
         {
-            for(int j = i+1; j < scoreList.size; j++)
+            for(int i = 0; i < scoreList.size - 1; i++)
             {
-                if(scoreList.get(i) < scoreList.get(j))
+                for(int j = i+1; j < scoreList.size; j++)
                 {
-                    int temp = scoreList.get(i);
-                    scoreList.set(i, scoreList.get(j));
-                    scoreList.set(j, temp);
+                    if(scoreList.get(i) < scoreList.get(j))
+                    {
+                        int temp = scoreList.get(i);
+                        scoreList.set(i, scoreList.get(j));
+                        scoreList.set(j, temp);
+                    }
                 }
             }
         }

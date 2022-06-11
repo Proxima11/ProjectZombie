@@ -144,7 +144,7 @@ public class MainZombie implements Screen {
                 iter.remove();
                 polisi.getDamage();
                 if (polisi.AliveorNot() == false) {
-
+                    game.setScreen(new gameOver(game));
                 }
 
 //            if (zombiess.intersects(bulletSpawn.random())) iter.remove();

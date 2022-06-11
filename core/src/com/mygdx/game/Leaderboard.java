@@ -2,8 +2,11 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -18,14 +21,20 @@ public class Leaderboard implements Screen {
     private Texture backBtnTouched;
     public Rectangle backRec;
     OrthographicCamera camera;
+    private FreeTypeFontGenerator fontGenerator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+    private BitmapFont font;
+
 
     public void readFile(){
         BufferedReader reader;
         try{
-            reader = new BufferedReader(new FileReader("LeaderboardFile.txt"));
+            int minus = 0;
+            reader = new BufferedReader(new FileReader("FileLeaderBoard.txt"));
             String line = reader.readLine();
             while(line != null){
-                System.out.println(line);
+                font.draw(game.batch, line, 350, 400+minus);
+                minus -= 50;
                 line = reader.readLine();
             }
             reader.close();
@@ -51,6 +60,14 @@ public class Leaderboard implements Screen {
 //        backRec.y = 480 - (60);
 //        backRec.width = 80;
 //        backRec.height = 60;
+
+        fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("ZOMBIE.TTF"));
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 35;
+        fontParameter.borderWidth = 5;
+        fontParameter.borderColor = com.badlogic.gdx.graphics.Color.CHARTREUSE;
+        fontParameter.color = Color.FOREST;
+        font = fontGenerator.generateFont(fontParameter);
     }
 
     @Override
@@ -65,7 +82,7 @@ public class Leaderboard implements Screen {
         game.batch.begin();
         game.batch.draw(backgroundGame, 0, 0);
 
-
+        readFile();
         
         if (Gdx.input.getX() < backRec.x + backRec.width && Gdx.input.getX() > backRec.x && 480 - Gdx.input.getY() < backRec.y + backRec.height && 480 - Gdx.input.getY() > backRec.y ) {
             game.batch.draw(backBtn, backRec.x, backRec.y);

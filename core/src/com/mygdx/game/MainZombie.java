@@ -1,9 +1,12 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -18,7 +21,7 @@ public class MainZombie implements Screen {
 
     final menuScreen game;
     private Texture bullet;
-    private Rectangle bulletRec;
+//    private Rectangle bulletRec;
     private Array<Rectangle> bulletSpawn;
     private Array<Peluru> bulletList;
     private Texture backgroundGame;
@@ -40,6 +43,10 @@ public class MainZombie implements Screen {
     private Array<Rectangle> zombieSpawn;
     private Array<Character> zombieList;
     private long zombieLastSpawn;
+
+    private FreeTypeFontGenerator fontGenerator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+    private BitmapFont font;
 
     Character zombieCon = new Zombie(1);
 
@@ -83,6 +90,15 @@ public class MainZombie implements Screen {
         zombieList = new Array<>();
 
         polisi = new Police(5);
+
+
+        fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Jelly Crazies.ttf"));
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 15;
+        fontParameter.borderWidth = 5;
+        fontParameter.borderColor = Color.FIREBRICK;
+        fontParameter.color = Color.GREEN;
+        font = fontGenerator.generateFont(fontParameter);
 
     }
 
@@ -201,7 +217,9 @@ public class MainZombie implements Screen {
         for (Rectangle bullets : bulletSpawn) {
             batch.draw(bullet, bullets.x, bullets.y);
         }
-//        batch.draw(bullet, bulletRec.x, bulletRec.y);
+
+        font.draw(batch, "POIN : 500", 520, 455 );
+
         batch.end();
 //        game.batch.end();
 

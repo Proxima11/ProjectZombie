@@ -29,14 +29,21 @@ public class Leaderboard implements Screen {
     public void readFile(){
         BufferedReader reader;
         try{
+            String lastline = "";
             int minus = 0;
             reader = new BufferedReader(new FileReader("FileLeaderBoard.txt"));
-            String line = reader.readLine();
-            while(line != null){
-                font.draw(game.batch, line, 350, 400+minus);
-                minus -= 50;
-                line = reader.readLine();
+            String line;
+            while((line = reader.readLine()) != null){
+                lastline = line;
             }
+
+            String[] getscore = lastline.split(" ");
+
+                for (int i = 0; i < getscore.length; i++) {
+                    font.draw(game.batch, (i+1) + ".  " + getscore[i], 330, 350 + minus);
+                    minus -= 50;
+                }
+
             reader.close();
         }
         catch (IOException e){

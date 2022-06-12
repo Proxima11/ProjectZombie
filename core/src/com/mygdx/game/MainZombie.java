@@ -261,6 +261,7 @@ public class MainZombie implements Screen {
         batch.begin();
         batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
         batch.draw(barrierHeatlh, 300, 420);
+        font.draw(batch, "X" + base.getHp(), 340, 460);
         batch.draw(police, policeRec.x, policeRec.y);
         if(polisi.getHp() == 5)
         {

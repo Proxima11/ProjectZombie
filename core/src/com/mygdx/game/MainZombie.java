@@ -194,7 +194,6 @@ public class MainZombie implements Screen {
             policeRec.x -= 200 * Gdx.graphics.getDeltaTime();
         if (Gdx.input.justTouched()) bulletSpawning();
 
-//            bulletRec.x += 700 * Gdx.graphics.getDeltaTime();
 
         if (policeRec.y > 250) policeRec.y = 250;
         if (policeRec.y < 0) policeRec.y = 0;
@@ -244,8 +243,6 @@ public class MainZombie implements Screen {
                         game.setScreen(new gameOver(game));
                     }
 
-//            if (zombiess.intersects(bulletSpawn.random())) iter.remove();
-
                 }
             }
         }
@@ -294,16 +291,7 @@ public class MainZombie implements Screen {
         font.draw(batch, "POIN : " + score, 520, 455 );
 
         batch.end();
-//        game.batch.end();
 
-
-//		bulletRec = new Rectangle();
-//		bulletRec.width = 20;
-//		bulletRec.height = 20;
-//		bulletRec.x = policeRec.x;
-//		bulletRec.y = policeRec.y;
-
-//		polisi = new Police(5);
 
 
 

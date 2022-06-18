@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,11 +25,14 @@ public class Leaderboard implements Screen {
     private FreeTypeFontGenerator fontGenerator;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
     private BitmapFont font;
+
+    private Music soundtrack;
     
 
     public Leaderboard(menuScreen game){
         this.game = game;
         backgroundGame = new Texture(Gdx.files.internal("backgroundMainMenu.png"));
+        soundtrack = Gdx.audio.newMusic(Gdx.files.internal("MusicZombie.mp3"));
         backBtn = new Texture(Gdx.files.internal("arrowistouch.png"));
         backBtnTouched = new Texture(Gdx.files.internal("arrowis!touch.png"));
         backRec =new Rectangle();
@@ -51,6 +55,10 @@ public class Leaderboard implements Screen {
         fontParameter.borderColor = com.badlogic.gdx.graphics.Color.CHARTREUSE;
         fontParameter.color = Color.FOREST;
         font = fontGenerator.generateFont(fontParameter);
+
+        soundtrack.setVolume((float) 0.3);
+        soundtrack.setLooping(true);
+        soundtrack.play();
     }
 
     @Override
@@ -99,6 +107,7 @@ public class Leaderboard implements Screen {
             game.batch.draw(backBtn, backRec.x, backRec.y);
             if (Gdx.input.isTouched()){
                 game.setScreen(new mainMenuScreen(game));
+                soundtrack.dispose();
             }
         }
         else {

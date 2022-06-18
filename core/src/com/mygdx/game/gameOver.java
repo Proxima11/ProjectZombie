@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -20,6 +21,7 @@ public class gameOver implements Screen {
     private OrthographicCamera camera;
     private Rectangle playRec;
     private Rectangle menuRec;
+    private Music soundtrack;
 
 
 
@@ -30,6 +32,13 @@ public class gameOver implements Screen {
         playTouch = new Texture(Gdx.files.internal("gameOvPlayTouch.png"));
         mainMenu = new Texture(Gdx.files.internal("gameOvMenu.png"));
         mainMenuTouch = new Texture(Gdx.files.internal("gameOvMenuTouch.png"));
+        soundtrack = Gdx.audio.newMusic(Gdx.files.internal("369147__inspectorj__music-box-happy-birthday.wav"));
+
+
+        soundtrack.setLooping(true);
+        soundtrack.play();
+
+
 
         playRec = new Rectangle();
         playRec.x = 140;
@@ -60,6 +69,7 @@ public class gameOver implements Screen {
             game.batch.draw(playAgain, playRec.x, playRec.y);
             if (Gdx.input.isTouched()){
                 game.setScreen(new MainZombie(game));
+                soundtrack.dispose();
             }
         }
         else{
@@ -69,6 +79,7 @@ public class gameOver implements Screen {
             game.batch.draw(mainMenu, menuRec.x, menuRec.y);
             if (Gdx.input.isTouched()){
                 game.setScreen(new mainMenuScreen(game));
+                soundtrack.dispose();
             }
         }
         else{

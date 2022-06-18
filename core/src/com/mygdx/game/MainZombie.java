@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -54,6 +55,8 @@ public class MainZombie implements Screen {
     private int score = 0;
     private Array<Integer> scoreList;
     private String dataScore = "";
+
+    private Music soundtrack;
 
 
     MainZombie(menuScreen game){
@@ -171,6 +174,11 @@ public class MainZombie implements Screen {
 
         scoreList = new Array<>();
 
+        soundtrack = Gdx.audio.newMusic(Gdx.files.internal("mainZombie.mp3"));
+
+        soundtrack.setVolume((float) 0.2);
+        soundtrack.setLooping(true);
+        soundtrack.play();
     }
 
     @Override
@@ -215,6 +223,7 @@ public class MainZombie implements Screen {
                     if (!base.AliveorNot()) {
                         writeToLeaderboard(score);
                         game.setScreen(new gameOver(game));
+                        soundtrack.dispose();
                     }
                 }
                 zombiess.x -= 100 * Gdx.graphics.getDeltaTime();
@@ -242,6 +251,7 @@ public class MainZombie implements Screen {
                     if (!polisi.AliveorNot()) {
                         writeToLeaderboard(score);
                         game.setScreen(new gameOver(game));
+                        soundtrack.dispose();
                     }
 
                 }

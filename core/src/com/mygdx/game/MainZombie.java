@@ -170,6 +170,7 @@ public class MainZombie implements Screen {
         base = new Base(10);
 
         scoreList = new Array<>();
+
     }
 
     @Override

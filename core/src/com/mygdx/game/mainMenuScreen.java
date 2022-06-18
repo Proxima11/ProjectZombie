@@ -38,7 +38,7 @@ public class mainMenuScreen implements Screen {
     mainMenuScreen(final menuScreen game) {
         this.game = game;
         background = new Texture("BackgroundMainMenu.png");
-        soundtrack = Gdx.audio.newMusic(Gdx.files.internal("Horror Piano Theme.mp3"));
+        soundtrack = Gdx.audio.newMusic(Gdx.files.internal("zombie song.mp3"));
         play = new Texture("playIs!touch.png");
         playNotTouch = new Texture("playIsTouch.png");
         leaderboard = new Texture("leadearboardis!Touch.png");
@@ -62,6 +62,7 @@ public class mainMenuScreen implements Screen {
         playRec3.height = 100;
 
 
+        soundtrack.setVolume((float) 0.3);
         soundtrack.setLooping(true);
         soundtrack.play();
 

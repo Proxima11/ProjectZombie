@@ -24,31 +24,7 @@ public class Leaderboard implements Screen {
     private FreeTypeFontGenerator fontGenerator;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
     private BitmapFont font;
-
-
-    public void readFile(){
-        BufferedReader reader;
-        try{
-            String lastline = "";
-            int minus = 0;
-            reader = new BufferedReader(new FileReader("FileLeaderBoard.txt"));
-            String line;
-            while((line = reader.readLine()) != null){
-                lastline = line;
-            }
-
-            String[] getscore = lastline.split(" ");
-
-                for (int i = 0; i < getscore.length; i++) {
-                    font.draw(game.batch, (i+1) + ".  " + getscore[i], 330, 350 + minus);
-                    minus -= 50;
-                }
-
-            reader.close();
-        }
-        catch (IOException e){
-        }
-    }
+    
 
     public Leaderboard(menuScreen game){
         this.game = game;
@@ -84,12 +60,40 @@ public class Leaderboard implements Screen {
 
     @Override
     public void render(float delta) {
+
+        ScoreBoard scoring = new ScoreBoard() {
+            @Override
+            public void readFile() {
+                BufferedReader reader;
+                try{
+                    String lastline = "";
+                    int minus = 0;
+                    reader = new BufferedReader(new FileReader("FileLeaderBoard.txt"));
+                    String line;
+                    while((line = reader.readLine()) != null){
+                        lastline = line;
+                    }
+
+                    String[] getscore = lastline.split(" ");
+
+                    for (int i = 0; i < getscore.length; i++) {
+                        font.draw(game.batch, (i+1) + ".  " + getscore[i], 330, 350 + minus);
+                        minus -= 50;
+                    }
+
+                    reader.close();
+                }
+                catch (IOException e){
+                }
+            }
+        };
+
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         game.batch.draw(backgroundGame, 0, 0);
 
-        readFile();
+        scoring.readFile();
         
         if (Gdx.input.getX() < backRec.x + backRec.width && Gdx.input.getX() > backRec.x && 480 - Gdx.input.getY() < backRec.y + backRec.height && 480 - Gdx.input.getY() > backRec.y ) {
             game.batch.draw(backBtn, backRec.x, backRec.y);

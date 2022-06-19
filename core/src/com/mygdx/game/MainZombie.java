@@ -69,61 +69,6 @@ public class MainZombie implements Screen {
         create();
     }
 
-    public void writeToLeaderboard(int score) {
-        int a = 0;
-        scoreList.add(score);
-
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("FileLeaderBoard.txt"));
-            String last = null, line;
-
-            while ((line = reader.readLine()) != null) {
-                last = line;
-            }
-            if (last != null) {
-                Scanner scan = new Scanner(last);
-                while (scan.hasNextInt()) {
-                    scoreList.add(scan.nextInt());
-                }
-            }
-
-        } catch (IOException e) {
-            System.out.println("File tidak dapat dibaca");
-        }
-
-        if (scoreList.size > 0) {
-            for (int i = 0; i < scoreList.size - 1; i++) {
-                for (int j = i + 1; j < scoreList.size; j++) {
-                    if (scoreList.get(i) < scoreList.get(j)) {
-                        int temp = scoreList.get(i);
-                        scoreList.set(i, scoreList.get(j));
-                        scoreList.set(j, temp);
-                    }
-                }
-            }
-        }
-
-        try {
-            if (scoreList.size < 5) {
-                for (int i = 0; i < scoreList.size; i++) {
-                    dataScore += scoreList.get(i) + " ";
-                }
-            } else {
-                for (int i = 0; i < 5; i++) {
-                    dataScore += scoreList.get(i) + " ";
-                }
-            }
-            FileWriter file = new FileWriter("FileLeaderBoard.txt", true);
-            file.append(dataScore);
-            file.append("\n");
-
-            file.close();
-
-        } catch (IOException e) {
-            System.out.println("File tidak dapat dibaca");
-        }
-    }
-
     public void create() {
         zombieSpawn = new Array<Rectangle>();
 
@@ -194,6 +139,63 @@ public class MainZombie implements Screen {
     @Override
     public void render(float delta) {
 
+        ScoringBoard scoring = new ScoringBoard() {
+            @Override
+            public void writeToLeaderBoard(int score) {
+                scoreList.add(score);
+
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader("FileLeaderBoard.txt"));
+                    String last = null, line;
+
+                    while ((line = reader.readLine()) != null) {
+                        last = line;
+                    }
+                    if (last != null) {
+                        Scanner scan = new Scanner(last);
+                        while (scan.hasNextInt()) {
+                            scoreList.add(scan.nextInt());
+                        }
+                    }
+
+                } catch (IOException e) {
+                    System.out.println("File tidak dapat dibaca");
+                }
+
+                if (scoreList.size > 0) {
+                    for (int i = 0; i < scoreList.size - 1; i++) {
+                        for (int j = i + 1; j < scoreList.size; j++) {
+                            if (scoreList.get(i) < scoreList.get(j)) {
+                                int temp = scoreList.get(i);
+                                scoreList.set(i, scoreList.get(j));
+                                scoreList.set(j, temp);
+                            }
+                        }
+                    }
+                }
+
+                try {
+                    if (scoreList.size < 5) {
+                        for (int i = 0; i < scoreList.size; i++) {
+                            dataScore += scoreList.get(i) + " ";
+                        }
+                    } else {
+                        for (int i = 0; i < 5; i++) {
+                            dataScore += scoreList.get(i) + " ";
+                        }
+                    }
+                    FileWriter file = new FileWriter("FileLeaderBoard.txt", true);
+                    file.append(dataScore);
+                    file.append("\n");
+
+                    file.close();
+
+                } catch (IOException e) {
+                    System.out.println("File tidak dapat dibaca");
+                }
+            }
+        };
+
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             pause();
         }
@@ -227,7 +229,7 @@ public class MainZombie implements Screen {
                     iter.remove();
                     base.getDamage(1);
                     if (!base.AliveorNot()) {
-                        writeToLeaderboard(score);
+                        scoring.writeToLeaderBoard(score);
                         game.setScreen(new gameOver(game));
                         soundtrack.dispose();
                     }
@@ -262,7 +264,7 @@ public class MainZombie implements Screen {
                         score += 25;
                         polisi.getDamage();
                         if (!polisi.AliveorNot()) {
-                            writeToLeaderboard(score);
+                            scoring.writeToLeaderBoard(score);
                             game.setScreen(new gameOver(game));
                             soundtrack.dispose();
                         }
@@ -298,7 +300,7 @@ public class MainZombie implements Screen {
                         score += 25;
                         polisi.getDamage();
                         if (!polisi.AliveorNot()) {
-                            writeToLeaderboard(score);
+                            scoring.writeToLeaderBoard(score);
                             game.setScreen(new gameOver(game));
                             soundtrack.dispose();
                         }
@@ -332,7 +334,7 @@ public class MainZombie implements Screen {
                         score += 25;
                         polisi.getDamage();
                         if (!polisi.AliveorNot()) {
-                            writeToLeaderboard(score);
+                            scoring.writeToLeaderBoard(score);
                             game.setScreen(new gameOver(game));
                             soundtrack.dispose();
                         }

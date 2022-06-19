@@ -3,13 +3,19 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class gameOver implements Screen {
     final menuScreen game;
@@ -23,7 +29,23 @@ public class gameOver implements Screen {
     private Rectangle menuRec;
     private Music soundtrack;
 
+    private FreeTypeFontGenerator fontGenerator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+    private BitmapFont font;
 
+    public int getScoreHistoryPlayer(){
+        int skor = 0;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("HistoryScorePlayer.txt"));
+            String last = null, line;
+
+            while ((line = reader.readLine()) != null){
+                last = line;
+            }
+            skor = Integer.parseInt(last);
+        }catch (IOException e){e.printStackTrace();}
+        return skor;
+    }
 
     gameOver(final menuScreen game) {
         this.game = game;
@@ -34,11 +56,8 @@ public class gameOver implements Screen {
         mainMenuTouch = new Texture(Gdx.files.internal("gameOvMenuTouch.png"));
         soundtrack = Gdx.audio.newMusic(Gdx.files.internal("369147__inspectorj__music-box-happy-birthday.wav"));
 
-
         soundtrack.setLooping(true);
         soundtrack.play();
-
-
 
         playRec = new Rectangle();
         playRec.x = 140;
@@ -50,6 +69,15 @@ public class gameOver implements Screen {
         menuRec.y = 100;
         menuRec.width = 250;
         menuRec.height = 100;
+
+        fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Jelly Crazies.ttf"));
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 15;
+        fontParameter.borderWidth = 5;
+        fontParameter.borderColor = com.badlogic.gdx.graphics.Color.FIREBRICK;
+        fontParameter.color = Color.GREEN;
+        font = fontGenerator.generateFont(fontParameter);
+
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,800,480);
@@ -64,6 +92,8 @@ public class gameOver implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         game.batch.draw(gameOver,0,0);
+
+        font.draw(game.batch, "YOUR SCORE : " + getScoreHistoryPlayer(), 220, 100);
 
         if (Gdx.input.getX() < playRec.x + playRec.width && Gdx.input.getX()> playRec.x && 480 -Gdx.input.getY()  <  playRec.y + playRec.height && 480 - Gdx.input.getY() >playRec.y){
             game.batch.draw(playAgain, playRec.x, playRec.y);

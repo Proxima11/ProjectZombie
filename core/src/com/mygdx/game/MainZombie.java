@@ -63,7 +63,6 @@ public class MainZombie implements Screen {
 
     private Music soundtrack;
 
-
     MainZombie(menuScreen game) {
         this.game = game;
         create();
@@ -349,7 +348,6 @@ public class MainZombie implements Screen {
         ScreenUtils.clear(0.2f, 0, 0, 1);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-//        game.batch.begin();
         batch.begin();
         batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
         batch.draw(barrierHeatlh, 300, 420);
@@ -379,7 +377,7 @@ public class MainZombie implements Screen {
         }
 
         font.draw(batch, "POIN : " + score, 520, 455);
-
+        getScoreHistory(score);
         batch.end();
 
 
@@ -389,6 +387,17 @@ public class MainZombie implements Screen {
 //
 //    }
 
+    }
+
+    public void getScoreHistory(int score){
+        try {
+            String data = "";
+            data += score + "\n";
+            FileWriter file = new FileWriter("HistoryScorePlayer.txt");
+            file.append(data);
+            file.close();
+
+        }catch (IOException e){e.printStackTrace();}
     }
 
 

@@ -145,13 +145,11 @@ public class MainZombie implements Screen {
 
                 try {
                     BufferedReader reader = new BufferedReader(new FileReader("FileLeaderBoard.txt"));
-                    String last = null, line;
+                    String line;
 
-                    while ((line = reader.readLine()) != null) {
-                        last = line;
-                    }
-                    if (last != null) {
-                        Scanner scan = new Scanner(last);
+                    line = reader.readLine();
+                    if (line != null) {
+                        Scanner scan = new Scanner(line);
                         while (scan.hasNextInt()) {
                             scoreList.add(scan.nextInt());
                         }
@@ -183,9 +181,8 @@ public class MainZombie implements Screen {
                             dataScore += scoreList.get(i) + " ";
                         }
                     }
-                    FileWriter file = new FileWriter("FileLeaderBoard.txt", true);
+                    FileWriter file = new FileWriter("FileLeaderBoard.txt");
                     file.append(dataScore);
-                    file.append("\n");
 
                     file.close();
 
@@ -392,7 +389,7 @@ public class MainZombie implements Screen {
     public void getScoreHistory(int score){
         try {
             String data = "";
-            data += score + "\n";
+            data += score;
             FileWriter file = new FileWriter("HistoryScorePlayer.txt");
             file.append(data);
             file.close();

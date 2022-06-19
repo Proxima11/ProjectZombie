@@ -37,12 +37,8 @@ public class gameOver implements Screen {
         int skor = 0;
         try {
             BufferedReader reader = new BufferedReader(new FileReader("HistoryScorePlayer.txt"));
-            String last = null, line;
-
-            while ((line = reader.readLine()) != null){
-                last = line;
-            }
-            skor = Integer.parseInt(last);
+            String line = reader.readLine();
+            skor = Integer.parseInt(line);
         }catch (IOException e){e.printStackTrace();}
         return skor;
     }

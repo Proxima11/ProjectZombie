@@ -22,47 +22,56 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class MainZombie implements Screen {
-
+    //game
     final menuScreen game;
+    private Texture backgroundGame;
+    private Rectangle backgroundGameRec;
+    private OrthographicCamera camera;
+    private SpriteBatch batch;
+
+    //variable untuk tampilan tulisan atau text
+    private FreeTypeFontGenerator fontGenerator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+    private BitmapFont font;
+
+    //variable untuk lagu
+    private Music levelUp;
+    private Music soundtrack;
+
+    //create variable untuk peluru
     private Texture bullet;
     private Array<Rectangle> bulletSpawn;
     private Array<Peluru> bulletList;
-    private Texture backgroundGame;
-    private Texture police;
-    private Texture zombie;
+
+    //create variabel untuk barrier base
+    private Texture barrier;
+    private Texture barrierHeatlh;
+    private Rectangle barrierRec;
+
+    //create variable untuk darah polisi dan gambar polisi yang digerakkan player
     private Texture health100;
     private Texture health80;
     private Texture health50;
     private Texture health20;
     private Texture health10;
-    private Texture barrier;
-    private Music levelUp;
-    private Texture barrierHeatlh;
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private Rectangle backgroundGameRec;
     private Rectangle policeRec;
-    private Rectangle barrierRec;
+    private Texture police;
     private Character polisi;
     private Character base;
+
+    //create variable untuk zombie
     private int temp = 1;
     private int temp2 = 1;
     private double kecepatanZomb = 0;
-
-
+    private Texture zombie;
     private Array<Rectangle> zombieSpawn;
     private Array<Character> zombieList;
     private long zombieLastSpawn;
 
-    private FreeTypeFontGenerator fontGenerator;
-    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
-    private BitmapFont font;
-
+    //create variable untuk score dan menampilkan score
     private int score = 0;
     private Array<Integer> scoreList;
     private String dataScore = "";
-
-    private Music soundtrack;
 
     MainZombie(menuScreen game) {
         this.game = game;

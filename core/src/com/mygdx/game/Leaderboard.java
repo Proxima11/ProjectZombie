@@ -31,7 +31,7 @@ public class Leaderboard implements Screen {
 
     public Leaderboard(menuScreen game){
         this.game = game;
-        backgroundGame = new Texture(Gdx.files.internal("backgroundMainMenu.png"));
+        backgroundGame = new Texture(Gdx.files.internal("BackgroundA.png"));
         soundtrack = Gdx.audio.newMusic(Gdx.files.internal("MusicZombie.mp3"));
         backBtn = new Texture(Gdx.files.internal("arrowistouch.png"));
         backBtnTouched = new Texture(Gdx.files.internal("arrowis!touch.png"));
@@ -50,7 +50,7 @@ public class Leaderboard implements Screen {
 
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("ZOMBIE.TTF"));
         fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter.size = 35;
+        fontParameter.size = 45;
         fontParameter.borderWidth = 5;
         fontParameter.borderColor = com.badlogic.gdx.graphics.Color.CHARTREUSE;
         fontParameter.color = Color.FOREST;

@@ -317,6 +317,10 @@ public class MainZombie implements Screen {
                 if (score >= 0 && score <= 500) {
                     if (TimeUtils.nanoTime() - zombieLastSpawn > 800000000) zombieSpawning();
                     zombiess.x -= 40 * Gdx.graphics.getDeltaTime();
+                    if (zombiess.x == 0){
+                        iter.remove();
+                        base.getDamage(1);
+                    }
 
                     int bulletIndex = -1;
                     for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {

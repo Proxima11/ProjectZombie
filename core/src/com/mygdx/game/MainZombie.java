@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
+//import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-import org.w3c.dom.css.Rect;
+//import org.w3c.dom.css.Rect;
 //import sun.applet.Main;
 
 import java.awt.*;
@@ -47,6 +47,7 @@ public class MainZombie implements Screen {
     private Character base;
     private int temp = 1;
     private int temp2 = 1;
+    private double kecepatanZomb = 0;
 
 
     private Array<Rectangle> zombieSpawn;
@@ -231,13 +232,14 @@ public class MainZombie implements Screen {
                     }
                 }
 
-                if (score > 1000 && score <= 1500) {
+                if (score > 1000) {
+                    kecepatanZomb += 0.002;
                     if (temp2 == 1){
                         levelUp.play();
                         temp2++;
                     }
                     if (TimeUtils.nanoTime() - zombieLastSpawn > 1000999999) zombieSpawning();
-                    zombiess.x -= 150 * Gdx.graphics.getDeltaTime();
+                    zombiess.x -= (80+(int)kecepatanZomb) * Gdx.graphics.getDeltaTime();
                     int bulletIndex = -1;
                     for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
                         Rectangle bullets = iterr.next();
@@ -268,12 +270,12 @@ public class MainZombie implements Screen {
                     }
                 }
                 if (score > 500 && score <= 1000) {
-                    if (temp == 1) {
+                    if (temp == 1){
                         levelUp.play();
                         temp++;
                     }
                     if (TimeUtils.nanoTime() - zombieLastSpawn > 900000000) zombieSpawning();
-                    zombiess.x -= 100 * Gdx.graphics.getDeltaTime();
+                    zombiess.x -= 80 * Gdx.graphics.getDeltaTime();
                     int bulletIndex = -1;
                     for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
                         Rectangle bullets = iterr.next();
@@ -305,7 +307,7 @@ public class MainZombie implements Screen {
                 }
                 if (score >= 0 && score <= 500) {
                     if (TimeUtils.nanoTime() - zombieLastSpawn > 800000000) zombieSpawning();
-                    zombiess.x -= 50 * Gdx.graphics.getDeltaTime();
+                    zombiess.x -= 40 * Gdx.graphics.getDeltaTime();
 
                     int bulletIndex = -1;
                     for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {

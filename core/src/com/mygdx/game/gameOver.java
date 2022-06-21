@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+//import com.badlogic.gdx.graphics.g2d.Sprite;
+//import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -94,8 +94,8 @@ public class gameOver implements Screen {
         if (Gdx.input.getX() < playRec.x + playRec.width && Gdx.input.getX()> playRec.x && 480 -Gdx.input.getY()  <  playRec.y + playRec.height && 480 - Gdx.input.getY() >playRec.y){
             game.batch.draw(playAgain, playRec.x, playRec.y);
             if (Gdx.input.isTouched()){
-                game.setScreen(new MainZombie(game));
                 soundtrack.dispose();
+                game.setScreen(new MainZombie(game));
             }
         }
         else{
@@ -104,8 +104,8 @@ public class gameOver implements Screen {
         if(Gdx.input.getX() < menuRec.x + menuRec.width && Gdx.input.getX() > menuRec.x && 480 - Gdx.input.getY() < menuRec.height + menuRec.y && 480 - Gdx.input.getY() > menuRec.y) {
             game.batch.draw(mainMenu, menuRec.x, menuRec.y);
             if (Gdx.input.isTouched()){
-                game.setScreen(new mainMenuScreen(game));
                 soundtrack.dispose();
+                game.setScreen(new mainMenuScreen(game));
             }
         }
         else{

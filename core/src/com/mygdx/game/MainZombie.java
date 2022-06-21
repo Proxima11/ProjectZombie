@@ -233,7 +233,7 @@ public class MainZombie implements Screen {
                 }
 
                 if (score > 1000) {
-                    kecepatanZomb += 0.002;
+                    kecepatanZomb += 0.005;
                     if (temp2 == 1){
                         levelUp.play();
                         temp2++;
@@ -413,7 +413,7 @@ public class MainZombie implements Screen {
 
     public void zombieSpawning() {
         Rectangle zombies = new Rectangle();
-        Character zombie1 = new Zombie(100);
+        Character zombie1 = new ZombieNormal(100);
         zombies.x = 840;
         zombies.y = MathUtils.random(0, 250);
         zombies.width = 64;

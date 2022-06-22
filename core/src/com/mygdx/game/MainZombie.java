@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
 //import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -62,8 +63,11 @@ public class MainZombie implements Screen {
     //create variable untuk zombie
     private int temp = 1;
     private int temp2 = 1;
+    private int Step = 0;
     private double kecepatanZomb = 0;
     private Texture zombie;
+    private Texture zombieRed;
+    private Texture zombiePolice;
     private Array<Rectangle> zombieSpawn;
     private Array<Character> zombieList;
     private long zombieLastSpawn;
@@ -105,6 +109,8 @@ public class MainZombie implements Screen {
         //create zombie dab array simpannya
         zombieSpawn = new Array<Rectangle>();
         zombie = new Texture(Gdx.files.internal("zombie.png"));
+        zombieRed = new Texture(Gdx.files.internal("redZombie.png"));
+        zombiePolice = new Texture(Gdx.files.internal("policeZombie.png"));
         zombieList = new Array<>();
 
         //create tampilan darah polisi
@@ -394,7 +400,15 @@ public class MainZombie implements Screen {
         }
         batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
         for (Rectangle zombies : zombieSpawn) {
-            batch.draw(zombie, zombies.x, zombies.y);
+            if (score >= 0 && score <= 500) {
+                batch.draw(zombie, zombies.x, zombies.y);
+            }
+            if (score > 500 && score <= 1000){
+                batch.draw(zombieRed, zombies.x, zombies.y);
+            }
+            if (score > 1000){
+                batch.draw(zombiePolice, zombies.x, zombies.y);
+            }
         }
         for (Rectangle bullets : bulletSpawn) {
             batch.draw(bullet, bullets.x, bullets.y);

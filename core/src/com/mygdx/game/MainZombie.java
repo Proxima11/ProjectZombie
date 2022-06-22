@@ -35,7 +35,9 @@ public class MainZombie implements Screen {
     //variable untuk tampilan tulisan atau text
     private FreeTypeFontGenerator fontGenerator;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter1;
     private BitmapFont font;
+    private BitmapFont font1;
 
     //variable untuk lagu
     private Music levelUp;
@@ -119,6 +121,13 @@ public class MainZombie implements Screen {
         fontParameter.borderColor = Color.FIREBRICK;
         fontParameter.color = Color.GREEN;
         font = fontGenerator.generateFont(fontParameter);
+
+        fontParameter1 = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter1.size = 15;
+        fontParameter1.borderWidth = 5;
+        fontParameter1.borderColor = Color.RED;
+        fontParameter1.color = Color.TAN;
+        font1 = fontGenerator.generateFont(fontParameter1);
 
         //create zombie dab array simpannya
         zombieSpawn = new Array<Rectangle>();
@@ -558,7 +567,7 @@ public class MainZombie implements Screen {
 
             if(doubleDmgActivate)
             {
-                font.draw(batch, " 2X DMG : " + (int) CountdownTimer, 90, 420);
+                font1.draw(batch, " 2X DMG : " + (int) CountdownTimer, 90, 420);
             }
         }
         if (pause){

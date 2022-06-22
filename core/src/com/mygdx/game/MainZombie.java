@@ -24,7 +24,6 @@ public class MainZombie implements Screen {
     //game
     final menuScreen game;
     private Texture backgroundGame;
-    private Texture backgroundPause;
     private Rectangle backgroundGameRec;
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -82,6 +81,20 @@ public class MainZombie implements Screen {
     private long bomLastSpawn;
     private boolean bomActivate;
 
+    // texture dan background untuk pause state
+    private Texture backgroundPause;
+    private Texture resumeButton;
+    private Texture resumeButtonTouched;
+    private Texture mainMenuButton;
+    private Texture mainMenuButtonTouched;
+
+    // damage
+    private Texture damage;
+    private Array<Rectangle> damageSpawn;
+    private Array<Damage> damageList;
+    private static final int GRAVITY = -15;
+    private static final int PUSH = 15;
+
     MainZombie(menuScreen game) {
         this.game = game;
         create();
@@ -90,7 +103,6 @@ public class MainZombie implements Screen {
     public void create() {
         //create dasar game
         backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
-        backgroundPause = new Texture(Gdx.files.internal("BackgroundA.png"));
         police = new Texture(Gdx.files.internal("police.png"));
         zombie = new Texture(Gdx.files.internal("zombie.png"));
         barrier = new Texture(Gdx.files.internal("barrier12.png"));
@@ -168,10 +180,22 @@ public class MainZombie implements Screen {
         soundtrack.play();
 
         //bom
-        bom = new Texture(Gdx.files.internal("x2.png"));
+        bom = new Texture(Gdx.files.internal("bomb.png"));
         bomSpawn = new Array<Rectangle>();
         bomActivate = false;
 //        CountdownTimer = 15;
+
+        // pause states
+        backgroundPause = new Texture(Gdx.files.internal("BackgroundMainMenu.png"));
+        resumeButton = new Texture(Gdx.files.internal("resumeButton.png"));
+        resumeButtonTouched = new Texture(Gdx.files.internal("resumeButtonTouched.png"));
+        mainMenuButton = new Texture(Gdx.files.internal("mainMenuButton.png"));
+        mainMenuButtonTouched = new Texture(Gdx.files.internal("mainMenuButtonTouched.png"));
+
+        // damage
+        damage = new Texture(Gdx.files.internal("damage.png"));
+        damageSpawn = new Array<>();
+        damageList = new Array<>();
     }
 
     @Override
@@ -258,18 +282,6 @@ public class MainZombie implements Screen {
                 policeRec.x -= 200 * Gdx.graphics.getDeltaTime();
             if (Gdx.input.justTouched()) bulletSpawning();
         }
-        else {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                try {
-                    Thread.sleep(100);
-                }catch (InterruptedException e){
-
-                }
-                pause = false;
-            }
-
-
-        }
 
         if (policeRec.y > 250) policeRec.y = 250;
         if (policeRec.y < 0) policeRec.y = 0;
@@ -339,6 +351,7 @@ public class MainZombie implements Screen {
                             bullets.x += 600 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
+
 //                                if (zombieSpawn.get(index).getWidth() == 64){
 //                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
 //                                    if (!zombieList.get(index).AliveorNot()) {
@@ -462,6 +475,20 @@ public class MainZombie implements Screen {
                             bullets.x += 200 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
+                                damageSpawn(bullets.x + 64, bullets.y);
+
+                                for (Iterator<Rectangle> iterrD = damageSpawn.iterator(); iterrD.hasNext();){
+                                    int count = 0;
+                                    Rectangle damages = iterrD.next();
+                                    damages.x += PUSH * Gdx.graphics.getDeltaTime();
+                                    if (count == 0){
+                                        damages.y += 200;
+                                        count++;
+                                    }
+                                    damages.y += GRAVITY * Gdx.graphics.getDeltaTime();
+                                    if (damages.y < bullets.y) iterr.remove();
+                                }
+
                                 zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
                                 if (!zombieList.get(index).AliveorNot()) {
                                     score += zombieList.get(index).getScore();
@@ -541,6 +568,9 @@ public class MainZombie implements Screen {
         for (Rectangle bullets : bulletSpawn) {
             batch.draw(bullet, bullets.x, bullets.y);
         }
+        for (Rectangle damages : damageSpawn) {
+            batch.draw(damage, damages.x, damages.y);
+        }
 
         if (!pause) {
             batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
@@ -593,6 +623,9 @@ public class MainZombie implements Screen {
                 batch.draw(bullet, bullets.x, bullets.y);
             }
 
+            for (Rectangle damages : damageSpawn) {
+                batch.draw(damage, damages.x, damages.y);
+            }
 
             font.draw(batch, "POIN : " + score, 520, 455);
             getScoreHistory(score);
@@ -600,8 +633,46 @@ public class MainZombie implements Screen {
         }
         if (pause){
             batch.draw(backgroundPause, backgroundGameRec.x, backgroundGameRec.y);
+            font.draw(batch, "GAME IS CURRENTLY PAUSED", 120, 455);
+            if ((Gdx.input.getX() >= 300 && Gdx.input.getX() <= 500) && (Gdx.input.getY() <= 220 && Gdx.input.getY() >= 110)){
+                batch.draw(resumeButtonTouched, 300 , 260);
+                if (Gdx.input.isTouched()) {
+                    pause = false;
+                    try {
+                        Thread.sleep(100);
+                    }catch (InterruptedException e){
+
+                    }
+                }
+            }
+            else {
+                batch.draw(resumeButton, 300, 260);
+            }
+
+            if ((Gdx.input.getX() >= 300 && Gdx.input.getX() <= 500) && (Gdx.input.getY() <= 370 && Gdx.input.getY() >= 260)){
+                batch.draw(mainMenuButtonTouched, 300 , 110);
+                if (Gdx.input.isTouched()) {
+                    game.setScreen(new mainMenuScreen(game));
+                }
+            }
+            else {
+                batch.draw(mainMenuButton, 300, 110);
+            }
+
+
         }
         batch.end();
+    }
+
+    public void damageSpawn(int x, int y){
+        Rectangle damages = new Rectangle();
+        Damage damage = new Damage(x , y);
+        damages.x = x + 64;
+        damages.y = y;
+        damages.width = 25;
+        damages.height = 20;
+        damageSpawn.add(damages);
+        damageList.add(damage);
     }
 
 

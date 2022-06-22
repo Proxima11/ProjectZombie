@@ -95,11 +95,6 @@ public class MainZombie implements Screen {
         backgroundPause = new Texture(Gdx.files.internal("BackgroundA.png"));
         police = new Texture(Gdx.files.internal("police.png"));
         zombie = new Texture(Gdx.files.internal("zombie.png"));
-        health100 = new Texture(Gdx.files.internal("health bar 100.png"));
-        health80 = new Texture(Gdx.files.internal("health bar 80.png"));
-        health50 = new Texture(Gdx.files.internal("health bar 50.png"));
-        health20 = new Texture(Gdx.files.internal("health bar 20.png"));
-        health10 = new Texture(Gdx.files.internal("health bar 10.png"));
         barrier = new Texture(Gdx.files.internal("barrier12.png"));
         barrierHeatlh = new Texture(Gdx.files.internal("baseHealthBar.png"));
         camera = new OrthographicCamera();

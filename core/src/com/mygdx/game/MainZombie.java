@@ -80,6 +80,7 @@ public class MainZombie implements Screen {
     private Array<Rectangle> bomSpawn;
     private long bomLastSpawn;
     private boolean bomActivate;
+    private Music soundBom;
 
     // texture dan background untuk pause state
     private Texture backgroundPause;
@@ -183,6 +184,7 @@ public class MainZombie implements Screen {
         bom = new Texture(Gdx.files.internal("bomb.png"));
         bomSpawn = new Array<Rectangle>();
         bomActivate = false;
+
 //        CountdownTimer = 15;
 
         // pause states
@@ -196,6 +198,12 @@ public class MainZombie implements Screen {
         damage = new Texture(Gdx.files.internal("damage.png"));
         damageSpawn = new Array<>();
         damageList = new Array<>();
+
+        // bom
+        soundBom = Gdx.audio.newMusic(Gdx.files.internal("suaraBom.mp3"));
+        soundBom.setVolume((float) 0.2);
+        soundBom.setLooping(false);
+
     }
 
     @Override
@@ -282,6 +290,16 @@ public class MainZombie implements Screen {
                 policeRec.x -= 200 * Gdx.graphics.getDeltaTime();
             if (Gdx.input.justTouched()) bulletSpawning();
         }
+        else {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                try {
+                    Thread.sleep(100);
+                }catch (InterruptedException e){
+
+                }
+                pause = false;
+            }
+        }
 
         if (policeRec.y > 250) policeRec.y = 250;
         if (policeRec.y < 0) policeRec.y = 0;
@@ -307,6 +325,8 @@ public class MainZombie implements Screen {
                     {
                         itter.remove();
                         bomActivate = true;
+                        soundBom.play();
+
                     }
                 }
 
@@ -382,6 +402,7 @@ public class MainZombie implements Screen {
 //                                    bulletList.removeIndex(bulletIndex);
 //                                    iterr.remove();
 //                                }
+
                                 zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
                                 if (!zombieList.get(index).AliveorNot()) {
                                     score += zombieList.get(index).getScore();
@@ -426,26 +447,6 @@ public class MainZombie implements Screen {
                                 }
                                 bulletList.removeIndex(bulletIndex);
                                 iterr.remove();
-//                                if (zombieSpawn.get(index).getWidth() == 64){
-//                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-//                                    if (!zombieList.get(index).AliveorNot()) {
-//                                        zombieList.removeIndex(index);
-//                                        iter.remove();
-//                                        score += 25;
-//                                    }
-//                                    bulletList.removeIndex(bulletIndex);
-//                                    iterr.remove();
-//                                }
-//                                else if (zombieSpawn.get(index).getWidth() == 65){
-//                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-//                                    if (!zombieList.get(index).AliveorNot()) {
-//                                        zombieList.removeIndex(index);
-//                                        iter.remove();
-//                                        score += 30;
-//                                    }
-//                                    bulletList.removeIndex(bulletIndex);
-//                                    iterr.remove();
-//                                }
                             }
                         }
                         if (zombiess.intersects(policeRec)) {
@@ -542,15 +543,6 @@ public class MainZombie implements Screen {
         }
         batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
         for (Rectangle zombies : zombieSpawn) {
-//            if (score >= 0 && score <= 500) {
-//                batch.draw(zombie, zombies.x, zombies.y);
-//            }
-//            if (score > 500 && score <= 1000){
-//                batch.draw(zombieRed, zombies.x, zombies.y);
-//            }
-//            if (score > 1000){
-//                batch.draw(zombiePolice, zombies.x, zombies.y);
-//            }
             if (zombies.getWidth() == 64 && zombies.getHeight() == 64){
                 batch.draw(zombie, zombies.x, zombies.y);
             }
@@ -594,15 +586,6 @@ public class MainZombie implements Screen {
             }
             batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
             for (Rectangle zombies : zombieSpawn) {
-//                if (score >= 0 && score <= 500) {
-//                    batch.draw(zombie, zombies.x, zombies.y);
-//                }
-//                if (score > 500 && score <= 1000){
-//                    batch.draw(zombieRed, zombies.x, zombies.y);
-//                }
-//                if (score > 1000){
-//                    batch.draw(zombiePolice, zombies.x, zombies.y);
-//                }
                 if (zombies.getWidth() == 64 && zombies.getHeight() == 64){
                     batch.draw(zombie, zombies.x, zombies.y);
                 }

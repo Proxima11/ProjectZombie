@@ -39,10 +39,12 @@ public class TutorialScreen implements Screen {
     private Texture updownleftright;
 
     private FreeTypeFontGenerator fontGenerator;
+    private FreeTypeFontGenerator fontGenerator1;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
     private BitmapFont font;
     private BitmapFont font1;
     private BitmapFont font2;
+    private BitmapFont font3;
 
     private Texture bullet;
     private Array<Rectangle> bulletSpawn;
@@ -121,6 +123,14 @@ public class TutorialScreen implements Screen {
         fontParameter.borderColor = Color.SLATE;
         fontParameter.color = Color.YELLOW;
         font2 = fontGenerator.generateFont(fontParameter);
+
+        fontGenerator1 = new FreeTypeFontGenerator(Gdx.files.internal("ZOMBIE.TTF"));
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 40;
+        fontParameter.borderWidth = 2;
+        fontParameter.borderColor = Color.CHARTREUSE;
+        fontParameter.color = Color.FOREST;
+        font3 = fontGenerator1.generateFont(fontParameter);
 
         //create polisi
         police = new Texture(Gdx.files.internal("police.png"));
@@ -228,7 +238,8 @@ public class TutorialScreen implements Screen {
         }
 
         if (tutorialStage == 0){
-            font.draw(batch, "WELCOME TO \nZOMBIE DEFENDER", 350, 250);
+            font.draw(batch, "WELCOME TO", 350, 250);
+            font3.draw(batch, "ZOMBIE DEFENDER", 350, 210);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 try {
                     Thread.sleep(100);

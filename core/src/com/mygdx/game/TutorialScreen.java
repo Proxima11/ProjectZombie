@@ -218,7 +218,7 @@ public class TutorialScreen implements Screen {
 
         if (tutorialStage == 0){
             font.draw(batch, "WELCOME TO \nZOMBIE DEFENDER", 350, 250);
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 try {
                     Thread.sleep(100);
                 }catch (InterruptedException e){
@@ -230,7 +230,7 @@ public class TutorialScreen implements Screen {
         else if (tutorialStage == 1){
             font.draw(batch, "THIS IS THE BARRIER \nTHAT NEED TO BE \nDEFENDED", 350, 250);
             batch.draw(leftArrow, 60, 250);
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
                     Thread.sleep(100);
@@ -242,7 +242,7 @@ public class TutorialScreen implements Screen {
         else if (tutorialStage == 2){
             font.draw(batch, "THIS IS THE HEALTH\nOF THE BARRIER", 350, 250);
             batch.draw(upArrow, 320, 360);
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
                     Thread.sleep(100);
@@ -254,7 +254,7 @@ public class TutorialScreen implements Screen {
         else if (tutorialStage == 3){
             font.draw(batch, "THIS IS YOU,\nTHE POLICE", 350, 250);
             batch.draw(downArrow, 40, 100);
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
                     Thread.sleep(100);
@@ -266,7 +266,7 @@ public class TutorialScreen implements Screen {
         else if (tutorialStage == 4){
             font.draw(batch, "THIS IS\nYOUR HEALTH BAR", 350, 250);
             batch.draw(upArrow, 30, 260);
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
                     Thread.sleep(100);
@@ -279,7 +279,7 @@ public class TutorialScreen implements Screen {
             font.draw(batch, "YOU CAN MOVE THE POLICE\nWITH THESE KEYS", 275, 300);
             batch.draw(wasd,400, 150 );
             batch.draw(updownleftright, 550, 150);
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
                     Thread.sleep(100);
@@ -316,7 +316,7 @@ public class TutorialScreen implements Screen {
         }
         else if (tutorialStage == 7){
             font.draw(batch, "YOU CAN SHOOT BULLETS\nBY CLICKING THE SCREEN", 275, 300);
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
                     Thread.sleep(100);
@@ -333,7 +333,7 @@ public class TutorialScreen implements Screen {
 
 
             // if (zombieDamaged == 4)
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 drawEnter = true;
                 try {
@@ -345,7 +345,7 @@ public class TutorialScreen implements Screen {
         }
         else if (tutorialStage == 9){
             font.draw(batch, "NICE JOB POLICE", 400, 300);
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
                     Thread.sleep(100);
@@ -356,7 +356,7 @@ public class TutorialScreen implements Screen {
         }
         else if (tutorialStage == 10){
             font.draw(batch, "IN WAR, ZOMBIES WON'T STAND STILL\nMOVE AROUND AND SHOOT THEM!", 160, 300);
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
                     Thread.sleep(100);
@@ -367,7 +367,7 @@ public class TutorialScreen implements Screen {
         }
         else if (tutorialStage == 11){
             font.draw(batch, "GOOD LUCK POLICE!", 400, 300);
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
                     Thread.sleep(100);
@@ -378,7 +378,7 @@ public class TutorialScreen implements Screen {
         }
         else if (tutorialStage == 12){
             font.draw(batch, "PRESS ENTER TO ENTER THE BATTLEFIELD!", 30, 240);
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 dispose();
                 soundtrack.dispose();
                 game.setScreen(new MainZombie(game));

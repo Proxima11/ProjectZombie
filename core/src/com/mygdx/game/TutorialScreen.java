@@ -269,7 +269,7 @@ public class TutorialScreen implements Screen {
         }
         else if (tutorialStage == 4){
             font.draw(batch, "THIS IS\nYOUR HEALTH BAR", 350, 250);
-            batch.draw(upArrow, 30, 260);
+            batch.draw(upArrow, 70, 375);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
@@ -296,17 +296,19 @@ public class TutorialScreen implements Screen {
             drawEnter = false;
             font.draw(batch, "TRY MOVING TO THE MARKERS", 275, 300);
             font2.draw(batch, "TOUCH THE MARKERS TO CONTINUE", 220, 35);
-            if ((policeRec.x <= 78 || policeRec.x >= 82) && (policeRec.y <= 208 || policeRec.y>=212) && !marker1Reached) {
-                batch.draw(marker, 80, 210);
-            }
-            else {
+            if ((policeRec.x >= 70 && policeRec.x <= 90) && (policeRec.y >= 230 && policeRec.y<=250) && !marker1Reached) {
                 marker1Reached = true;
+
             }
-            if ((policeRec.x <= 98 || policeRec.x >= 102) && (policeRec.y <= 48 || policeRec.y>= 52) && !marker2Reached) {
-                batch.draw(marker, 100, 50);
+            else if (!marker1Reached){
+                batch.draw(marker, 80, 240);
             }
-            else {
+
+            if ((policeRec.x >= 90 && policeRec.x <= 110) && (policeRec.y >= 40 && policeRec.y<=60) && !marker2Reached) {
                 marker2Reached = true;
+            }
+            else if (!marker2Reached){
+                batch.draw(marker, 100, 50);
             }
             if (marker1Reached && marker2Reached){
                 drawEnter = true;
@@ -361,17 +363,6 @@ public class TutorialScreen implements Screen {
             }
             for (Rectangle bullets : bulletSpawn) {
                 batch.draw(bullet, bullets.x, bullets.y);
-            }
-
-            // if (zombieDamaged == 4)
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-                tutorialStage++;
-                drawEnter = true;
-                try {
-                    Thread.sleep(100);
-                }catch (InterruptedException e){
-
-                }
             }
         }
         else if (tutorialStage == 9){

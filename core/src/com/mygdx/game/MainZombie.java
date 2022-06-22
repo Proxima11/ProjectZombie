@@ -282,7 +282,7 @@ public class MainZombie implements Screen {
         if (policeRec.x < barrierRec.width) policeRec.x = barrierRec.width;
 
         if (!pause) {
-            if (TimeUtils.millis() - x2LastSpawn > 5) doubleDamageSpawning();
+            if (TimeUtils.millis() - x2LastSpawn > 50000) doubleDamageSpawning();
         }
 
         if (!pause) {
@@ -293,7 +293,7 @@ public class MainZombie implements Screen {
             try {
                 for(Iterator<Rectangle> itter = x2spawn.iterator(); itter.hasNext();){
                     Rectangle power = itter.next();
-                    if (TimeUtils.millis() - x2LastSpawn > 5) doubleDamageSpawning();
+                    if (TimeUtils.millis() - x2LastSpawn > 50000) doubleDamageSpawning();
                     power.x -= (60) * Gdx.graphics.getDeltaTime();
                 }
 
@@ -525,6 +525,7 @@ public class MainZombie implements Screen {
             {
                 batch.draw(x2, xx2.x, xx2.y);
             }
+
             for (Rectangle bullets : bulletSpawn) {
                 batch.draw(bullet, bullets.x, bullets.y);
             }

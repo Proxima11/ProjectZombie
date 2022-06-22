@@ -579,7 +579,7 @@ public class MainZombie implements Screen {
             font.draw(batch, "GAME IS CURRENTLY PAUSED", 120, 455);
             if ((Gdx.input.getX() >= 300 && Gdx.input.getX() <= 500) && (Gdx.input.getY() <= 220 && Gdx.input.getY() >= 110)){
                 batch.draw(resumeButtonTouched, 300 , 260);
-                if (Gdx.input.isTouched()) {
+                if (Gdx.input.justTouched()) {
                     pause = false;
                     try {
                         Thread.sleep(100);
@@ -594,7 +594,8 @@ public class MainZombie implements Screen {
 
             if ((Gdx.input.getX() >= 300 && Gdx.input.getX() <= 500) && (Gdx.input.getY() <= 370 && Gdx.input.getY() >= 260)){
                 batch.draw(mainMenuButtonTouched, 300 , 110);
-                if (Gdx.input.isTouched()) {
+                if (Gdx.input.justTouched()) {
+                    soundtrack.dispose();
                     game.setScreen(new mainMenuScreen(game));
                 }
             }

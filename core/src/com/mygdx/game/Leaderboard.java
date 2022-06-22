@@ -115,7 +115,7 @@ public class Leaderboard implements Screen {
         
         if (Gdx.input.getX() < backRec.x + backRec.width && Gdx.input.getX() > backRec.x && 480 - Gdx.input.getY() < backRec.y + backRec.height && 480 - Gdx.input.getY() > backRec.y ) {
             game.batch.draw(backBtn, backRec.x, backRec.y);
-            if (Gdx.input.isTouched()){
+            if (Gdx.input.justTouched()){
                 game.setScreen(new mainMenuScreen(game));
                 soundtrack.dispose();
             }

@@ -94,7 +94,7 @@ public class mainMenuScreen implements Screen {
 
         if (Gdx.input.getX() < playRec.x + playRec.width && Gdx.input.getX() > playRec.x && 480 - Gdx.input.getY() < playRec.y + playRec.height && 480 - Gdx.input.getY() > playRec.y ) {
             game.batch.draw(playNotTouch, playRec.x, playRec.y);
-            if(Gdx.input.isTouched()){
+            if(Gdx.input.justTouched()){
                 //game.setScreen(new TutorialScreen(game));
                 game.setScreen(new MainZombie(game));
                 soundtrack.dispose();
@@ -105,7 +105,7 @@ public class mainMenuScreen implements Screen {
         }
         if (Gdx.input.getX() < playRec2.x + playRec2.width && Gdx.input.getX() > playRec2.x && 480 - Gdx.input.getY() < playRec2.y + playRec2.height && 480 - Gdx.input.getY() > playRec2.y){
             game.batch.draw(leaderboardNotTouch,playRec2.x, playRec2.y);
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
                 game.setScreen(new Leaderboard(game));
                 soundtrack.dispose();
             }
@@ -115,7 +115,7 @@ public class mainMenuScreen implements Screen {
         }
         if (Gdx.input.getX() < playRec3.x + playRec3.width && Gdx.input.getX() > playRec3.x && 480 - Gdx.input.getY() < playRec3.y + playRec3.height && 480 - Gdx.input.getY() > playRec3.y){
             game.batch.draw(exitNotTouch, playRec3.x, playRec3.y);
-            if (Gdx.input.isTouched()){
+            if (Gdx.input.justTouched()){
                 soundtrack.dispose();
                 Gdx.app.exit();
             }

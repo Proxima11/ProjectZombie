@@ -81,6 +81,8 @@ public class MainZombie implements Screen {
 
     //create variable untuk power up 2x
     private Texture x2;
+    private Array<Rectangle> x2spawn;
+    private long x2LastSpawn;
 
     MainZombie(menuScreen game) {
         this.game = game;
@@ -171,6 +173,10 @@ public class MainZombie implements Screen {
         soundtrack.setVolume((float) 0.2);
         soundtrack.setLooping(true);
         soundtrack.play();
+
+        //power up double damage
+        x2 = new Texture(Gdx.files.internal("x2.png"));
+        x2spawn = new Array<Rectangle>();
     }
 
     @Override
@@ -181,6 +187,7 @@ public class MainZombie implements Screen {
     @Override
     public void render(float delta) {
 
+        //anonymous untuk fungsi write leaderboard
         ScoringBoard scoring = new ScoringBoard() {
             @Override
             public void writeToLeaderBoard(int score) {
@@ -213,7 +220,7 @@ public class MainZombie implements Screen {
                         }
                     }
                 }
-
+                //hanya membaca score 5 tertinggi
                 try {
                     if (scoreList.size < 5) {
                         for (int i = 0; i < scoreList.size; i++) {
@@ -274,6 +281,9 @@ public class MainZombie implements Screen {
         if (policeRec.x > 150) policeRec.x = 150;
         if (policeRec.x < barrierRec.width) policeRec.x = barrierRec.width;
 
+        if (!pause) {
+            if (TimeUtils.millis() - x2LastSpawn > 5) doubleDamageSpawning();
+        }
 
         if (!pause) {
             if (TimeUtils.nanoTime() - zombieLastSpawn > 1999999999) zombieSpawning();
@@ -281,6 +291,12 @@ public class MainZombie implements Screen {
 
         if (!pause) {
             try {
+                for(Iterator<Rectangle> itter = x2spawn.iterator(); itter.hasNext();){
+                    Rectangle power = itter.next();
+                    if (TimeUtils.millis() - x2LastSpawn > 5) doubleDamageSpawning();
+                    power.x -= (60) * Gdx.graphics.getDeltaTime();
+                }
+
                 int index = -1;
                 for (Iterator<Rectangle> iter = zombieSpawn.iterator(); iter.hasNext(); ) {
                     Rectangle zombiess = iter.next();
@@ -594,6 +610,16 @@ public class MainZombie implements Screen {
         else if (random == 9 || random == 10){
             zombie2Spawning();
         }
+    }
+
+    public void doubleDamageSpawning(){
+        Rectangle X2 = new Rectangle();
+        X2.x = 840;
+        X2.y = MathUtils.random(0, 250);
+        X2.width = 40;
+        X2.height = 40;
+        x2spawn.add(X2);
+        x2LastSpawn = TimeUtils.millis();
     }
 
     @Override

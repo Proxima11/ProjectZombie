@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
 //import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -64,8 +65,11 @@ public class MainZombie implements Screen {
     //create variable untuk zombie
     private int temp = 1;
     private int temp2 = 1;
+    private int Step = 0;
     private double kecepatanZomb = 0;
     private Texture zombie;
+    private Texture zombieRed;
+    private Texture zombiePolice;
     private Array<Rectangle> zombieSpawn;
     private Array<Character> zombieList;
     private long zombieLastSpawn;
@@ -120,6 +124,8 @@ public class MainZombie implements Screen {
         //create zombie dab array simpannya
         zombieSpawn = new Array<Rectangle>();
         zombie = new Texture(Gdx.files.internal("zombie.png"));
+        zombieRed = new Texture(Gdx.files.internal("redZombie.png"));
+        zombiePolice = new Texture(Gdx.files.internal("policeZombie.png"));
         zombieList = new Array<>();
 
         //create tampilan darah polisi
@@ -409,6 +415,41 @@ public class MainZombie implements Screen {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
+        batch.draw(barrierHeatlh, 300, 420);
+        font.draw(batch, "X" + base.getHp(), 340, 460);
+        batch.draw(police, policeRec.x, policeRec.y);
+        if (polisi.getHp() == 5) {
+            batch.draw(health100, 20, 420);
+        }
+        if (polisi.getHp() == 4) {
+            batch.draw(health80, 20, 420);
+        }
+        if (polisi.getHp() == 3) {
+            batch.draw(health50, 20, 420);
+        }
+        if (polisi.getHp() == 2) {
+            batch.draw(health20, 20, 420);
+        }
+        if (polisi.getHp() == 1) {
+            batch.draw(health10, 20, 420);
+        }
+        batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
+        for (Rectangle zombies : zombieSpawn) {
+            if (score >= 0 && score <= 500) {
+                batch.draw(zombie, zombies.x, zombies.y);
+            }
+            if (score > 500 && score <= 1000){
+                batch.draw(zombieRed, zombies.x, zombies.y);
+            }
+            if (score > 1000){
+                batch.draw(zombiePolice, zombies.x, zombies.y);
+            }
+        }
+        for (Rectangle bullets : bulletSpawn) {
+            batch.draw(bullet, bullets.x, bullets.y);
+        }
+
         if (!pause) {
             batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
             batch.draw(barrierHeatlh, 300, 420);
@@ -436,6 +477,7 @@ public class MainZombie implements Screen {
             for (Rectangle bullets : bulletSpawn) {
                 batch.draw(bullet, bullets.x, bullets.y);
             }
+
 
             font.draw(batch, "POIN : " + score, 520, 455);
             getScoreHistory(score);

@@ -471,6 +471,10 @@ public class MainZombie implements Screen {
                 batch.draw(zombieRed, zombies.x, zombies.y);
             }
         }
+        for(Rectangle xx2 : x2spawn)
+        {
+                batch.draw(x2,xx2.x, xx2.y);
+        }
         for (Rectangle bullets : bulletSpawn) {
             batch.draw(bullet, bullets.x, bullets.y);
         }

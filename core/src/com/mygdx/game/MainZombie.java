@@ -295,6 +295,16 @@ public class MainZombie implements Screen {
                     Rectangle power = itter.next();
                     if (TimeUtils.millis() - x2LastSpawn > 50000) doubleDamageSpawning();
                     power.x -= (60) * Gdx.graphics.getDeltaTime();
+                    if(power. x + 64 < 0) itter.remove();
+
+                    if(power.intersects(policeRec))
+                    {
+                        itter.remove();
+                        for(int i = 0; i < bulletList.size; i++)
+                        {
+                            bulletList.get(i).DoubleDamage();
+                        }
+                    }
                 }
 
                 int index = -1;

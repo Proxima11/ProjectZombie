@@ -184,8 +184,9 @@ public class MainZombie implements Screen {
         bom = new Texture(Gdx.files.internal("bomb.png"));
         bomSpawn = new Array<Rectangle>();
         bomActivate = false;
-
-//        CountdownTimer = 15;
+        soundBom = Gdx.audio.newMusic(Gdx.files.internal("suaraBom.mp3"));
+        soundBom.setVolume((float) 0.2);
+        soundBom.setLooping(false);
 
         // pause states
         backgroundPause = new Texture(Gdx.files.internal("BackgroundMainMenu.png"));
@@ -199,10 +200,6 @@ public class MainZombie implements Screen {
         damageSpawn = new Array<>();
         damageList = new Array<>();
 
-        // bom
-        soundBom = Gdx.audio.newMusic(Gdx.files.internal("suaraBom.mp3"));
-        soundBom.setVolume((float) 0.2);
-        soundBom.setLooping(false);
 
     }
 

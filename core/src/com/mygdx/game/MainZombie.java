@@ -381,14 +381,6 @@ public class MainZombie implements Screen {
                                     iterr.remove();
                                     bulletList.removeIndex(bulletIndex);
                                 }
-//                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-//                                if (!zombieList.get(index).AliveorNot()) {
-//                                    iter.remove();
-//                                    score += 25;
-//                                    zombieList.removeIndex(index);
-//                                }
-//                                iterr.remove();
-//                                bulletList.removeIndex(bulletIndex);
                             }
                         }
                         if (zombiess.intersects(policeRec)) {
@@ -417,14 +409,6 @@ public class MainZombie implements Screen {
                             bullets.x += 400 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
-//                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-//                                if (!zombieList.get(index).AliveorNot()) {
-//                                    iter.remove();
-//                                    score += 25;
-//                                    zombieList.removeIndex(index);
-//                                }
-//                                iterr.remove();
-//                                bulletList.removeIndex(bulletIndex);
                                 if (zombieSpawn.get(index).getWidth() == 64){
                                     zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
                                     if (!zombieList.get(index).AliveorNot()) {
@@ -608,7 +592,7 @@ public class MainZombie implements Screen {
 
             font.draw(batch, "POIN : " + score, 520, 455);
             getScoreHistory(score);
-            
+
         }
         if (pause){
             batch.draw(backgroundPause, backgroundGameRec.x, backgroundGameRec.y);

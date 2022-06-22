@@ -44,11 +44,6 @@ public class Leaderboard implements Screen {
         backRec.height = 60;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-//        backRec = new Rectangle();
-//        backRec.x = 800 / 2 - 80 / 2;
-//        backRec.y = 480 - (60);
-//        backRec.width = 80;
-//        backRec.height = 60;
 
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("ZOMBIE.TTF"));
         fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();

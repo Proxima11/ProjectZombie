@@ -83,6 +83,8 @@ public class MainZombie implements Screen {
     private Texture x2;
     private Array<Rectangle> x2spawn;
     private long x2LastSpawn;
+    private boolean doubleDmgActivate;
+    private float CountdownTimer;
 
     MainZombie(menuScreen game) {
         this.game = game;
@@ -177,6 +179,8 @@ public class MainZombie implements Screen {
         //power up double damage
         x2 = new Texture(Gdx.files.internal("x2.png"));
         x2spawn = new Array<Rectangle>();
+        doubleDmgActivate = false;
+        CountdownTimer = 15;
     }
 
     @Override
@@ -282,28 +286,41 @@ public class MainZombie implements Screen {
         if (policeRec.x < barrierRec.width) policeRec.x = barrierRec.width;
 
         if (!pause) {
-            if (TimeUtils.millis() - x2LastSpawn > 50000) doubleDamageSpawning();
+            if (TimeUtils.nanoTime() - zombieLastSpawn > 1999999999) zombieSpawning();
         }
 
         if (!pause) {
-            if (TimeUtils.nanoTime() - zombieLastSpawn > 1999999999) zombieSpawning();
+            if (TimeUtils.millis() - x2LastSpawn > 50000) doubleDamageSpawning();
         }
 
         if (!pause) {
             try {
                 for(Iterator<Rectangle> itter = x2spawn.iterator(); itter.hasNext();){
                     Rectangle power = itter.next();
-                    if (TimeUtils.millis() - x2LastSpawn > 50000) doubleDamageSpawning();
                     power.x -= (60) * Gdx.graphics.getDeltaTime();
                     if(power. x + 64 < 0) itter.remove();
 
                     if(power.intersects(policeRec))
                     {
                         itter.remove();
+                        doubleDmgActivate = true;
+                    }
+                }
+
+                if(doubleDmgActivate)
+                {
+                    if(CountdownTimer > 0)
+                    {
                         for(int i = 0; i < bulletList.size; i++)
                         {
                             bulletList.get(i).DoubleDamage();
                         }
+                        CountdownTimer = CountdownTimer - Gdx.graphics.getDeltaTime();
+                    }
+                    else
+                    {
+                        doubleDmgActivate = false;
+                        CountdownTimer = 15;
                     }
                 }
 
@@ -543,6 +560,11 @@ public class MainZombie implements Screen {
 
             font.draw(batch, "POIN : " + score, 520, 455);
             getScoreHistory(score);
+
+            if(doubleDmgActivate)
+            {
+                font.draw(batch, " 2X DMG : " + (int) CountdownTimer, 90, 420);
+            }
         }
         if (pause){
             batch.draw(backgroundPause, backgroundGameRec.x, backgroundGameRec.y);
@@ -610,7 +632,7 @@ public class MainZombie implements Screen {
     }
 
     public void randomZombie1() {
-        int random = MathUtils.random(1, 10);
+        int random = MathUtils.random(9);
         if (random >= 0 && random <= 5){
             zombieSpawning();
         }
@@ -620,7 +642,7 @@ public class MainZombie implements Screen {
     }
 
     public void randomZombie2() {
-        int random = MathUtils.random(1, 10);
+        int random = MathUtils.random(11);
         if (random >= 0 && random <= 5){
             zombieSpawning();
         }

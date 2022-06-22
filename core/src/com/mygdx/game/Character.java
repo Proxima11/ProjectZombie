@@ -6,6 +6,15 @@ import java.awt.*;
 
 abstract class Character {
     private int hp;
+    private int score;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     public int getHp() {
         return hp;

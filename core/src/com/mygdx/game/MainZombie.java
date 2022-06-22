@@ -2,8 +2,6 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
-//import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -67,7 +65,6 @@ public class MainZombie implements Screen {
     //create variable untuk zombie
     private int temp = 1;
     private int temp2 = 1;
-    private int Step = 0;
     private double kecepatanZomb = 0;
     private Texture zombie;
     private Texture zombieRed;
@@ -344,36 +341,44 @@ public class MainZombie implements Screen {
                             bullets.x += 600 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
-                                if (zombieSpawn.get(index).getWidth() == 64){
-                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-                                    if (!zombieList.get(index).AliveorNot()) {
-                                        iter.remove();
-                                        score += 25;
-                                        zombieList.removeIndex(index);
-                                    }
-                                    iterr.remove();
-                                    bulletList.removeIndex(bulletIndex);
+//                                if (zombieSpawn.get(index).getWidth() == 64){
+//                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
+//                                    if (!zombieList.get(index).AliveorNot()) {
+//                                        zombieList.removeIndex(index);
+//                                        iter.remove();
+//                                        score += 25;
+//                                    }
+//                                    bulletList.removeIndex(bulletIndex);
+//                                    iterr.remove();
+//                                }
+//                                else if (zombieSpawn.get(index).getWidth() == 65){
+//                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
+//                                    if (!zombieList.get(index).AliveorNot()) {
+//                                        zombieList.removeIndex(index);
+//                                        iter.remove();
+//                                        score += 30;
+//                                    }
+//                                    bulletList.removeIndex(bulletIndex);
+//                                    iterr.remove();
+//                                }
+//                                else if (zombieSpawn.get(index).getWidth() == 66){
+//                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
+//                                    if (!zombieList.get(index).AliveorNot()) {
+//                                        zombieList.removeIndex(index);
+//                                        iter.remove();
+//                                        score += 50;
+//                                    }
+//                                    bulletList.removeIndex(bulletIndex);
+//                                    iterr.remove();
+//                                }
+                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
+                                if (!zombieList.get(index).AliveorNot()) {
+                                    score += zombieList.get(index).getScore();
+                                    zombieList.removeIndex(index);
+                                    iter.remove();
                                 }
-                                else if (zombieSpawn.get(index).getWidth() == 65){
-                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-                                    if (!zombieList.get(index).AliveorNot()) {
-                                        iter.remove();
-                                        score += 30;
-                                        zombieList.removeIndex(index);
-                                    }
-                                    iterr.remove();
-                                    bulletList.removeIndex(bulletIndex);
-                                }
-                                else if (zombieSpawn.get(index).getWidth() == 66){
-                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-                                    if (!zombieList.get(index).AliveorNot()) {
-                                        iter.remove();
-                                        score += 40;
-                                        zombieList.removeIndex(index);
-                                    }
-                                    iterr.remove();
-                                    bulletList.removeIndex(bulletIndex);
-                                }
+                                bulletList.removeIndex(bulletIndex);
+                                iterr.remove();
                             }
                         }
                         if (zombiess.intersects(policeRec)) {
@@ -402,26 +407,34 @@ public class MainZombie implements Screen {
                             bullets.x += 400 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
-                                if (zombieSpawn.get(index).getWidth() == 64){
-                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-                                    if (!zombieList.get(index).AliveorNot()) {
-                                        iter.remove();
-                                        score += 25;
-                                        zombieList.removeIndex(index);
-                                    }
-                                    iterr.remove();
-                                    bulletList.removeIndex(bulletIndex);
+                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
+                                if (!zombieList.get(index).AliveorNot()) {
+                                    score += zombieList.get(index).getScore();
+                                    zombieList.removeIndex(index);
+                                    iter.remove();
                                 }
-                                else if (zombieSpawn.get(index).getWidth() == 65){
-                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-                                    if (!zombieList.get(index).AliveorNot()) {
-                                        iter.remove();
-                                        score += 30;
-                                        zombieList.removeIndex(index);
-                                    }
-                                    iterr.remove();
-                                    bulletList.removeIndex(bulletIndex);
-                                }
+                                bulletList.removeIndex(bulletIndex);
+                                iterr.remove();
+//                                if (zombieSpawn.get(index).getWidth() == 64){
+//                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
+//                                    if (!zombieList.get(index).AliveorNot()) {
+//                                        zombieList.removeIndex(index);
+//                                        iter.remove();
+//                                        score += 25;
+//                                    }
+//                                    bulletList.removeIndex(bulletIndex);
+//                                    iterr.remove();
+//                                }
+//                                else if (zombieSpawn.get(index).getWidth() == 65){
+//                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
+//                                    if (!zombieList.get(index).AliveorNot()) {
+//                                        zombieList.removeIndex(index);
+//                                        iter.remove();
+//                                        score += 30;
+//                                    }
+//                                    bulletList.removeIndex(bulletIndex);
+//                                    iterr.remove();
+//                                }
                             }
                         }
                         if (zombiess.intersects(policeRec)) {
@@ -453,12 +466,12 @@ public class MainZombie implements Screen {
                             if (bullets.intersects(zombiess)) {
                                 zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
                                 if (!zombieList.get(index).AliveorNot()) {
-                                    iter.remove();
-                                    score += 25;
+                                    score += zombieList.get(index).getScore();
                                     zombieList.removeIndex(index);
+                                    iter.remove();
                                 }
-                                iterr.remove();
                                 bulletList.removeIndex(bulletIndex);
+                                iterr.remove();
                             }
 
                         }
@@ -585,7 +598,7 @@ public class MainZombie implements Screen {
 
             font.draw(batch, "POIN : " + score, 520, 455);
             getScoreHistory(score);
-
+            
         }
         if (pause){
             batch.draw(backgroundPause, backgroundGameRec.x, backgroundGameRec.y);

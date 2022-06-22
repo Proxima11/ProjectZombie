@@ -81,6 +81,7 @@ public class MainZombie implements Screen {
     private Array<Rectangle> bomSpawn;
     private long bomLastSpawn;
     private boolean bomActivate;
+    private Music soundBom;
 
     MainZombie(menuScreen game) {
         this.game = game;
@@ -171,7 +172,10 @@ public class MainZombie implements Screen {
         bom = new Texture(Gdx.files.internal("x2.png"));
         bomSpawn = new Array<Rectangle>();
         bomActivate = false;
-//        CountdownTimer = 15;
+        soundBom = Gdx.audio.newMusic(Gdx.files.internal("suaraBom.mp3"));
+        soundBom.setVolume((float) 0.2);
+        soundBom.setLooping(false);
+
     }
 
     @Override
@@ -295,6 +299,8 @@ public class MainZombie implements Screen {
                     {
                         itter.remove();
                         bomActivate = true;
+                        soundBom.play();
+
                     }
                 }
 

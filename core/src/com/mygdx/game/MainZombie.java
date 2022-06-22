@@ -301,7 +301,7 @@ public class MainZombie implements Screen {
                             levelUp.play();
                             temp2++;
                         }
-                        if (TimeUtils.nanoTime() - zombieLastSpawn > 1000999999) zombieSpawning();
+                        if (TimeUtils.nanoTime() - zombieLastSpawn > 1000999999) randomZombie2();
                         zombiess.x -= (80 + (int) kecepatanZomb) * Gdx.graphics.getDeltaTime();
                         int bulletIndex = -1;
                         for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
@@ -337,7 +337,7 @@ public class MainZombie implements Screen {
                             levelUp.play();
                             temp++;
                         }
-                        if (TimeUtils.nanoTime() - zombieLastSpawn > 900000000) zombieSpawning();
+                        if (TimeUtils.nanoTime() - zombieLastSpawn > 900000000) randomZombie1();
                         zombiess.x -= 80 * Gdx.graphics.getDeltaTime();
                         int bulletIndex = -1;
                         for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
@@ -521,7 +521,7 @@ public class MainZombie implements Screen {
 
     public void zombieSpawning() {
         Rectangle zombies = new Rectangle();
-        Character zombie1 = new ZombieNormal(100);
+        Character zombie1 = new ZombieNormal(50);
         zombies.x = 840;
         zombies.y = MathUtils.random(0, 250);
         zombies.width = 64;
@@ -545,14 +545,37 @@ public class MainZombie implements Screen {
 
     public void zombie2Spawning() {
         Rectangle zombies = new Rectangle();
-        Character zombie1 = new ZombieGladiator(150);
+        Character zombie2 = new ZombieGladiator(150);
         zombies.x = 840;
         zombies.y = MathUtils.random(0, 250);
         zombies.width = 64;
         zombies.height = 64;
         zombieSpawn.add(zombies);
-        zombieList.add(zombie1);
+        zombieList.add(zombie2);
         zombieLastSpawn = TimeUtils.nanoTime();
+    }
+
+    public void randomZombie1() {
+        int random = MathUtils.random(1, 10);
+        if (random >= 0 && random <= 5){
+            zombieSpawning();
+        }
+        else if (random >= 6 && random <= 8){
+            zombie1Spawning();
+        }
+    }
+
+    public void randomZombie2() {
+        int random = MathUtils.random(1, 10);
+        if (random >= 0 && random <= 5){
+            zombieSpawning();
+        }
+        else if (random >= 6 && random <= 8){
+            zombie1Spawning();
+        }
+        else if (random == 9 || random == 10){
+            zombie2Spawning();
+        }
     }
 
     @Override

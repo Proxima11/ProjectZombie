@@ -15,10 +15,6 @@ public class Peluru {
         this.damage = damage;
     }
 
-    public int damaging(){
-        return damage;
-    }
-
     public void DoubleDamage(){
         setDamage(getDamage()*2);
     }

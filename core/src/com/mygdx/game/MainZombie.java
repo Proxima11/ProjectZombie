@@ -323,8 +323,8 @@ public class MainZombie implements Screen {
                     }
                     else
                     {
-                        doubleDmgActivate = false;
                         CountdownTimer = 15;
+                        doubleDmgActivate = false;
                     }
                 }
 
@@ -343,7 +343,7 @@ public class MainZombie implements Screen {
                     }
 
                     if (score > 1000) {
-                        kecepatanZomb += 0.005;
+                        kecepatanZomb += 0.01;
                         if (temp2 == 1) {
                             levelUp.play();
                             temp2++;
@@ -357,7 +357,7 @@ public class MainZombie implements Screen {
                             bullets.x += 600 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
-                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
+                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
                                 if (!zombieList.get(index).AliveorNot()) {
                                     iter.remove();
                                     score += 25;
@@ -393,7 +393,7 @@ public class MainZombie implements Screen {
                             bullets.x += 400 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
-                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
+                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
                                 if (!zombieList.get(index).AliveorNot()) {
                                     iter.remove();
                                     score += 25;
@@ -430,7 +430,7 @@ public class MainZombie implements Screen {
                             bullets.x += 200 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
-                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
+                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
                                 if (!zombieList.get(index).AliveorNot()) {
                                     iter.remove();
                                     score += 25;

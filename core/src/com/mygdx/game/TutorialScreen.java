@@ -57,6 +57,7 @@ public class TutorialScreen implements Screen {
     private Character polisi;
     private Character base;
     private Texture zombie;
+    private Rectangle zombies;
     private Music soundtrack;
 
     public TutorialScreen(menuScreen game){
@@ -82,6 +83,11 @@ public class TutorialScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         batch = new SpriteBatch();
+        zombies = new Rectangle();
+        zombies.width = 64;
+        zombies.height = 64;
+        zombies.x = 700;
+        zombies.y = 150;
 
         leftArrow = new Texture(Gdx.files.internal("leftArrow.png"));
         downArrow = new Texture(Gdx.files.internal("downArrow.png"));
@@ -174,9 +180,7 @@ public class TutorialScreen implements Screen {
     }
 
     public void bulletShot(){
-
-
-
+        if (Gdx.input.justTouched()) bulletSpawning();
     }
 
     @Override
@@ -316,6 +320,15 @@ public class TutorialScreen implements Screen {
         }
         else if (tutorialStage == 7){
             font.draw(batch, "YOU CAN SHOOT BULLETS\nBY CLICKING THE SCREEN", 275, 300);
+            bulletShot();
+            for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
+                Rectangle bullets = iterr.next();
+                bullets.x += 200 * Gdx.graphics.getDeltaTime();
+                if (bullets.x + 20 > 800) iterr.remove();
+            }
+            for (Rectangle bullets : bulletSpawn) {
+                batch.draw(bullet, bullets.x, bullets.y);
+            }
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
@@ -331,6 +344,24 @@ public class TutorialScreen implements Screen {
             font2.draw(batch, "KILL THE ZOMBIE TO CONTINUE", 230, 35);
             batch.draw(zombie, 700, 150);
 
+            bulletShot();
+            for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
+                Rectangle bullets = iterr.next();
+                bullets.x += 200 * Gdx.graphics.getDeltaTime();
+                if (bullets.x + 20 > 800) iterr.remove();
+                if(bullets.intersects(zombies)) {
+                    tutorialStage++;
+                    drawEnter = true;
+                    try {
+                        Thread.sleep(100);
+                    }catch (InterruptedException e){
+
+                    }
+                }
+            }
+            for (Rectangle bullets : bulletSpawn) {
+                batch.draw(bullet, bullets.x, bullets.y);
+            }
 
             // if (zombieDamaged == 4)
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){

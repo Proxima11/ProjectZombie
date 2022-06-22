@@ -24,7 +24,9 @@ public class Leaderboard implements Screen {
     OrthographicCamera camera;
     private FreeTypeFontGenerator fontGenerator;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter1;
     private BitmapFont font;
+    private BitmapFont font1;
 
     private Music soundtrack;
     
@@ -52,9 +54,16 @@ public class Leaderboard implements Screen {
         fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontParameter.size = 45;
         fontParameter.borderWidth = 5;
-        fontParameter.borderColor = com.badlogic.gdx.graphics.Color.CHARTREUSE;
-        fontParameter.color = Color.FOREST;
+        fontParameter.borderColor = Color.BLUE;
+        fontParameter.color = Color.CHARTREUSE;
         font = fontGenerator.generateFont(fontParameter);
+
+        fontParameter1 = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter1.size = 60;
+        fontParameter1.borderWidth = 5;
+        fontParameter1.borderColor = Color.DARK_GRAY;
+        fontParameter1.color = Color.GOLD;
+        font1 = fontGenerator.generateFont(fontParameter1);
 
         soundtrack.setVolume((float) 0.3);
         soundtrack.setLooping(true);
@@ -101,6 +110,7 @@ public class Leaderboard implements Screen {
         game.batch.begin();
         game.batch.draw(backgroundGame, 0, 0);
 
+        font1.draw(game.batch, "PLAYER SCORE", 200, 420);
         scoring.readFile();
         
         if (Gdx.input.getX() < backRec.x + backRec.width && Gdx.input.getX() > backRec.x && 480 - Gdx.input.getY() < backRec.y + backRec.height && 480 - Gdx.input.getY() > backRec.y ) {

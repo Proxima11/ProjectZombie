@@ -121,13 +121,6 @@ public class MainZombie implements Screen {
         fontParameter.color = Color.GREEN;
         font = fontGenerator.generateFont(fontParameter);
 
-        fontParameter1 = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter1.size = 15;
-        fontParameter1.borderWidth = 5;
-        fontParameter1.borderColor = Color.RED;
-        fontParameter1.color = Color.TAN;
-        font1 = fontGenerator.generateFont(fontParameter1);
-
         //create zombie dab array simpannya
         zombieSpawn = new Array<Rectangle>();
         zombie = new Texture(Gdx.files.internal("zombie.png"));

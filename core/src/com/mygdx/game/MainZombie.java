@@ -33,9 +33,7 @@ public class MainZombie implements Screen {
     //variable untuk tampilan tulisan atau text
     private FreeTypeFontGenerator fontGenerator;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
-    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter1;
     private BitmapFont font;
-    private BitmapFont font1;
 
     //variable untuk lagu
     private Music levelUp;

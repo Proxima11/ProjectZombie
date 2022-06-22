@@ -41,6 +41,7 @@ public class TutorialScreen implements Screen {
     private FreeTypeFontGenerator fontGenerator;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
     private BitmapFont font;
+    private BitmapFont font1;
     private BitmapFont font2;
 
     private Texture bullet;
@@ -102,17 +103,23 @@ public class TutorialScreen implements Screen {
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Jelly Crazies.ttf"));
         fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontParameter.size = 12;
-        fontParameter.borderWidth = 5;
-        fontParameter.borderColor = com.badlogic.gdx.graphics.Color.FIREBRICK;
-        fontParameter.color = Color.GREEN;
+        fontParameter.borderWidth = 2;
+        fontParameter.borderColor = Color.CYAN;
+        fontParameter.color = Color.FIREBRICK;
         font = fontGenerator.generateFont(fontParameter);
 
-        fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Jelly Crazies.ttf"));
         fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter.size = 6;
+        fontParameter.size = 15;
         fontParameter.borderWidth = 5;
-        fontParameter.borderColor = com.badlogic.gdx.graphics.Color.FIREBRICK;
+        fontParameter.borderColor = Color.FIREBRICK;
         fontParameter.color = Color.GREEN;
+        font1 = fontGenerator.generateFont(fontParameter);
+
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 8;
+        fontParameter.borderWidth = 3;
+        fontParameter.borderColor = Color.SLATE;
+        fontParameter.color = Color.YELLOW;
         font2 = fontGenerator.generateFont(fontParameter);
 
         //create polisi
@@ -211,13 +218,13 @@ public class TutorialScreen implements Screen {
         if (tutorialStage<=11) {
             batch.draw(barrierHeatlh, 300, 420);
             batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
-            font.draw(batch, "X" + base.getHp(), 340, 460);
+            font1.draw(batch, "X" + base.getHp(), 340, 460);
             batch.draw(police, policeRec.x, policeRec.y);
             batch.draw(health, 20, 420);
         }
 
         if (tutorialStage <= 10 && drawEnter) {
-            font2.draw(batch, "PRESS ENTER TO CONTINUE", 250, 35);
+            font2.draw(batch, "PRESS  ENTER  TO  CONTINUE", 250, 35);
         }
 
         if (tutorialStage == 0){
@@ -295,7 +302,7 @@ public class TutorialScreen implements Screen {
         else if (tutorialStage == 6){
             drawEnter = false;
             font.draw(batch, "TRY MOVING TO THE MARKERS", 275, 300);
-            font2.draw(batch, "TOUCH THE MARKERS TO CONTINUE", 220, 35);
+            font2.draw(batch, "TOUCH  THE  MARKERS  TO  CONTINUE", 220, 35);
             if ((policeRec.x >= 70 && policeRec.x <= 90) && (policeRec.y >= 230 && policeRec.y<=250) && !marker1Reached) {
                 marker1Reached = true;
 
@@ -343,7 +350,7 @@ public class TutorialScreen implements Screen {
         else if (tutorialStage == 8){
             drawEnter = false;
             font.draw(batch, "THERE IS A ZOMBIE IN THE FIELD, KILL IT!", 60, 380);
-            font2.draw(batch, "KILL THE ZOMBIE TO CONTINUE", 230, 35);
+            font2.draw(batch, "KILL  THE  ZOMBIE  TO  CONTINUE", 230, 35);
             batch.draw(zombie, 700, 150);
 
             bulletShot();

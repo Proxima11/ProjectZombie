@@ -368,38 +368,6 @@ public class MainZombie implements Screen {
                             bullets.x += 600 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
-
-//                                if (zombieSpawn.get(index).getWidth() == 64){
-//                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-//                                    if (!zombieList.get(index).AliveorNot()) {
-//                                        zombieList.removeIndex(index);
-//                                        iter.remove();
-//                                        score += 25;
-//                                    }
-//                                    bulletList.removeIndex(bulletIndex);
-//                                    iterr.remove();
-//                                }
-//                                else if (zombieSpawn.get(index).getWidth() == 65){
-//                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-//                                    if (!zombieList.get(index).AliveorNot()) {
-//                                        zombieList.removeIndex(index);
-//                                        iter.remove();
-//                                        score += 30;
-//                                    }
-//                                    bulletList.removeIndex(bulletIndex);
-//                                    iterr.remove();
-//                                }
-//                                else if (zombieSpawn.get(index).getWidth() == 66){
-//                                    zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
-//                                    if (!zombieList.get(index).AliveorNot()) {
-//                                        zombieList.removeIndex(index);
-//                                        iter.remove();
-//                                        score += 50;
-//                                    }
-//                                    bulletList.removeIndex(bulletIndex);
-//                                    iterr.remove();
-//                                }
-
                                 zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
                                 if (!zombieList.get(index).AliveorNot()) {
                                     score += zombieList.get(index).getScore();

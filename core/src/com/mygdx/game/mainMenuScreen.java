@@ -73,8 +73,8 @@ public class mainMenuScreen implements Screen {
 
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("ZOMBIE.TTF"));
         fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        fontParameter.size = 35;
-        fontParameter.borderWidth = 5;
+        fontParameter.size = 60;
+        fontParameter.borderWidth = 10;
         fontParameter.borderColor = Color.CHARTREUSE;
         fontParameter.color = Color.FOREST;
         font = fontGenerator.generateFont(fontParameter);
@@ -124,7 +124,7 @@ public class mainMenuScreen implements Screen {
             game.batch.draw(exit, playRec3.x, playRec3.y);
         }
 
-        font.draw(game.batch, "ZOMBIE DEFENDER", 10, 460);
+        font.draw(game.batch, "ZOMBIE DEFENDER", 100, 390);
 
         game.batch.end();
     }

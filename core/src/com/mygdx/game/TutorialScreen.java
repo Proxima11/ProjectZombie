@@ -41,10 +41,7 @@ public class TutorialScreen implements Screen {
     private FreeTypeFontGenerator fontGenerator;
     private FreeTypeFontGenerator fontGenerator1;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
-    private BitmapFont font;
-    private BitmapFont font1;
-    private BitmapFont font2;
-    private BitmapFont font3;
+    private BitmapFont font, font1, font2, font3, font4, font5, font6, font7, font8;
 
     private Texture bullet;
     private Array<Rectangle> bulletSpawn;
@@ -131,6 +128,41 @@ public class TutorialScreen implements Screen {
         fontParameter.borderColor = Color.CHARTREUSE;
         fontParameter.color = Color.FOREST;
         font3 = fontGenerator1.generateFont(fontParameter);
+
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 12;
+        fontParameter.borderWidth = 2;
+        fontParameter.borderColor = Color.CYAN;
+        fontParameter.color = Color.PURPLE;
+        font4 = fontGenerator.generateFont(fontParameter);
+
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 12;
+        fontParameter.borderWidth = 2;
+        fontParameter.borderColor = Color.CYAN;
+        fontParameter.color = Color.BLUE;
+        font5 = fontGenerator.generateFont(fontParameter);
+
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 12;
+        fontParameter.borderWidth = 2;
+        fontParameter.borderColor = Color.CYAN;
+        fontParameter.color = Color.SCARLET;
+        font6 = fontGenerator.generateFont(fontParameter);
+
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 40;
+        fontParameter.borderWidth = 2;
+        fontParameter.borderColor = Color.CYAN;
+        fontParameter.color = Color.RED;
+        font7 = fontGenerator1.generateFont(fontParameter);
+
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 35;
+        fontParameter.borderWidth = 2;
+        fontParameter.borderColor = Color.CYAN;
+        fontParameter.color = Color.FOREST;
+        font8 = fontGenerator1.generateFont(fontParameter);
 
         //create polisi
         police = new Texture(Gdx.files.internal("police.png"));
@@ -250,7 +282,8 @@ public class TutorialScreen implements Screen {
             }
         }
         else if (tutorialStage == 1){
-            font.draw(batch, "THIS IS THE BARRIER \nTHAT NEED TO BE \nDEFENDED", 350, 250);
+            font.draw(batch, "THIS IS THE \nTHAT NEED TO BE \nDEFENDED", 350, 250);
+            font4.draw(batch, "BARRIER", 520, 250);
             batch.draw(leftArrow, 60, 250);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
@@ -274,7 +307,8 @@ public class TutorialScreen implements Screen {
             }
         }
         else if (tutorialStage == 3){
-            font.draw(batch, "THIS IS YOU,\nTHE POLICE", 350, 250);
+            font.draw(batch, "THIS IS YOU,\nTHE ", 350, 250);
+            font5.draw(batch, "POLICE", 413, 227);
             batch.draw(downArrow, 40, 100);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
@@ -286,7 +320,8 @@ public class TutorialScreen implements Screen {
             }
         }
         else if (tutorialStage == 4){
-            font.draw(batch, "THIS IS\nYOUR HEALTH BAR", 350, 250);
+            font.draw(batch, "THIS IS\nYOUR ", 350, 250);
+            font6.draw(batch, "HEALTH BAR", 433, 227);
             batch.draw(upArrow, 70, 375);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
@@ -360,7 +395,10 @@ public class TutorialScreen implements Screen {
         }
         else if (tutorialStage == 8){
             drawEnter = false;
-            font.draw(batch, "THERE IS A ZOMBIE IN THE FIELD, KILL IT!", 60, 380);
+            font.draw(batch, "THERE IS A", 60, 380);
+            font8.draw(batch, "ZOMBIE", 225, 377);
+            font.draw(batch, "IN THE FIELD,", 368, 380);
+            font7.draw(batch, "KILL IT!", 570, 377);
             font2.draw(batch, "KILL  THE  ZOMBIE  TO  CONTINUE", 230, 35);
             batch.draw(zombie, 700, 150);
 

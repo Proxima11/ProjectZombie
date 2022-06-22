@@ -37,7 +37,7 @@ public class mainMenuScreen implements Screen {
 
     mainMenuScreen(final menuScreen game) {
         this.game = game;
-        background = new Texture("BackgroundB.png");
+        background = new Texture("BackgroundA.png");
         soundtrack = Gdx.audio.newMusic(Gdx.files.internal("zombie song.mp3"));
         play = new Texture("playIs!touch.png");
         playNotTouch = new Texture("playIsTouch.png");

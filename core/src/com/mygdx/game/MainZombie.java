@@ -26,9 +26,11 @@ public class MainZombie implements Screen {
     //game
     final menuScreen game;
     private Texture backgroundGame;
+    private Texture backgroundPause;
     private Rectangle backgroundGameRec;
     private OrthographicCamera camera;
     private SpriteBatch batch;
+    private boolean pause;
 
     //variable untuk tampilan tulisan atau text
     private FreeTypeFontGenerator fontGenerator;
@@ -88,6 +90,19 @@ public class MainZombie implements Screen {
     public void create() {
         //create dasar game
         backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
+        backgroundPause = new Texture(Gdx.files.internal("BackgroundA.png"));
+        police = new Texture(Gdx.files.internal("police.png"));
+        zombie = new Texture(Gdx.files.internal("zombie.png"));
+        health100 = new Texture(Gdx.files.internal("health bar 100.png"));
+        health80 = new Texture(Gdx.files.internal("health bar 80.png"));
+        health50 = new Texture(Gdx.files.internal("health bar 50.png"));
+        health20 = new Texture(Gdx.files.internal("health bar 20.png"));
+        health10 = new Texture(Gdx.files.internal("health bar 10.png"));
+        barrier = new Texture(Gdx.files.internal("barrier12.png"));
+        barrierHeatlh = new Texture(Gdx.files.internal("baseHealthBar.png"));
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+        batch = new SpriteBatch();
         backgroundGameRec = new Rectangle();
         backgroundGameRec.x = 0;
         backgroundGameRec.y = 0;
@@ -220,20 +235,39 @@ public class MainZombie implements Screen {
             }
         };
 
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            pause();
+
+        if (!pause) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                try {
+                    Thread.sleep(100);
+                }catch (InterruptedException e){
+
+                }
+                pause = true;
+            }
+
+            if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
+                policeRec.y += 200 * Gdx.graphics.getDeltaTime();
+            if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
+                policeRec.y -= 200 * Gdx.graphics.getDeltaTime();
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
+                policeRec.x += 200 * Gdx.graphics.getDeltaTime();
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
+                policeRec.x -= 200 * Gdx.graphics.getDeltaTime();
+            if (Gdx.input.justTouched()) bulletSpawning();
         }
+        else {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                try {
+                    Thread.sleep(100);
+                }catch (InterruptedException e){
 
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
-            policeRec.y += 200 * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
-            policeRec.y -= 200 * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
-            policeRec.x += 200 * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
-            policeRec.x -= 200 * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.justTouched()) bulletSpawning();
+                }
+                pause = false;
+            }
 
+
+        }
 
         if (policeRec.y > 250) policeRec.y = 250;
         if (policeRec.y < 0) policeRec.y = 0;
@@ -241,140 +275,142 @@ public class MainZombie implements Screen {
         if (policeRec.x < barrierRec.width) policeRec.x = barrierRec.width;
 
 
-        if (TimeUtils.nanoTime() - zombieLastSpawn > 1999999999) zombieSpawning();
-
-        try {
-            int index = -1;
-            for (Iterator<Rectangle> iter = zombieSpawn.iterator(); iter.hasNext(); ) {
-
-                Rectangle zombiess = iter.next();
-                index++;
-                if (zombiess.x + 64 < 0) {
-                    iter.remove();
-                    base.getDamage(1);
-                    if (!base.AliveorNot()) {
-                        scoring.writeToLeaderBoard(score);
-                        game.setScreen(new gameOver(game));
-                        soundtrack.dispose();
-                    }
-                }
-
-                if (score > 1000) {
-                    kecepatanZomb += 0.005;
-                    if (temp2 == 1){
-                        levelUp.play();
-                        temp2++;
-                    }
-                    if (TimeUtils.nanoTime() - zombieLastSpawn > 1000999999) zombieSpawning();
-                    zombiess.x -= (80+(int)kecepatanZomb) * Gdx.graphics.getDeltaTime();
-                    int bulletIndex = -1;
-                    for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
-                        Rectangle bullets = iterr.next();
-                        bulletIndex++;
-                        bullets.x += 600 * Gdx.graphics.getDeltaTime();
-                        if (bullets.x + 20 > 800) iterr.remove();
-                        if (bullets.intersects(zombiess)) {
-                            zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
-                            if (!zombieList.get(index).AliveorNot()) {
-                                iter.remove();
-                                score += 25;
-                                zombieList.removeIndex(index);
-                            }
-                            iterr.remove();
-                            bulletList.removeIndex(bulletIndex);
-                        }
-                    }
-                    if (zombiess.intersects(policeRec)) {
-                        iter.remove();
-                        score += 25;
-                        polisi.getDamage();
-                        if (!polisi.AliveorNot()) {
-                            scoring.writeToLeaderBoard(score);
-                            game.setScreen(new gameOver(game));
-                            soundtrack.dispose();
-                        }
-
-                    }
-                }
-                if (score > 500 && score <= 1000) {
-                    if (temp == 1){
-                        levelUp.play();
-                        temp++;
-                    }
-                    if (TimeUtils.nanoTime() - zombieLastSpawn > 900000000) zombieSpawning();
-                    zombiess.x -= 80 * Gdx.graphics.getDeltaTime();
-                    int bulletIndex = -1;
-                    for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
-                        Rectangle bullets = iterr.next();
-                        bulletIndex++;
-                        bullets.x += 400 * Gdx.graphics.getDeltaTime();
-                        if (bullets.x + 20 > 800) iterr.remove();
-                        if (bullets.intersects(zombiess)) {
-                            zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
-                            if (!zombieList.get(index).AliveorNot()) {
-                                iter.remove();
-                                score += 25;
-                                zombieList.removeIndex(index);
-                            }
-                            iterr.remove();
-                            bulletList.removeIndex(bulletIndex);
-                        }
-                    }
-                    if (zombiess.intersects(policeRec)) {
-                        iter.remove();
-                        score += 25;
-                        polisi.getDamage();
-                        if (!polisi.AliveorNot()) {
-                            scoring.writeToLeaderBoard(score);
-                            game.setScreen(new gameOver(game));
-                            soundtrack.dispose();
-                        }
-
-                    }
-                }
-                if (score >= 0 && score <= 500) {
-                    if (TimeUtils.nanoTime() - zombieLastSpawn > 800000000) zombieSpawning();
-                    zombiess.x -= 40 * Gdx.graphics.getDeltaTime();
-                    if (zombiess.x == 0){
-                        iter.remove();
-                        base.getDamage(1);
-                    }
-
-                    int bulletIndex = -1;
-                    for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
-                        Rectangle bullets = iterr.next();
-                        bulletIndex++;
-                        bullets.x += 200 * Gdx.graphics.getDeltaTime();
-                        if (bullets.x + 20 > 800) iterr.remove();
-                        if (bullets.intersects(zombiess)) {
-                            zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
-                            if (!zombieList.get(index).AliveorNot()) {
-                                iter.remove();
-                                score += 25;
-                                zombieList.removeIndex(index);
-                            }
-                            iterr.remove();
-                            bulletList.removeIndex(bulletIndex);
-                        }
-
-                    }
-                    if (zombiess.intersects(policeRec)) {
-                        iter.remove();
-                        score += 25;
-                        polisi.getDamage();
-                        if (!polisi.AliveorNot()) {
-                            scoring.writeToLeaderBoard(score);
-                            game.setScreen(new gameOver(game));
-                            soundtrack.dispose();
-                        }
-
-                    }
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-
+        if (!pause) {
+            if (TimeUtils.nanoTime() - zombieLastSpawn > 1999999999) zombieSpawning();
         }
 
+        if (!pause) {
+            try {
+                int index = -1;
+                for (Iterator<Rectangle> iter = zombieSpawn.iterator(); iter.hasNext(); ) {
+                    Rectangle zombiess = iter.next();
+                    index++;
+                    if (zombiess.x + 64 < 0) {
+                        iter.remove();
+                        base.getDamage(1);
+                        if (!base.AliveorNot()) {
+                            scoring.writeToLeaderBoard(score);
+                            game.setScreen(new gameOver(game));
+                            soundtrack.dispose();
+                        }
+                    }
+
+                    if (score > 1000) {
+                        kecepatanZomb += 0.005;
+                        if (temp2 == 1) {
+                            levelUp.play();
+                            temp2++;
+                        }
+                        if (TimeUtils.nanoTime() - zombieLastSpawn > 1000999999) zombieSpawning();
+                        zombiess.x -= (80 + (int) kecepatanZomb) * Gdx.graphics.getDeltaTime();
+                        int bulletIndex = -1;
+                        for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
+                            Rectangle bullets = iterr.next();
+                            bulletIndex++;
+                            bullets.x += 600 * Gdx.graphics.getDeltaTime();
+                            if (bullets.x + 20 > 800) iterr.remove();
+                            if (bullets.intersects(zombiess)) {
+                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
+                                if (!zombieList.get(index).AliveorNot()) {
+                                    iter.remove();
+                                    score += 25;
+                                    zombieList.removeIndex(index);
+                                }
+                                iterr.remove();
+                                bulletList.removeIndex(bulletIndex);
+                            }
+                        }
+                        if (zombiess.intersects(policeRec)) {
+                            iter.remove();
+                            score += 25;
+                            polisi.getDamage();
+                            if (!polisi.AliveorNot()) {
+                                scoring.writeToLeaderBoard(score);
+                                game.setScreen(new gameOver(game));
+                                soundtrack.dispose();
+                            }
+
+                        }
+                    }
+                    if (score > 500 && score <= 1000) {
+                        if (temp == 1) {
+                            levelUp.play();
+                            temp++;
+                        }
+                        if (TimeUtils.nanoTime() - zombieLastSpawn > 900000000) zombieSpawning();
+                        zombiess.x -= 80 * Gdx.graphics.getDeltaTime();
+                        int bulletIndex = -1;
+                        for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
+                            Rectangle bullets = iterr.next();
+                            bulletIndex++;
+                            bullets.x += 400 * Gdx.graphics.getDeltaTime();
+                            if (bullets.x + 20 > 800) iterr.remove();
+                            if (bullets.intersects(zombiess)) {
+                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
+                                if (!zombieList.get(index).AliveorNot()) {
+                                    iter.remove();
+                                    score += 25;
+                                    zombieList.removeIndex(index);
+                                }
+                                iterr.remove();
+                                bulletList.removeIndex(bulletIndex);
+                            }
+                        }
+                        if (zombiess.intersects(policeRec)) {
+                            iter.remove();
+                            score += 25;
+                            polisi.getDamage();
+                            if (!polisi.AliveorNot()) {
+                                scoring.writeToLeaderBoard(score);
+                                game.setScreen(new gameOver(game));
+                                soundtrack.dispose();
+                            }
+
+                        }
+                    }
+                    if (score >= 0 && score <= 500) {
+                        if (TimeUtils.nanoTime() - zombieLastSpawn > 800000000) zombieSpawning();
+                        zombiess.x -= 40 * Gdx.graphics.getDeltaTime();
+                        if (zombiess.x == 0) {
+                            iter.remove();
+                            base.getDamage(1);
+                        }
+
+                        int bulletIndex = -1;
+                        for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
+                            Rectangle bullets = iterr.next();
+                            bulletIndex++;
+                            bullets.x += 200 * Gdx.graphics.getDeltaTime();
+                            if (bullets.x + 20 > 800) iterr.remove();
+                            if (bullets.intersects(zombiess)) {
+                                zombieList.get(index).getDamage(bulletList.get(bulletIndex).damaging());
+                                if (!zombieList.get(index).AliveorNot()) {
+                                    iter.remove();
+                                    score += 25;
+                                    zombieList.removeIndex(index);
+                                }
+                                iterr.remove();
+                                bulletList.removeIndex(bulletIndex);
+                            }
+
+                        }
+                        if (zombiess.intersects(policeRec)) {
+                            iter.remove();
+                            score += 25;
+                            polisi.getDamage();
+                            if (!polisi.AliveorNot()) {
+                                scoring.writeToLeaderBoard(score);
+                                game.setScreen(new gameOver(game));
+                                soundtrack.dispose();
+                            }
+
+                        }
+                    }
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+
+            }
+        }
         ScreenUtils.clear(0.2f, 0, 0, 1);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
@@ -414,18 +450,44 @@ public class MainZombie implements Screen {
             batch.draw(bullet, bullets.x, bullets.y);
         }
 
-        font.draw(batch, "POIN : " + score, 520, 455);
-        getScoreHistory(score);
+        if (!pause) {
+            batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
+            batch.draw(barrierHeatlh, 300, 420);
+            font.draw(batch, "X" + base.getHp(), 340, 460);
+            batch.draw(police, policeRec.x, policeRec.y);
+            if (polisi.getHp() == 5) {
+                batch.draw(health100, 20, 420);
+            }
+            if (polisi.getHp() == 4) {
+                batch.draw(health80, 20, 420);
+            }
+            if (polisi.getHp() == 3) {
+                batch.draw(health50, 20, 420);
+            }
+            if (polisi.getHp() == 2) {
+                batch.draw(health20, 20, 420);
+            }
+            if (polisi.getHp() == 1) {
+                batch.draw(health10, 20, 420);
+            }
+            batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
+            for (Rectangle zombies : zombieSpawn) {
+                batch.draw(zombie, zombies.x, zombies.y);
+            }
+            for (Rectangle bullets : bulletSpawn) {
+                batch.draw(bullet, bullets.x, bullets.y);
+            }
+
+
+            font.draw(batch, "POIN : " + score, 520, 455);
+            getScoreHistory(score);
+        }
+        if (pause){
+            batch.draw(backgroundPause, backgroundGameRec.x, backgroundGameRec.y);
+        }
         batch.end();
-
-
-//    @Override
-//    public void show() {
-//
-//
-//    }
-
     }
+
 
     public void getScoreHistory(int score){
         try {
@@ -469,7 +531,7 @@ public class MainZombie implements Screen {
 
     @Override
     public void pause() {
-
+        batch.draw(backgroundPause, backgroundGameRec.x, backgroundGameRec.y);
     }
 
     @Override

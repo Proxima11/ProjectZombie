@@ -16,8 +16,8 @@ public class Damage {
         setPosition(new Vector3(x , y, 0));
         velocity = new Vector3(0, 0, 0);
         setCount(0);
-        // nanti di isi png damage nya
-        //setDamage(new Texture(".png"));
+        //nanti di isi png damage nya
+        setDamage(new Texture("damage.png"));
     }
 
     public void update(float dt){
@@ -60,19 +60,5 @@ public class Damage {
         this.count = count;
     }
 
-    // cara untuk pake class damage nya :
-    // public Damage damage;
-    // tambahin kedalam contructornya
-    // damage = new Damage(x,y); -> x,y posisi kepala zombie
-        // ini di dalam render setelah batch open :
-        //damage.update(delta);
-        // nilai a nya diganti posisi kepalanya zombie dikurangi beberapa
-        //if (damage.getPosition().y >= a) {
-        //    game.batch.draw(damage.getDamage(), damage.getPosition().x, damage.getPosition().y);
-        //    if (damage.getCount() == 0) {
-        //        damage.setCount(1);
-        //        damage.upward();
-        //    }
-        //}
 
 }

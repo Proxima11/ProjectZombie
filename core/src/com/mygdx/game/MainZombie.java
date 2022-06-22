@@ -472,7 +472,15 @@ public class MainZombie implements Screen {
             }
             batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
             for (Rectangle zombies : zombieSpawn) {
-                batch.draw(zombie, zombies.x, zombies.y);
+                if (score >= 0 && score <= 500) {
+                    batch.draw(zombie, zombies.x, zombies.y);
+                }
+                if (score > 500 && score <= 1000){
+                    batch.draw(zombieRed, zombies.x, zombies.y);
+                }
+                if (score > 1000){
+                    batch.draw(zombiePolice, zombies.x, zombies.y);
+                }
             }
             for (Rectangle bullets : bulletSpawn) {
                 batch.draw(bullet, bullets.x, bullets.y);

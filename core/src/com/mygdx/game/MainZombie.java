@@ -81,12 +81,11 @@ public class MainZombie implements Screen {
     private Array<Integer> scoreList;
     private String dataScore = "";
 
-    //create variable untuk power up 2x
-    private Texture x2;
-    private Array<Rectangle> x2spawn;
-    private long x2LastSpawn;
-    private boolean doubleDmgActivate;
-    private float CountdownTimer;
+    //create variable untuk bom
+    private Texture bom;
+    private Array<Rectangle> bomSpawn;
+    private long bomLastSpawn;
+    private boolean bomActivate;
 
     MainZombie(menuScreen game) {
         this.game = game;
@@ -180,11 +179,11 @@ public class MainZombie implements Screen {
         soundtrack.setLooping(true);
         soundtrack.play();
 
-        //power up double damage
-        x2 = new Texture(Gdx.files.internal("x2.png"));
-        x2spawn = new Array<Rectangle>();
-        doubleDmgActivate = false;
-        CountdownTimer = 15;
+        //bom
+        bom = new Texture(Gdx.files.internal("x2.png"));
+        bomSpawn = new Array<Rectangle>();
+        bomActivate = false;
+//        CountdownTimer = 15;
     }
 
     @Override
@@ -294,12 +293,12 @@ public class MainZombie implements Screen {
         }
 
         if (!pause) {
-            if (TimeUtils.millis() - x2LastSpawn > 50000) doubleDamageSpawning();
+            if (TimeUtils.millis() - bomLastSpawn > 50000) bomSpawning();
         }
 
         if (!pause) {
             try {
-                for(Iterator<Rectangle> itter = x2spawn.iterator(); itter.hasNext();){
+                for(Iterator<Rectangle> itter = bomSpawn.iterator(); itter.hasNext();){
                     Rectangle power = itter.next();
                     power.x -= (60) * Gdx.graphics.getDeltaTime();
                     if(power. x + 64 < 0) itter.remove();
@@ -307,24 +306,19 @@ public class MainZombie implements Screen {
                     if(power.intersects(policeRec))
                     {
                         itter.remove();
-                        doubleDmgActivate = true;
+                        bomActivate = true;
                     }
                 }
 
-                if(doubleDmgActivate)
+                if(bomActivate)
                 {
-                    if(CountdownTimer > 0)
-                    {
-                        for(int i = 0; i < bulletList.size; i++)
-                        {
-                            bulletList.get(i).DoubleDamage();
-                        }
-                        CountdownTimer = CountdownTimer - Gdx.graphics.getDeltaTime();
+                    for (int i = 0; i < polisi.getHp(); i++){
+                        polisi.getDamage();
                     }
-                    else
-                    {
-                        CountdownTimer = 15;
-                        doubleDmgActivate = false;
+                    if (!polisi.AliveorNot()) {
+                        scoring.writeToLeaderBoard(score);
+                        game.setScreen(new gameOver(game));
+                        soundtrack.dispose();
                     }
                 }
 
@@ -552,9 +546,9 @@ public class MainZombie implements Screen {
                 batch.draw(zombieRed, zombies.x, zombies.y);
             }
         }
-        for(Rectangle xx2 : x2spawn)
+        for(Rectangle bomm : bomSpawn)
         {
-                batch.draw(x2,xx2.x, xx2.y);
+                batch.draw(bom,bomm.x, bomm.y);
         }
         for (Rectangle bullets : bulletSpawn) {
             batch.draw(bullet, bullets.x, bullets.y);
@@ -602,9 +596,9 @@ public class MainZombie implements Screen {
                 }
             }
 
-            for(Rectangle xx2 : x2spawn)
+            for(Rectangle bomm : bomSpawn)
             {
-                batch.draw(x2, xx2.x, xx2.y);
+                batch.draw(bom, bomm.x, bomm.y);
             }
 
             for (Rectangle bullets : bulletSpawn) {
@@ -614,11 +608,7 @@ public class MainZombie implements Screen {
 
             font.draw(batch, "POIN : " + score, 520, 455);
             getScoreHistory(score);
-
-            if(doubleDmgActivate)
-            {
-                font1.draw(batch, " 2X DMG : " + (int) CountdownTimer, 90, 420);
-            }
+            
         }
         if (pause){
             batch.draw(backgroundPause, backgroundGameRec.x, backgroundGameRec.y);
@@ -708,14 +698,14 @@ public class MainZombie implements Screen {
         }
     }
 
-    public void doubleDamageSpawning(){
-        Rectangle X2 = new Rectangle();
-        X2.x = 840;
-        X2.y = MathUtils.random(0, 250);
-        X2.width = 40;
-        X2.height = 40;
-        x2spawn.add(X2);
-        x2LastSpawn = TimeUtils.millis();
+    public void bomSpawning(){
+        Rectangle boom = new Rectangle();
+        boom.x = 840;
+        boom.y = MathUtils.random(0, 250);
+        boom.width = 40;
+        boom.height = 40;
+        bomSpawn.add(boom);
+        bomLastSpawn = TimeUtils.millis();
     }
 
     @Override

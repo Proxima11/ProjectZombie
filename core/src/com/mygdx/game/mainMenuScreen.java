@@ -79,6 +79,7 @@ public class mainMenuScreen implements Screen {
         fontParameter.color = Color.FOREST;
         font = fontGenerator.generateFont(fontParameter);
 
+
     }
 
 

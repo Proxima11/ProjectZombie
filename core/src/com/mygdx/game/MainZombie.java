@@ -461,13 +461,13 @@ public class MainZombie implements Screen {
 //            if (score > 1000){
 //                batch.draw(zombiePolice, zombies.x, zombies.y);
 //            }
-            if (zombies.getWidth() == 64){
+            if (zombies.getWidth() == 64 && zombies.getHeight() == 64){
                 batch.draw(zombie, zombies.x, zombies.y);
             }
-            if (zombies.getWidth() == 65){
+            if (zombies.getWidth() == 65 && zombies.getHeight() == 65){
                 batch.draw(zombiePolice, zombies.x, zombies.y);
             }
-            if (zombies.getWidth() == 66){
+            if (zombies.getWidth() == 66 && zombies.getHeight() == 66){
                 batch.draw(zombieRed, zombies.x, zombies.y);
             }
         }
@@ -510,13 +510,13 @@ public class MainZombie implements Screen {
 //                if (score > 1000){
 //                    batch.draw(zombiePolice, zombies.x, zombies.y);
 //                }
-                if (zombies.getWidth() == 64){
+                if (zombies.getWidth() == 64 && zombies.getHeight() == 64){
                     batch.draw(zombie, zombies.x, zombies.y);
                 }
-                if (zombies.getWidth() == 65){
+                if (zombies.getWidth() == 65 && zombies.getHeight() == 65){
                     batch.draw(zombiePolice, zombies.x, zombies.y);
                 }
-                if (zombies.getWidth() == 66){
+                if (zombies.getWidth() == 66 && zombies.getHeight() == 66){
                     batch.draw(zombieRed, zombies.x, zombies.y);
                 }
             }

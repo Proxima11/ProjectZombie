@@ -96,8 +96,7 @@ public class mainMenuScreen implements Screen {
         if (Gdx.input.getX() < playRec.x + playRec.width && Gdx.input.getX() > playRec.x && 480 - Gdx.input.getY() < playRec.y + playRec.height && 480 - Gdx.input.getY() > playRec.y ) {
             game.batch.draw(playNotTouch, playRec.x, playRec.y);
             if(Gdx.input.isTouched()){
-            game.setScreen(new MainZombie(game));
-            //game.setScreen(new TutorialScreen(game));
+            game.setScreen(new TutorialScreen(game));
             soundtrack.dispose();
                 dispose();
             }

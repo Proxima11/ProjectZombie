@@ -22,6 +22,7 @@ public class TutorialScreen implements Screen {
     boolean drawEnter = true;
     boolean marker1Reached = false;
     boolean marker2Reached = false;
+    int zombieDamaged = 0;
 
     final menuScreen game;
     private Texture backgroundGame;
@@ -66,7 +67,7 @@ public class TutorialScreen implements Screen {
     public void create(){
         backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
         police = new Texture(Gdx.files.internal("police.png"));
-        zombie = new Texture(Gdx.files.internal("zombie.png"));
+        zombie = new Texture(Gdx.files.internal("standingZombie.png"));
         health = new Texture(Gdx.files.internal("health bar 100.png"));
         barrier = new Texture(Gdx.files.internal("barrier12.png"));
         barrierHeatlh = new Texture(Gdx.files.internal("baseHealthBar.png"));
@@ -107,9 +108,6 @@ public class TutorialScreen implements Screen {
         fontParameter.borderColor = com.badlogic.gdx.graphics.Color.FIREBRICK;
         fontParameter.color = Color.GREEN;
         font2 = fontGenerator.generateFont(fontParameter);
-
-        //create zombie dab array simpannya
-        zombie = new Texture(Gdx.files.internal("zombie.png"));
 
         //create polisi
         police = new Texture(Gdx.files.internal("police.png"));
@@ -189,10 +187,10 @@ public class TutorialScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        if (tutorialStage >= 5) {
+        if (tutorialStage >= 6 && tutorialStage < 9) {
             policeMovement();
         }
-        if (tutorialStage >= 6){
+        if (tutorialStage >= 7 && tutorialStage < 9){
             if (Gdx.input.justTouched()) bulletSpawning();
             for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
                 Rectangle bullets = iterr.next();
@@ -206,21 +204,17 @@ public class TutorialScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
-        batch.draw(barrierHeatlh, 300, 420);
-        batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
-        font.draw(batch, "X" + base.getHp(), 340, 460);
-        batch.draw(police, policeRec.x, policeRec.y);
-        batch.draw(health, 20, 420);
+        if (tutorialStage<=11) {
+            batch.draw(barrierHeatlh, 300, 420);
+            batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
+            font.draw(batch, "X" + base.getHp(), 340, 460);
+            batch.draw(police, policeRec.x, policeRec.y);
+            batch.draw(health, 20, 420);
+        }
 
         if (tutorialStage <= 10 && drawEnter) {
             font2.draw(batch, "PRESS ENTER TO CONTINUE", 250, 35);
         }
-        // 0. welcome to zombie defender
-        // 1. show barrier and barrier health
-        // 2. show police and police health
-        // 3. movement
-        // 4. shooting
-        // 5. zombie
 
         if (tutorialStage == 0){
             font.draw(batch, "WELCOME TO \nZOMBIE DEFENDER", 350, 250);
@@ -258,7 +252,7 @@ public class TutorialScreen implements Screen {
             }
         }
         else if (tutorialStage == 3){
-            font.draw(batch, "THIS IS\nTHE POLICE", 350, 250);
+            font.draw(batch, "THIS IS YOU,\nTHE POLICE", 350, 250);
             batch.draw(downArrow, 40, 100);
             if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
                 tutorialStage++;
@@ -270,6 +264,18 @@ public class TutorialScreen implements Screen {
             }
         }
         else if (tutorialStage == 4){
+            font.draw(batch, "THIS IS\nYOUR HEALTH BAR", 350, 250);
+            batch.draw(upArrow, 30, 260);
+            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                tutorialStage++;
+                try {
+                    Thread.sleep(100);
+                }catch (InterruptedException e){
+
+                }
+            }
+        }
+        else if (tutorialStage == 5){
             font.draw(batch, "YOU CAN MOVE THE POLICE\nWITH THESE KEYS", 275, 300);
             batch.draw(wasd,400, 150 );
             batch.draw(updownleftright, 550, 150);
@@ -282,7 +288,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
-        else if (tutorialStage == 5){
+        else if (tutorialStage == 6){
             drawEnter = false;
             font.draw(batch, "TRY MOVING TO THE MARKERS", 275, 300);
             font2.draw(batch, "TOUCH THE MARKERS TO CONTINUE", 220, 35);
@@ -308,7 +314,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
-        else if (tutorialStage == 6){
+        else if (tutorialStage == 7){
             font.draw(batch, "YOU CAN SHOOT BULLETS\nBY CLICKING THE SCREEN", 275, 300);
             if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
                 tutorialStage++;
@@ -319,9 +325,27 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
-        else if (tutorialStage == 7){
-            font.draw(batch, "", 0, 0);
-            if (Gdx.input.justTouched()){
+        else if (tutorialStage == 8){
+            drawEnter = false;
+            font.draw(batch, "THERE IS A ZOMBIE IN THE FIELD, KILL IT!", 60, 380);
+            font2.draw(batch, "KILL THE ZOMBIE TO CONTINUE", 230, 35);
+            batch.draw(zombie, 700, 150);
+
+
+            // if (zombieDamaged == 4)
+            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                tutorialStage++;
+                drawEnter = true;
+                try {
+                    Thread.sleep(100);
+                }catch (InterruptedException e){
+
+                }
+            }
+        }
+        else if (tutorialStage == 9){
+            font.draw(batch, "NICE JOB POLICE", 400, 300);
+            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
                 tutorialStage++;
                 try {
                     Thread.sleep(100);
@@ -330,6 +354,37 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
+        else if (tutorialStage == 10){
+            font.draw(batch, "IN WAR, ZOMBIES WON'T STAND STILL\nMOVE AROUND AND SHOOT THEM!", 160, 300);
+            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                tutorialStage++;
+                try {
+                    Thread.sleep(100);
+                }catch (InterruptedException e){
+
+                }
+            }
+        }
+        else if (tutorialStage == 11){
+            font.draw(batch, "GOOD LUCK POLICE!", 400, 300);
+            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                tutorialStage++;
+                try {
+                    Thread.sleep(100);
+                }catch (InterruptedException e){
+
+                }
+            }
+        }
+        else if (tutorialStage == 12){
+            font.draw(batch, "PRESS ENTER TO ENTER THE BATTLEFIELD!", 30, 240);
+            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                dispose();
+                soundtrack.dispose();
+                game.setScreen(new MainZombie(game));
+            }
+        }
+
         batch.end();
     }
 

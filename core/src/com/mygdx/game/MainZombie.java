@@ -231,7 +231,7 @@ public class MainZombie implements Screen {
 
 
         if (!pause) {
-            if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 try {
                     Thread.sleep(100);
                 }catch (InterruptedException e){
@@ -251,7 +251,7 @@ public class MainZombie implements Screen {
             if (Gdx.input.justTouched()) bulletSpawning();
         }
         else {
-            if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 try {
                     Thread.sleep(100);
                 }catch (InterruptedException e){

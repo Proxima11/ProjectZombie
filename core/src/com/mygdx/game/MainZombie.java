@@ -349,7 +349,7 @@ public class MainZombie implements Screen {
                             temp2++;
                         }
                         if (TimeUtils.nanoTime() - zombieLastSpawn > 1000999999) randomZombie2();
-                        zombiess.x -= (50) * Gdx.graphics.getDeltaTime();
+                        zombiess.x -= (80 + (int) kecepatanZomb) * Gdx.graphics.getDeltaTime();
                         int bulletIndex = -1;
                         for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
                             Rectangle bullets = iterr.next();

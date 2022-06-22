@@ -473,18 +473,13 @@ public class MainZombie implements Screen {
                             bullets.x += 200 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
-                                damageSpawn(bullets.x + 64, bullets.y);
 
+                                damageSpawn(bullets.x, bullets.y);
                                 for (Iterator<Rectangle> iterrD = damageSpawn.iterator(); iterrD.hasNext();){
-                                    int count = 0;
                                     Rectangle damages = iterrD.next();
-                                    damages.x += PUSH * Gdx.graphics.getDeltaTime();
-                                    if (count == 0){
-                                        damages.y += 200;
-                                        count++;
-                                    }
-                                    damages.y += GRAVITY * Gdx.graphics.getDeltaTime();
-                                    if (damages.y < bullets.y) iterr.remove();
+                                    damages.x += 150 * Gdx.graphics.getDeltaTime();
+                                    damages.y -= 150 * Gdx.graphics.getDeltaTime();
+                                    if (damages.y < bullets.y - 25) iterrD.remove();
                                 }
 
                                 zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());

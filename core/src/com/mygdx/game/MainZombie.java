@@ -482,6 +482,30 @@ public class MainZombie implements Screen {
         zombieLastSpawn = TimeUtils.nanoTime();
     }
 
+    public void zombie1Spawning() {
+        Rectangle zombies = new Rectangle();
+        Character zombie1 = new ZombieElite(100);
+        zombies.x = 840;
+        zombies.y = MathUtils.random(0, 250);
+        zombies.width = 64;
+        zombies.height = 64;
+        zombieSpawn.add(zombies);
+        zombieList.add(zombie1);
+        zombieLastSpawn = TimeUtils.nanoTime();
+    }
+
+    public void zombie2Spawning() {
+        Rectangle zombies = new Rectangle();
+        Character zombie1 = new ZombieGladiator(150);
+        zombies.x = 840;
+        zombies.y = MathUtils.random(0, 250);
+        zombies.width = 64;
+        zombies.height = 64;
+        zombieSpawn.add(zombies);
+        zombieList.add(zombie1);
+        zombieLastSpawn = TimeUtils.nanoTime();
+    }
+
     @Override
     public void resize(int width, int height) {
 

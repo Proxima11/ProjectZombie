@@ -508,7 +508,6 @@ public class MainZombie implements Screen {
         }catch (IOException e){e.printStackTrace();}
     }
 
-
     private void bulletSpawning() {
         Rectangle bullets = new Rectangle();
         Peluru peluru = new Peluru();

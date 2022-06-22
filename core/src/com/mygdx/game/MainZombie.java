@@ -436,14 +436,23 @@ public class MainZombie implements Screen {
         }
         batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
         for (Rectangle zombies : zombieSpawn) {
-            if (score >= 0 && score <= 500) {
+//            if (score >= 0 && score <= 500) {
+//                batch.draw(zombie, zombies.x, zombies.y);
+//            }
+//            if (score > 500 && score <= 1000){
+//                batch.draw(zombieRed, zombies.x, zombies.y);
+//            }
+//            if (score > 1000){
+//                batch.draw(zombiePolice, zombies.x, zombies.y);
+//            }
+            if (zombies.getWidth() == 64){
                 batch.draw(zombie, zombies.x, zombies.y);
             }
-            if (score > 500 && score <= 1000){
-                batch.draw(zombieRed, zombies.x, zombies.y);
-            }
-            if (score > 1000){
+            if (zombies.getWidth() == 65){
                 batch.draw(zombiePolice, zombies.x, zombies.y);
+            }
+            if (zombies.getWidth() == 66){
+                batch.draw(zombieRed, zombies.x, zombies.y);
             }
         }
         for (Rectangle bullets : bulletSpawn) {
@@ -472,14 +481,23 @@ public class MainZombie implements Screen {
             }
             batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
             for (Rectangle zombies : zombieSpawn) {
-                if (score >= 0 && score <= 500) {
+//                if (score >= 0 && score <= 500) {
+//                    batch.draw(zombie, zombies.x, zombies.y);
+//                }
+//                if (score > 500 && score <= 1000){
+//                    batch.draw(zombieRed, zombies.x, zombies.y);
+//                }
+//                if (score > 1000){
+//                    batch.draw(zombiePolice, zombies.x, zombies.y);
+//                }
+                if (zombies.getWidth() == 64){
                     batch.draw(zombie, zombies.x, zombies.y);
                 }
-                if (score > 500 && score <= 1000){
-                    batch.draw(zombieRed, zombies.x, zombies.y);
-                }
-                if (score > 1000){
+                if (zombies.getWidth() == 65){
                     batch.draw(zombiePolice, zombies.x, zombies.y);
+                }
+                if (zombies.getWidth() == 66){
+                    batch.draw(zombieRed, zombies.x, zombies.y);
                 }
             }
             for (Rectangle bullets : bulletSpawn) {
@@ -536,8 +554,8 @@ public class MainZombie implements Screen {
         Character zombie1 = new ZombieElite(100);
         zombies.x = 840;
         zombies.y = MathUtils.random(0, 250);
-        zombies.width = 64;
-        zombies.height = 64;
+        zombies.width = 65;
+        zombies.height = 65;
         zombieSpawn.add(zombies);
         zombieList.add(zombie1);
         zombieLastSpawn = TimeUtils.nanoTime();
@@ -548,8 +566,8 @@ public class MainZombie implements Screen {
         Character zombie2 = new ZombieGladiator(150);
         zombies.x = 840;
         zombies.y = MathUtils.random(0, 250);
-        zombies.width = 64;
-        zombies.height = 64;
+        zombies.width = 66;
+        zombies.height = 66;
         zombieSpawn.add(zombies);
         zombieList.add(zombie2);
         zombieLastSpawn = TimeUtils.nanoTime();

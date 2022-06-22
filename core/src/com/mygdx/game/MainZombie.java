@@ -73,50 +73,27 @@ public class MainZombie implements Screen {
     private Array<Integer> scoreList;
     private String dataScore = "";
 
+    //create variable untuk power up 2x
+    private Texture x2;
+
     MainZombie(menuScreen game) {
         this.game = game;
         create();
     }
 
     public void create() {
-        zombieSpawn = new Array<Rectangle>();
-
+        //create dasar game
         backgroundGame = new Texture(Gdx.files.internal("background game2.png"));
-        police = new Texture(Gdx.files.internal("police.png"));
-        zombie = new Texture(Gdx.files.internal("zombie.png"));
-        health100 = new Texture(Gdx.files.internal("health bar 100.png"));
-        health80 = new Texture(Gdx.files.internal("health bar 80.png"));
-        health50 = new Texture(Gdx.files.internal("health bar 50.png"));
-        health20 = new Texture(Gdx.files.internal("health bar 20.png"));
-        health10 = new Texture(Gdx.files.internal("health bar 10.png"));
-        barrier = new Texture(Gdx.files.internal("barrier12.png"));
-        barrierHeatlh = new Texture(Gdx.files.internal("baseHealthBar.png"));
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
-        batch = new SpriteBatch();
         backgroundGameRec = new Rectangle();
         backgroundGameRec.x = 0;
         backgroundGameRec.y = 0;
         backgroundGameRec.width = 800;
         backgroundGameRec.height = 480;
-        policeRec = new Rectangle();
-        policeRec.x = 20;
-        policeRec.y = 40;
-        policeRec.width = 64;
-        policeRec.height = 64;
-        barrierRec = new Rectangle();
-        barrierRec.x = 0;
-        barrierRec.y = 0;
-        barrierRec.width = 50;
-        barrierRec.height = 320;
-        bullet = new Texture(Gdx.files.internal("peluru.png"));
-        bulletSpawn = new Array<>();
-        bulletList = new Array<>();
-        zombieList = new Array<>();
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+        batch = new SpriteBatch();
 
-
-        polisi = new Police(5);
-
+        //create jenis font
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Jelly Crazies.ttf"));
         fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontParameter.size = 15;
@@ -125,16 +102,51 @@ public class MainZombie implements Screen {
         fontParameter.color = Color.GREEN;
         font = fontGenerator.generateFont(fontParameter);
 
+        //create zombie dab array simpannya
+        zombieSpawn = new Array<Rectangle>();
+        zombie = new Texture(Gdx.files.internal("zombie.png"));
+        zombieList = new Array<>();
 
+        //create tampilan darah polisi
+        health100 = new Texture(Gdx.files.internal("health bar 100.png"));
+        health80 = new Texture(Gdx.files.internal("health bar 80.png"));
+        health50 = new Texture(Gdx.files.internal("health bar 50.png"));
+        health20 = new Texture(Gdx.files.internal("health bar 20.png"));
+        health10 = new Texture(Gdx.files.internal("health bar 10.png"));
+
+        //create polisi
+        police = new Texture(Gdx.files.internal("police.png"));
+        policeRec = new Rectangle();
+        policeRec.x = 20;
+        policeRec.y = 40;
+        policeRec.width = 64;
+        policeRec.height = 64;
+        polisi = new Police(5);
+
+        //create tampilan dan darah base
+        barrier = new Texture(Gdx.files.internal("barrier12.png"));
+        barrierHeatlh = new Texture(Gdx.files.internal("baseHealthBar.png"));
+        barrierRec = new Rectangle();
+        barrierRec.x = 0;
+        barrierRec.y = 0;
+        barrierRec.width = 50;
+        barrierRec.height = 320;
         base = new Base(10);
 
+        //create peluru
+        bullet = new Texture(Gdx.files.internal("peluru.png"));
+        bulletSpawn = new Array<>();
+        bulletList = new Array<>();
+
+        //array score
         scoreList = new Array<>();
 
-        soundtrack = Gdx.audio.newMusic(Gdx.files.internal("mainZombie.mp3"));
-
-
+        //sound untuk level up
         levelUp = Gdx.audio.newMusic(Gdx.files.internal("442943__qubodup__level-up.wav"));
         levelUp.setLooping(false);
+
+        //sound untuk in game
+        soundtrack = Gdx.audio.newMusic(Gdx.files.internal("mainZombie.mp3"));
         soundtrack.setVolume((float) 0.2);
         soundtrack.setLooping(true);
         soundtrack.play();

@@ -314,7 +314,7 @@ public class MainZombie implements Screen {
         }
 
         if (!pause) {
-            if(TimeUtils.millis() - bomLastSpawn > 5000000) bomSpawning();
+            if(TimeUtils.millis() - bomLastSpawn > 50000) bomSpawning();
         }
 
         if (!pause) {

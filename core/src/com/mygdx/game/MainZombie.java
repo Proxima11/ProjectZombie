@@ -350,6 +350,7 @@ public class MainZombie implements Screen {
                     Rectangle zombiess = iter.next();
                     index++;
                     if (zombiess.x + 64 < 0) {
+                        zombieList.removeIndex(index);
                         iter.remove();
                         base.getDamage(1);
                         if (!base.AliveorNot()) {
@@ -394,6 +395,7 @@ public class MainZombie implements Screen {
                             }
                         }
                         if (zombiess.intersects(policeRec)) {
+                            zombieList.removeIndex(index);
                             iter.remove();
                             score += 25;
                             polisi.getDamage();
@@ -431,6 +433,7 @@ public class MainZombie implements Screen {
                             }
                         }
                         if (zombiess.intersects(policeRec)) {
+                            zombieList.removeIndex(index);
                             iter.remove();
                             score += 25;
                             polisi.getDamage();
@@ -446,6 +449,7 @@ public class MainZombie implements Screen {
                         if (TimeUtils.nanoTime() - zombieLastSpawn > 800000000) zombieSpawning();
                         zombiess.x -= 40 * Gdx.graphics.getDeltaTime();
                         if (zombiess.x == 0) {
+                            zombieList.removeIndex(index);
                             iter.remove();
                             base.getDamage(1);
                         }
@@ -469,6 +473,7 @@ public class MainZombie implements Screen {
 
                         }
                         if (zombiess.intersects(policeRec)) {
+                            zombieList.removeIndex(index);
                             iter.remove();
                             score += 25;
                             polisi.getDamage();

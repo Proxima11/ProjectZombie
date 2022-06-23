@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -93,8 +94,10 @@ public class MainZombie implements Screen {
     private Texture damage;
     private Array<Rectangle> damageSpawn;
     private Array<Damage> damageList;
-    private static final int GRAVITY = -15;
-    private static final int PUSH = 15;
+    private static final int GRAVITY = 20;
+    private static final int PUSH = 60;
+    private ArrayList<Boolean> damageJump;
+    private Array<Double> baseY;
 
     MainZombie(menuScreen game) {
         this.game = game;
@@ -199,6 +202,8 @@ public class MainZombie implements Screen {
         damage = new Texture(Gdx.files.internal("damage.png"));
         damageSpawn = new Array<>();
         damageList = new Array<>();
+        damageJump = new ArrayList<>();
+        baseY = new Array<>();
 
 
     }
@@ -352,6 +357,14 @@ public class MainZombie implements Screen {
                             soundtrack.dispose();
                         }
                     }
+                    Iterator<Double> itterY = baseY.iterator();
+                    for (Iterator<Rectangle> iterrD = damageSpawn.iterator(); iterrD.hasNext();){
+                        Rectangle damages = iterrD.next();
+                        double minY = itterY.next();
+                        damages.x += PUSH * Gdx.graphics.getDeltaTime();
+                        damages.y -= GRAVITY * Gdx.graphics.getDeltaTime();
+                        if (damages.y < minY ) iterrD.remove();
+                    }
 
                     if (score > 1000) {
                         kecepatanZomb += 0.01;
@@ -368,6 +381,7 @@ public class MainZombie implements Screen {
                             bullets.x += 600 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
+                                damageSpawn(bullets.x, bullets.y);
                                 zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
                                 if (!zombieList.get(index).AliveorNot()) {
                                     score += zombieList.get(index).getScore();
@@ -404,6 +418,7 @@ public class MainZombie implements Screen {
                             bullets.x += 400 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
+                                damageSpawn(bullets.x, bullets.y);
                                 zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
                                 if (!zombieList.get(index).AliveorNot()) {
                                     score += zombieList.get(index).getScore();
@@ -433,7 +448,6 @@ public class MainZombie implements Screen {
                             iter.remove();
                             base.getDamage(1);
                         }
-
                         int bulletIndex = -1;
                         for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
                             Rectangle bullets = iterr.next();
@@ -441,15 +455,7 @@ public class MainZombie implements Screen {
                             bullets.x += 200 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
                             if (bullets.intersects(zombiess)) {
-
                                 damageSpawn(bullets.x, bullets.y);
-                                for (Iterator<Rectangle> iterrD = damageSpawn.iterator(); iterrD.hasNext();){
-                                    Rectangle damages = iterrD.next();
-                                    damages.x += 150 * Gdx.graphics.getDeltaTime();
-                                    damages.y -= 150 * Gdx.graphics.getDeltaTime();
-                                    if (damages.y < bullets.y - 25) iterrD.remove();
-                                }
-
                                 zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
                                 if (!zombieList.get(index).AliveorNot()) {
                                     score += zombieList.get(index).getScore();
@@ -611,12 +617,14 @@ public class MainZombie implements Screen {
     public void damageSpawn(int x, int y){
         Rectangle damages = new Rectangle();
         Damage damage = new Damage(x , y);
+        double baseY = y - 5;
         damages.x = x + 64;
         damages.y = y;
         damages.width = 25;
         damages.height = 20;
         damageSpawn.add(damages);
         damageList.add(damage);
+        this.baseY.add(baseY);
     }
 
 

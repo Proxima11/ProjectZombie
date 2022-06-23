@@ -1,9 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.utils.Array;
-
-import java.awt.*;
-
 abstract class Character {
     private int hp;
     private int score;

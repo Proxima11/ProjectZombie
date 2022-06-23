@@ -274,6 +274,7 @@ public class MainZombie implements Screen {
 
 
         if (!pause) {
+            //kondisi untuk pause
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 try {
                     Thread.sleep(100);
@@ -283,6 +284,7 @@ public class MainZombie implements Screen {
                 pause = true;
             }
 
+            //gerak W A S D untuk karakter polisi (W untuk maju, A untuk ke kiri, S untuk mundur, D untuk ke kanan)
             if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
                 policeRec.y += 200 * Gdx.graphics.getDeltaTime();
             if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
@@ -294,6 +296,7 @@ public class MainZombie implements Screen {
             if (Gdx.input.justTouched()) bulletSpawning();
         }
         else {
+            //kondisi untuk unpause
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 try {
                     Thread.sleep(100);
@@ -304,35 +307,37 @@ public class MainZombie implements Screen {
             }
         }
 
+        //batas dari gerak karakter polisi dengan input keyboard
         if (policeRec.y > 250) policeRec.y = 250;
         if (policeRec.y < 0) policeRec.y = 0;
         if (policeRec.x > 150) policeRec.x = 150;
         if (policeRec.x < barrierRec.width) policeRec.x = barrierRec.width;
 
+        //kondisi spawn zombie
         if (!pause) {
             if (TimeUtils.nanoTime() - zombieLastSpawn > 1999999999) zombieSpawning();
         }
 
+        //kondisi spawn bom
         if (!pause) {
             if(TimeUtils.millis() - bomLastSpawn > 50000) bomSpawning();
         }
 
         if (!pause) {
             try {
+                //kondisi cek untuk bom yang collision dengan karakter polisi maka akan menuju class game over
                 for(Iterator<Rectangle> itter = bomSpawn.iterator(); itter.hasNext();){
                     Rectangle power = itter.next();
                     power.x -= (60) * Gdx.graphics.getDeltaTime();
                     if(power. x + 64 < 0) itter.remove();
-
                     if(power.intersects(policeRec))
                     {
                         itter.remove();
                         bomActivate = true;
                         soundBom.play();
-
                     }
                 }
-
+                //kondisi cek untuk bom yang collision dengan karakter polisi maka akan menuju class game ove
                 if(bomActivate)
                 {
                     for (int i = 0; i < polisi.getHp(); i++){
@@ -345,20 +350,24 @@ public class MainZombie implements Screen {
                     }
                 }
 
+                //kondisi cek zombie
                 int index = -1;
                 for (Iterator<Rectangle> iter = zombieSpawn.iterator(); iter.hasNext(); ) {
                     Rectangle zombiess = iter.next();
                     index++;
+                    //ketika keluar dari layar di kiri maka darah base akan berkurang
                     if (zombiess.x + 64 < 0) {
                         zombieList.removeIndex(index);
                         iter.remove();
                         base.getDamage(1);
+                        //cek ketika base sudah berdarah 0 atau belum
                         if (!base.AliveorNot()) {
                             scoring.writeToLeaderBoard(score);
                             game.setScreen(new gameOver(game));
                             soundtrack.dispose();
                         }
                     }
+                    //spawn dan remove damage ketika peluru hit zombie
                     Iterator<Double> itterY = baseY.iterator();
                     for (Iterator<Rectangle> iterrD = damageSpawn.iterator(); iterrD.hasNext();){
                         Rectangle damages = iterrD.next();
@@ -367,21 +376,27 @@ public class MainZombie implements Screen {
                         damages.y -= GRAVITY * Gdx.graphics.getDeltaTime();
                         if (damages.y < minY ) iterrD.remove();
                     }
-
+                    //kondisi zombie ketika score melebihi 1000
                     if (score > 1000) {
                         kecepatanZomb += 0.01;
+                        //spawn suara
                         if (temp2 == 1) {
                             levelUp.play();
                             temp2++;
                         }
+                        //spawn kondisi random zombie 2
                         if (TimeUtils.nanoTime() - zombieLastSpawn > 1000999999) randomZombie2();
+                        //gerak zombie ke kiri
                         zombiess.x -= (80 + (int) kecepatanZomb) * Gdx.graphics.getDeltaTime();
                         int bulletIndex = -1;
+                        //spawn bullet
                         for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
                             Rectangle bullets = iterr.next();
                             bulletIndex++;
+                            //gerak zombie ke kanan
                             bullets.x += 600 * Gdx.graphics.getDeltaTime();
                             if (bullets.x + 20 > 800) iterr.remove();
+                            //kondisi ketika peluru intersect zombie
                             if (bullets.intersects(zombiess)) {
                                 damageSpawn(bullets.x, bullets.y);
                                 zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
@@ -394,11 +409,13 @@ public class MainZombie implements Screen {
                                 iterr.remove();
                             }
                         }
+                        //ketika zombie collision dengan polisi akan mengurangi darah polisi
                         if (zombiess.intersects(policeRec)) {
                             zombieList.removeIndex(index);
                             iter.remove();
                             score += 25;
                             polisi.getDamage();
+                            //ketika polisi berdarah 0
                             if (!polisi.AliveorNot()) {
                                 scoring.writeToLeaderBoard(score);
                                 game.setScreen(new gameOver(game));
@@ -407,13 +424,18 @@ public class MainZombie implements Screen {
 
                         }
                     }
+                    //kondisi zombie ketika score berada diantara 500 keatas sampai 1000
                     if (score > 500 && score <= 1000) {
+                        //spawn lagu
                         if (temp == 1) {
                             levelUp.play();
                             temp++;
                         }
+                        //spawn random zombie 1
                         if (TimeUtils.nanoTime() - zombieLastSpawn > 900000000) randomZombie1();
+                        //gerak zombie
                         zombiess.x -= 80 * Gdx.graphics.getDeltaTime();
+                        //cek zombie collasion dengan peluru
                         int bulletIndex = -1;
                         for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
                             Rectangle bullets = iterr.next();
@@ -432,11 +454,13 @@ public class MainZombie implements Screen {
                                 iterr.remove();
                             }
                         }
+                        //kondisi ketika zombie collasion dengan polisi
                         if (zombiess.intersects(policeRec)) {
                             zombieList.removeIndex(index);
                             iter.remove();
                             score += 25;
                             polisi.getDamage();
+                            //ketika polisi sudah berdarah 0
                             if (!polisi.AliveorNot()) {
                                 scoring.writeToLeaderBoard(score);
                                 game.setScreen(new gameOver(game));
@@ -445,23 +469,31 @@ public class MainZombie implements Screen {
 
                         }
                     }
+                    //kondisi zombie ketika score berada diantara 0 keatas sampai 500
                     if (score >= 0 && score <= 500) {
+                        //spawn zombie
                         if (TimeUtils.nanoTime() - zombieLastSpawn > 800000000) zombieSpawning();
+                        //gerak zombie
                         zombiess.x -= 40 * Gdx.graphics.getDeltaTime();
+                        //hapus zombie ketika melewati layar
                         if (zombiess.x == 0) {
                             zombieList.removeIndex(index);
                             iter.remove();
                             base.getDamage(1);
                         }
+                        //cek kondisi peluru yang collasion dengan zombie
                         int bulletIndex = -1;
                         for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
                             Rectangle bullets = iterr.next();
                             bulletIndex++;
                             bullets.x += 200 * Gdx.graphics.getDeltaTime();
+                            //ketika melewati batas layar
                             if (bullets.x + 20 > 800) iterr.remove();
+                            //kondisi ketika peluru collasion dengan zombie
                             if (bullets.intersects(zombiess)) {
                                 damageSpawn(bullets.x, bullets.y);
                                 zombieList.get(index).getDamage(bulletList.get(bulletIndex).getDamage());
+                                //kondisi ketika zombie berdarah 0
                                 if (!zombieList.get(index).AliveorNot()) {
                                     score += zombieList.get(index).getScore();
                                     zombieList.removeIndex(index);
@@ -472,11 +504,13 @@ public class MainZombie implements Screen {
                             }
 
                         }
+                        //kondisi ketika zombie collasion dengan polisi
                         if (zombiess.intersects(policeRec)) {
                             zombieList.removeIndex(index);
                             iter.remove();
                             score += 25;
                             polisi.getDamage();
+                            //kondisi ketika polisi berdarah 0
                             if (!polisi.AliveorNot()) {
                                 scoring.writeToLeaderBoard(score);
                                 game.setScreen(new gameOver(game));
@@ -490,14 +524,17 @@ public class MainZombie implements Screen {
 
             }
         }
+        //menggambar bagian - bagian dari screen
         ScreenUtils.clear(0.2f, 0, 0, 1);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
+        //kondisi tampilan darah base
         batch.draw(barrierHeatlh, 300, 420);
         font.draw(batch, "X" + base.getHp(), 340, 460);
         batch.draw(police, policeRec.x, policeRec.y);
+        //kondisi tampilan darah polisi
         if (polisi.getHp() == 5) {
             batch.draw(health100, 20, 420);
         }
@@ -514,6 +551,7 @@ public class MainZombie implements Screen {
             batch.draw(health10, 20, 420);
         }
         batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
+        //kondisi tampilan zombie
         for (Rectangle zombies : zombieSpawn) {
             if (zombies.getWidth() == 64 && zombies.getHeight() == 64){
                 batch.draw(zombie, zombies.x, zombies.y);
@@ -525,13 +563,16 @@ public class MainZombie implements Screen {
                 batch.draw(zombieRed, zombies.x, zombies.y);
             }
         }
+        //kondisi tampilan bom
         for(Rectangle bomm : bomSpawn)
         {
                 batch.draw(bom,bomm.x, bomm.y);
         }
+        //kondisi tampilan peluru
         for (Rectangle bullets : bulletSpawn) {
             batch.draw(bullet, bullets.x, bullets.y);
         }
+        //kondisi tampilan damage
         for (Rectangle damages : damageSpawn) {
             batch.draw(damage, damages.x, damages.y);
         }
@@ -587,6 +628,7 @@ public class MainZombie implements Screen {
             
         }
         if (pause){
+            //kondisi ingame ketika pause
             batch.draw(backgroundPause, backgroundGameRec.x, backgroundGameRec.y);
             font.draw(batch, "GAME IS CURRENTLY PAUSED", 120, 455);
             if ((Gdx.input.getX() >= 300 && Gdx.input.getX() <= 500) && (Gdx.input.getY() <= 220 && Gdx.input.getY() >= 110)){
@@ -604,6 +646,7 @@ public class MainZombie implements Screen {
                 batch.draw(resumeButton, 300, 260);
             }
 
+            //kondisi untuk ke main menu
             if ((Gdx.input.getX() >= 300 && Gdx.input.getX() <= 500) && (Gdx.input.getY() <= 370 && Gdx.input.getY() >= 260)){
                 batch.draw(mainMenuButtonTouched, 300 , 110);
                 if (Gdx.input.justTouched()) {
@@ -618,6 +661,7 @@ public class MainZombie implements Screen {
         batch.end();
     }
 
+    //fungsi spawn damage
     public void damageSpawn(int x, int y){
         Rectangle damages = new Rectangle();
         Damage damage = new Damage(x , y);
@@ -632,6 +676,7 @@ public class MainZombie implements Screen {
     }
 
 
+    //fungsi mendapatkan score
     public void getScoreHistory(int score){
         try {
             String data = "";
@@ -643,6 +688,7 @@ public class MainZombie implements Screen {
         }catch (IOException e){e.printStackTrace();}
     }
 
+    //fungsi spawn peluru
     private void bulletSpawning() {
         Rectangle bullets = new Rectangle();
         Peluru peluru = new Peluru();
@@ -654,6 +700,7 @@ public class MainZombie implements Screen {
         bulletList.add(peluru);
     }
 
+    //fungsi spawn zombie
     public void zombieSpawning() {
         Rectangle zombies = new Rectangle();
         Character zombie1 = new ZombieNormal(50);
@@ -666,6 +713,7 @@ public class MainZombie implements Screen {
         zombieLastSpawn = TimeUtils.nanoTime();
     }
 
+    //fungsi spawn zombie 1
     public void zombie1Spawning() {
         Rectangle zombies = new Rectangle();
         Character zombie1 = new ZombieElite(100);
@@ -678,6 +726,7 @@ public class MainZombie implements Screen {
         zombieLastSpawn = TimeUtils.nanoTime();
     }
 
+    //fungsi spawn zombie 2
     public void zombie2Spawning() {
         Rectangle zombies = new Rectangle();
         Character zombie2 = new ZombieGladiator(150);
@@ -690,6 +739,7 @@ public class MainZombie implements Screen {
         zombieLastSpawn = TimeUtils.nanoTime();
     }
 
+    //fungsi random zombie 1
     public void randomZombie1() {
         int random = MathUtils.random(9);
         if (random >= 0 && random <= 5){
@@ -700,6 +750,7 @@ public class MainZombie implements Screen {
         }
     }
 
+    //fungsi random zombie 2
     public void randomZombie2() {
         int random = MathUtils.random(11);
         if (random >= 0 && random <= 5){
@@ -713,6 +764,7 @@ public class MainZombie implements Screen {
         }
     }
 
+    //fungsi spawn bom
     public void bomSpawning(){
         Rectangle boom = new Rectangle();
         boom.x = 840;
@@ -728,6 +780,7 @@ public class MainZombie implements Screen {
 
     }
 
+    //fungsi pause
     @Override
     public void pause() {
         try {

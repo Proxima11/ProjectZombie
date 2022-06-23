@@ -41,7 +41,7 @@ public class TutorialScreen implements Screen {
     private FreeTypeFontGenerator fontGenerator;
     private FreeTypeFontGenerator fontGenerator1;
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
-    private BitmapFont font, font1, font2, font3, font4, font5, font6, font7, font8;
+    private BitmapFont font, font1, font2, font3, font4, font5, font6, font7, font8, font9, font10;
 
     private Texture bullet;
     private Array<Rectangle> bulletSpawn;
@@ -60,7 +60,13 @@ public class TutorialScreen implements Screen {
     private Rectangle zombies;
     private Music soundtrack;
 
-    public TutorialScreen(menuScreen game){
+    private Texture zombieBig;
+    private Texture policeZombieBig;
+    private Texture redZombieBig;
+    private Texture keyboard;
+    private Texture bigBomb;
+
+    public TutorialScreen(final menuScreen game){
         this.game = game;
         create();
     }
@@ -164,6 +170,20 @@ public class TutorialScreen implements Screen {
         fontParameter.color = Color.FOREST;
         font8 = fontGenerator1.generateFont(fontParameter);
 
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 10;
+        fontParameter.borderWidth = 2;
+        fontParameter.borderColor = Color.CYAN;
+        fontParameter.color = Color.FIREBRICK;
+        font9 = fontGenerator.generateFont(fontParameter);
+
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = 6;
+        fontParameter.borderWidth = 2;
+        fontParameter.borderColor = Color.CYAN;
+        fontParameter.color = Color.FIREBRICK;
+        font10 = fontGenerator.generateFont(fontParameter);
+
         //create polisi
         police = new Texture(Gdx.files.internal("police.png"));
         policeRec = new Rectangle();
@@ -194,6 +214,13 @@ public class TutorialScreen implements Screen {
         soundtrack.setVolume((float) 0.2);
         soundtrack.setLooping(true);
         soundtrack.play();
+
+        zombieBig = new Texture(Gdx.files.internal("zomBig.png"));
+        policeZombieBig = new Texture(Gdx.files.internal("zomPoliceBig.png"));
+        redZombieBig = new Texture(Gdx.files.internal("redZomBig.png"));
+
+        keyboard = new Texture(Gdx.files.internal("keyboard.png"));
+        bigBomb = new Texture(Gdx.files.internal("bigBomb.png"));
 
         //power up double damage
         //x2 = new Texture(Gdx.files.internal("x2.png"));
@@ -239,7 +266,6 @@ public class TutorialScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
         if (tutorialStage >= 6 && tutorialStage < 9) {
             policeMovement();
         }
@@ -265,8 +291,8 @@ public class TutorialScreen implements Screen {
             batch.draw(health, 20, 420);
         }
 
-        if (tutorialStage <= 10 && drawEnter) {
-            font2.draw(batch, "PRESS  ENTER  TO  CONTINUE", 250, 35);
+        if (tutorialStage <= 15 && drawEnter) {
+            font2.draw(batch, "PRESS  ENTER  TO  CONTINUE", 220, 35);
         }
 
         if (tutorialStage == 0){
@@ -447,6 +473,7 @@ public class TutorialScreen implements Screen {
             font.draw(batch, "GOOD LUCK POLICE!", 400, 300);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 tutorialStage++;
+                backgroundGame.dispose();
                 try {
                     Thread.sleep(100);
                 }catch (InterruptedException e){
@@ -455,14 +482,60 @@ public class TutorialScreen implements Screen {
             }
         }
         else if (tutorialStage == 12){
-            font.draw(batch, "PRESS ENTER TO ENTER THE BATTLEFIELD!", 30, 240);
+            font.draw(batch, "YOU CAN PRESS ESCAPE TO PAUSE THE GAME", 60, 400);
+            batch.draw(keyboard, 150, 100);
+            batch.draw(rightArrow, 110, 290);
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+                tutorialStage++;
+                try {
+                    Thread.sleep(100);
+                }catch (InterruptedException e){
+
+                }
+            }
+        }
+        else if (tutorialStage == 13){
+            font9.draw(batch, "THERE ARE 3 TYPES OF ZOMBIES WITH DIFFERENT SCORES", 30, 400);
+            batch.draw(zombieBig, 50, 180);
+            font10.draw(batch,"NORMAL ZOMBIE", 55, 170);
+            font10.draw(batch,"25 POINTS", 80, 150);
+            batch.draw(policeZombieBig, 320, 180);
+            font10.draw(batch,"POLICE ZOMBIE", 330, 170);
+            font10.draw(batch,"35 POINTS", 355, 150);
+            batch.draw(redZombieBig, 600, 180);
+            font10.draw(batch,"RED ZOMBIE", 620, 170);
+            font10.draw(batch,"60 POINTS", 630, 150);
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+                tutorialStage++;
+                try {
+                    Thread.sleep(100);
+                }catch (InterruptedException e){
+
+                }
+            }
+        }
+        else if (tutorialStage == 14){
+            font.draw(batch, "THE ZOMBIES ARE CAPABLE OF CREATION!", 80, 400);
+            font.draw(batch, "EVADE THE INCOMING BOMBS", 180, 370);
+            batch.draw(bigBomb, 325, 120);
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+                tutorialStage++;
+                try {
+                    Thread.sleep(100);
+                }catch (InterruptedException e){
+
+                }
+            }
+        }
+        else if (tutorialStage == 15){
+            drawEnter = false;
+            font.draw(batch, "PRESS ENTER TO ENTER THE BATTLEFIELD!", 70, 250);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
                 dispose();
                 soundtrack.dispose();
                 game.setScreen(new MainZombie(game));
             }
         }
-
         batch.end();
     }
 

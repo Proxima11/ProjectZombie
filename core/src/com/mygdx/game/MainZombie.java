@@ -609,8 +609,6 @@ public class MainZombie implements Screen {
             else {
                 batch.draw(mainMenuButton, 300, 110);
             }
-
-
         }
         batch.end();
     }

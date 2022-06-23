@@ -78,6 +78,7 @@ public class Leaderboard implements Screen {
             public void readFile() {
                 BufferedReader reader;
                 try{
+                    //membaca file leaderboard
                     String lastline = "";
                     int minus = 0;
                     reader = new BufferedReader(new FileReader("FileLeaderBoard.txt"));
@@ -105,9 +106,10 @@ public class Leaderboard implements Screen {
         game.batch.begin();
         game.batch.draw(backgroundGame, 0, 0);
 
+        //tulisan
         font1.draw(game.batch, "PLAYER SCORE", 200, 420);
         scoring.readFile();
-        
+        //kembali ke main menu
         if (Gdx.input.getX() < backRec.x + backRec.width && Gdx.input.getX() > backRec.x && 480 - Gdx.input.getY() < backRec.y + backRec.height && 480 - Gdx.input.getY() > backRec.y ) {
             game.batch.draw(backBtn, backRec.x, backRec.y);
             if (Gdx.input.justTouched()){

@@ -22,7 +22,6 @@ public class TutorialScreen implements Screen {
     boolean drawEnter = true;
     boolean marker1Reached = false;
     boolean marker2Reached = false;
-    int zombieDamaged = 0;
 
     final menuScreen game;
     private Texture backgroundGame;
@@ -221,14 +220,10 @@ public class TutorialScreen implements Screen {
 
         keyboard = new Texture(Gdx.files.internal("keyboard.png"));
         bigBomb = new Texture(Gdx.files.internal("bigBomb.png"));
-
-        //power up double damage
-        //x2 = new Texture(Gdx.files.internal("x2.png"));
-        //x2spawn = new Array<Rectangle>();
     }
 
     public void policeMovement(){
-
+        //gerak polisi
         if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
             policeRec.y += 200 * Gdx.graphics.getDeltaTime();
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
@@ -238,6 +233,7 @@ public class TutorialScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
             policeRec.x -= 200 * Gdx.graphics.getDeltaTime();
 
+        //batas gerak polisi
         if (policeRec.y > 250) policeRec.y = 250;
         if (policeRec.y < 0) policeRec.y = 0;
         if (policeRec.x > 150) policeRec.x = 150;
@@ -245,6 +241,7 @@ public class TutorialScreen implements Screen {
     }
 
     public void bulletSpawning(){
+        //spawn peluru
         Rectangle bullets = new Rectangle();
         Peluru peluru = new Peluru();
         bullets.x = policeRec.x + 40;
@@ -266,9 +263,11 @@ public class TutorialScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        //kondisi polisi dapat gerak
         if (tutorialStage >= 6 && tutorialStage < 9) {
             policeMovement();
         }
+        //kondisi peluru dapat keluar
         if (tutorialStage >= 7 && tutorialStage < 9){
             if (Gdx.input.justTouched()) bulletSpawning();
             for (Iterator<Rectangle> iterr = bulletSpawn.iterator(); iterr.hasNext(); ) {
@@ -283,6 +282,7 @@ public class TutorialScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(backgroundGame, backgroundGameRec.x, backgroundGameRec.y);
+        //base
         if (tutorialStage<=11) {
             batch.draw(barrierHeatlh, 300, 420);
             batch.draw(barrier, barrierRec.x, barrierRec.y, 50, 320);
@@ -291,6 +291,7 @@ public class TutorialScreen implements Screen {
             batch.draw(health, 20, 420);
         }
 
+        //tampilan tulisan
         if (tutorialStage <= 15 && drawEnter) {
             font2.draw(batch, "PRESS  ENTER  TO  CONTINUE", 220, 35);
         }
@@ -307,6 +308,7 @@ public class TutorialScreen implements Screen {
                 tutorialStage++;
             }
         }
+        //penjelasan base
         else if (tutorialStage == 1){
             font.draw(batch, "THIS IS THE \nTHAT NEED TO BE \nDEFENDED", 350, 250);
             font4.draw(batch, "BARRIER", 520, 250);
@@ -320,6 +322,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
+        //penjelasan darah base
         else if (tutorialStage == 2){
             font.draw(batch, "THIS IS THE HEALTH\nOF THE BARRIER", 350, 250);
             batch.draw(upArrow, 320, 360);
@@ -332,6 +335,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
+        //penjelasan karakter polisi
         else if (tutorialStage == 3){
             font.draw(batch, "THIS IS YOU,\nTHE ", 350, 250);
             font5.draw(batch, "POLICE", 413, 227);
@@ -345,6 +349,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
+        //penjelasan darah polisi
         else if (tutorialStage == 4){
             font.draw(batch, "THIS IS\nYOUR ", 350, 250);
             font6.draw(batch, "HEALTH BAR", 433, 227);
@@ -358,6 +363,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
+        ////penjelasan polisi
         else if (tutorialStage == 5){
             font.draw(batch, "YOU CAN MOVE THE POLICE\nWITH THESE KEYS", 275, 300);
             batch.draw(wasd,400, 150 );
@@ -371,6 +377,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
+        //penjelasan gerak polisi
         else if (tutorialStage == 6){
             drawEnter = false;
             font.draw(batch, "TRY MOVING TO THE MARKERS", 275, 300);
@@ -399,6 +406,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
+        //penjelasan peluru
         else if (tutorialStage == 7){
             font.draw(batch, "YOU CAN SHOOT BULLETS\nBY CLICKING THE SCREEN", 275, 300);
             bulletShot();
@@ -419,6 +427,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
+        //penjelasan zombie
         else if (tutorialStage == 8){
             drawEnter = false;
             font.draw(batch, "THERE IS A", 60, 380);
@@ -481,6 +490,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
+        //penjelasan pause
         else if (tutorialStage == 12){
             font.draw(batch, "YOU CAN PRESS ESCAPE TO PAUSE THE GAME", 60, 400);
             batch.draw(keyboard, 150, 100);
@@ -494,6 +504,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
+        //penjelasan jenis zombie
         else if (tutorialStage == 13){
             font9.draw(batch, "THERE ARE 3 TYPES OF ZOMBIES WITH DIFFERENT SCORES", 30, 400);
             batch.draw(zombieBig, 50, 180);
@@ -514,6 +525,7 @@ public class TutorialScreen implements Screen {
                 }
             }
         }
+        //penjelasan bom
         else if (tutorialStage == 14){
             font.draw(batch, "THE ZOMBIES ARE CAPABLE OF CREATION!", 80, 400);
             font.draw(batch, "EVADE THE INCOMING BOMBS", 180, 370);

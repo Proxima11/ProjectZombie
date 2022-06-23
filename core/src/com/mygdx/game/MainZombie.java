@@ -191,6 +191,7 @@ public class MainZombie implements Screen {
         soundBom.setVolume((float) 0.2);
         soundBom.setLooping(false);
 
+
         // pause states
         backgroundPause = new Texture(Gdx.files.internal("BackgroundMainMenu.png"));
         resumeButton = new Texture(Gdx.files.internal("resumeButton.png"));
@@ -313,7 +314,7 @@ public class MainZombie implements Screen {
         }
 
         if (!pause) {
-            if (TimeUtils.millis() - bomLastSpawn > 50000) bomSpawning();
+            if(TimeUtils.millis() - bomLastSpawn > 5000000) bomSpawning();
         }
 
         if (!pause) {
@@ -726,7 +727,13 @@ public class MainZombie implements Screen {
 
     @Override
     public void pause() {
-        batch.draw(backgroundPause, backgroundGameRec.x, backgroundGameRec.y);
+        try {
+            batch.draw(backgroundPause, backgroundGameRec.x, backgroundGameRec.y);
+        }
+        catch (IllegalStateException e)
+        {
+
+        }
     }
 
     @Override

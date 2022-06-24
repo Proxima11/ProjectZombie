@@ -475,11 +475,17 @@ public class MainZombie implements Screen {
                         if (TimeUtils.nanoTime() - zombieLastSpawn > 800000000) zombieSpawning();
                         //gerak zombie
                         zombiess.x -= 40 * Gdx.graphics.getDeltaTime();
-                        //hapus zombie ketika melewati layar
+                        //ketika keluar dari layar di kiri maka darah base akan berkurang
                         if (zombiess.x == 0) {
                             zombieList.removeIndex(index);
                             iter.remove();
                             base.getDamage(1);
+                            //cek ketika base sudah berdarah 0 atau belum
+                            if (!base.AliveorNot()) {
+                                scoring.writeToLeaderBoard(score);
+                                game.setScreen(new gameOver(game));
+                                soundtrack.dispose();
+                            }
                         }
                         //cek kondisi peluru yang collasion dengan zombie
                         int bulletIndex = -1;
